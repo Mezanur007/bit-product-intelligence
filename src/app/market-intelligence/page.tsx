@@ -305,7 +305,7 @@ export default function MarketIntelligencePage() {
   return (
     <div className="space-y-6">
       {/* Title Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 neu-raised p-6 md:p-8 rounded-3xl border border-white">
         <div>
           <div className="flex items-center gap-2 text-xs font-bold text-[#315EE8] uppercase tracking-wider mb-1">
             <Search className="w-3.5 h-3.5" />
@@ -326,7 +326,7 @@ export default function MarketIntelligencePage() {
         </div>
 
         {/* Status Badge with Mascot */}
-        <div className="bg-gradient-to-r from-emerald-50 to-cyan-50 text-emerald-900 border border-emerald-200 px-4 py-2 rounded-2xl text-xs md:text-sm font-extrabold flex items-center gap-2.5 shadow-xs">
+        <div className="neu-raised-sm px-4 py-2 rounded-2xl text-xs md:text-sm font-extrabold flex items-center gap-2.5 text-emerald-900">
           <img src="/brand/mascot.png" alt="BI Mascot" className="w-8 h-8 object-contain" />
           <div>
             <div className="flex items-center gap-1.5">
@@ -341,7 +341,7 @@ export default function MarketIntelligencePage() {
       </div>
 
       {/* Product Selector Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-[#E6EAF1] shadow-xs flex flex-wrap items-center justify-between gap-3">
+      <div className="neu-raised p-4 rounded-3xl border border-white flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
             {language === 'ar' ? 'المنتج قيد التحليل:' : 'Active Target Product:'}
@@ -358,8 +358,8 @@ export default function MarketIntelligencePage() {
                 }}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   selectedOpp?.id === opp.id
-                    ? 'bg-[#315EE8] text-white shadow-sm'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'neu-btn-primary px-3 py-1.5 text-xs font-bold'
+                    : 'neu-btn px-3 py-1.5 text-xs font-bold text-slate-700'
                 }`}
               >
                 {opp.name}
@@ -373,7 +373,7 @@ export default function MarketIntelligencePage() {
           <button
             onClick={runCompetitorScan}
             disabled={aiLoading}
-            className="flex items-center gap-1.5 px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
+            className={`flex items-center gap-1.5 px-3 py-2 neu-btn text-indigo-700 text-xs font-bold disabled:opacity-50`}
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>{language === 'ar' ? 'فحص المنافسين بالذكاء الاصطناعي' : 'Run AI Competitor Scan'}</span>
@@ -382,7 +382,7 @@ export default function MarketIntelligencePage() {
           <button
             onClick={runMarketEstimate}
             disabled={aiLoading}
-            className="flex items-center gap-1.5 px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
+            className={`flex items-center gap-1.5 px-3 py-2 neu-btn text-[#315EE8] text-xs font-bold disabled:opacity-50`}
           >
             <TrendingUp className="w-3.5 h-3.5" />
             <span>{language === 'ar' ? 'تقدير حجم السوق (منشآت)' : 'Monshaat Market Sizing'}</span>
@@ -391,7 +391,7 @@ export default function MarketIntelligencePage() {
           <button
             onClick={runRiskScan}
             disabled={aiLoading}
-            className="flex items-center gap-1.5 px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
+            className={`flex items-center gap-1.5 px-3 py-2 neu-btn text-amber-700 text-xs font-bold disabled:opacity-50`}
           >
             <ShieldAlert className="w-3.5 h-3.5" />
             <span>{language === 'ar' ? 'فحص المخاطر والامتثال' : 'Scan Regulatory Risks'}</span>
@@ -401,7 +401,7 @@ export default function MarketIntelligencePage() {
 
       {/* AI Loading Banner */}
       {aiLoading && (
-        <div className="p-4 bg-indigo-50 border border-indigo-200 rounded-2xl flex items-center gap-3 text-indigo-800 text-xs font-semibold animate-pulse">
+        <div className="neu-pressed p-4 rounded-2xl flex items-center gap-3 font-bold text-[#315EE8] text-xs animate-pulse">
           <RefreshCw className="w-4 h-4 animate-spin text-indigo-600" />
           <span>
             {language === 'ar'
@@ -413,7 +413,7 @@ export default function MarketIntelligencePage() {
 
       {/* STAGING QUEUE: AI-Generated Competitor Discoveries */}
       {stagedCompetitors.length > 0 && (
-        <div className="bg-gradient-to-r from-indigo-50/70 via-purple-50/50 to-white p-6 rounded-2xl border-2 border-indigo-300 shadow-sm space-y-4">
+        <div className="neu-raised p-6 rounded-3xl border border-white space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-indigo-600 text-white flex items-center gap-1">
@@ -440,7 +440,7 @@ export default function MarketIntelligencePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {stagedCompetitors.map((comp) => (
-              <div key={comp.id} className="bg-white p-4 rounded-xl border border-indigo-200 shadow-2xs space-y-3">
+              <div key={comp.id} className="neu-raised-sm p-4 rounded-2xl space-y-3">
                 <div className="flex items-start justify-between">
                   <div>
                     <h4 className="font-bold text-sm text-gray-900">{comp.name}</h4>
@@ -474,7 +474,7 @@ export default function MarketIntelligencePage() {
                   {comp.differentiationOpportunity}
                 </p>
 
-                <div className="pt-2 border-t border-gray-100 flex items-center justify-between">
+                <div className="pt-2 border-t border-white/40 flex items-center justify-between">
                   <a
                     href={comp.website}
                     target="_blank"
@@ -488,13 +488,13 @@ export default function MarketIntelligencePage() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => setStagedCompetitors((prev) => prev.filter((c) => c.id !== comp.id))}
-                      className="px-2.5 py-1 text-xs text-gray-600 hover:text-gray-900 font-semibold"
+                      className="neu-btn px-2.5 py-1 text-xs font-bold text-slate-600"
                     >
                       {language === 'ar' ? 'تجاهل' : 'Discard'}
                     </button>
                     <button
                       onClick={() => acceptCompetitor(comp)}
-                      className="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center gap-1 shadow-xs"
+                      className="neu-btn-primary px-3 py-1 text-xs font-bold flex items-center gap-1"
                     >
                       <Check className="w-3 h-3" />
                       <span>{language === 'ar' ? 'اعتماد وإضافة للمنتج' : 'Verify & Accept'}</span>
@@ -509,7 +509,7 @@ export default function MarketIntelligencePage() {
 
       {/* STAGING QUEUE: AI Market Estimate Results */}
       {stagedMarketEstimate && (
-        <div className="bg-gradient-to-r from-blue-50/80 to-white p-6 rounded-2xl border-2 border-blue-300 shadow-sm space-y-4">
+        <div className="neu-raised p-6 rounded-3xl border border-white space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-blue-600 text-white flex items-center gap-1">
@@ -529,19 +529,19 @@ export default function MarketIntelligencePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-white p-4 rounded-xl border border-blue-200">
+            <div className="neu-pressed p-4 rounded-2xl">
               <span className="text-[10px] font-bold text-gray-500 uppercase">TAM (إجمالي السوق المتاح)</span>
               <p className="text-lg font-extrabold text-[#172033] mt-1 tabular-nums">{fmtSAR(stagedMarketEstimate.tamSAR)}</p>
             </div>
-            <div className="bg-white p-4 rounded-xl border border-blue-200">
+            <div className="neu-pressed p-4 rounded-2xl">
               <span className="text-[10px] font-bold text-gray-500 uppercase">SAM (السوق المخدوم)</span>
               <p className="text-lg font-extrabold text-[#315EE8] mt-1 tabular-nums">{fmtSAR(stagedMarketEstimate.samSAR)}</p>
             </div>
-            <div className="bg-white p-4 rounded-xl border border-blue-200">
+            <div className="neu-pressed p-4 rounded-2xl">
               <span className="text-[10px] font-bold text-gray-500 uppercase">SOM (السوق المستهدف بالسنة 2)</span>
               <p className="text-lg font-extrabold text-emerald-600 mt-1 tabular-nums">{fmtSAR(stagedMarketEstimate.somSAR)}</p>
             </div>
-            <div className="bg-white p-4 rounded-xl border border-blue-200">
+            <div className="neu-pressed p-4 rounded-2xl">
               <span className="text-[10px] font-bold text-gray-500 uppercase">عدد المنشآت المستهدفة</span>
               <p className="text-lg font-extrabold text-gray-900 mt-1 tabular-nums">
                 {stagedMarketEstimate.targetEstablishmentsCount.toLocaleString()} {language === 'ar' ? 'منشأة' : 'entities'}
@@ -549,7 +549,7 @@ export default function MarketIntelligencePage() {
             </div>
           </div>
 
-          <p className="text-xs text-gray-700 bg-white/70 p-3 rounded-xl border border-blue-100">
+          <p className="neu-pressed p-3 rounded-2xl text-xs text-gray-700">
             <strong>{language === 'ar' ? 'المنهجية والمصادر:' : 'Methodology & Sources:'}</strong>{' '}
             {stagedMarketEstimate.methodologyNotes}
           </p>
@@ -557,13 +557,13 @@ export default function MarketIntelligencePage() {
           <div className="flex justify-end gap-2">
             <button
               onClick={() => setStagedMarketEstimate(null)}
-              className="px-3 py-1.5 text-xs text-gray-600 font-semibold"
+              className="neu-btn px-3 py-1.5 text-xs text-gray-600 font-semibold"
             >
               {language === 'ar' ? 'تجاهل' : 'Discard'}
             </button>
             <button
               onClick={acceptMarketEstimate}
-              className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm"
+              className="neu-btn-primary px-4 py-1.5 text-white text-xs font-bold flex items-center gap-1.5"
             >
               <Check className="w-3.5 h-3.5" />
               <span>{language === 'ar' ? 'اعتماد التقدير وتحديث الخطوة الأولى' : 'Apply to Step 1 Market Evaluation'}</span>
@@ -574,7 +574,7 @@ export default function MarketIntelligencePage() {
 
       {/* STAGING QUEUE: AI Risk Scan Results */}
       {stagedRisks.length > 0 && (
-        <div className="bg-gradient-to-r from-amber-50/80 to-white p-6 rounded-2xl border-2 border-amber-300 shadow-sm space-y-4">
+        <div className="neu-raised p-6 rounded-3xl border border-white space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-amber-600 text-white flex items-center gap-1">
@@ -595,7 +595,7 @@ export default function MarketIntelligencePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {stagedRisks.map((rsk) => (
-              <div key={rsk.riskCode} className="bg-white p-4 rounded-xl border border-amber-200 shadow-2xs space-y-2">
+              <div key={rsk.riskCode} className="neu-raised-sm p-4 rounded-2xl space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="font-extrabold text-xs text-amber-900">{rsk.riskCode}</span>
                   <span className="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-amber-100 text-amber-800">
@@ -607,10 +607,10 @@ export default function MarketIntelligencePage() {
                   <strong className="text-gray-700">{language === 'ar' ? 'المعالجة:' : 'Mitigation:'}</strong>{' '}
                   {rsk.mitigation}
                 </p>
-                <div className="pt-2 border-t border-gray-100 flex justify-end">
+                <div className="pt-2 border-t border-white/40 flex justify-end">
                   <button
                     onClick={() => acceptRisk(rsk)}
-                    className="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold flex items-center gap-1"
+                    className="neu-btn px-3 py-1 text-amber-700 font-bold text-xs flex items-center gap-1"
                   >
                     <Check className="w-3 h-3" />
                     <span>{language === 'ar' ? 'إضافة لسجل المخاطر' : 'Add to Risk Register'}</span>
@@ -623,8 +623,8 @@ export default function MarketIntelligencePage() {
       )}
 
       {/* Cross-Product Competitor Benchmarks */}
-      <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
-        <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+      <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white">
+        <div className="flex items-center justify-between pb-4 border-b border-white/40">
           <div>
             <h3 className="font-bold text-base text-[#172033]">
               {language === 'ar' ? 'مشهد تسعير المنافسين ودعم اللغة العربية' : 'Competitive Pricing & Arabic Support Landscape'}
@@ -640,9 +640,9 @@ export default function MarketIntelligencePage() {
           </span>
         </div>
 
-        <div className="mt-4 overflow-x-auto">
+        <div className="neu-pressed rounded-2xl overflow-x-auto mt-4">
           <table className="w-full text-left text-xs">
-            <thead className="bg-[#F8FAFC] text-gray-500 font-bold uppercase border-b border-gray-200">
+            <thead className="bg-[#EDF2F7]/80 text-gray-500 font-bold uppercase border-b border-white/40">
               <tr>
                 <th className="py-2.5 px-3">{language === 'ar' ? 'المنافس' : 'Competitor'}</th>
                 <th className="py-2.5 px-3">{language === 'ar' ? 'المنتج المرتبط' : 'Associated Product'}</th>
@@ -652,7 +652,7 @@ export default function MarketIntelligencePage() {
                 <th className="py-2.5 px-3">{language === 'ar' ? 'فرصة التمايز لـ بي آي للتكنولوجيا' : 'BI Technology Differentiation'}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-white/40">
               {allCompetitors.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="py-8 text-center text-gray-400">
@@ -661,7 +661,7 @@ export default function MarketIntelligencePage() {
                 </tr>
               ) : (
                 allCompetitors.map((c) => (
-                  <tr key={c.id} className="hover:bg-gray-50">
+                  <tr key={c.id} className="hover:bg-white/20">
                     <td className="py-3 px-3">
                       <div className="font-bold text-gray-900">{c.name}</div>
                       <div className="text-[10px] text-gray-400">{c.productName} ({c.country})</div>
@@ -694,8 +694,8 @@ export default function MarketIntelligencePage() {
       </div>
 
       {/* Verified Market Research Sources */}
-      <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
-        <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+      <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white">
+        <div className="flex items-center justify-between pb-4 border-b border-white/40">
           <div>
             <h3 className="font-bold text-base text-[#172033]">
               {language === 'ar' ? 'مصادر أبحاث السوق وتصنيف الأدلة' : 'Market Research Sources & Evidence Classification'}
@@ -711,9 +711,9 @@ export default function MarketIntelligencePage() {
           </span>
         </div>
 
-        <div className="mt-4 overflow-x-auto">
+        <div className="neu-pressed rounded-2xl overflow-x-auto mt-4">
           <table className="w-full text-left text-xs">
-            <thead className="bg-[#F8FAFC] text-gray-500 font-bold uppercase border-b border-gray-200">
+            <thead className="bg-[#EDF2F7]/80 text-gray-500 font-bold uppercase border-b border-white/40">
               <tr>
                 <th className="py-2.5 px-3">{language === 'ar' ? 'الناشر وعنوان الصفحة' : 'Publisher & Page Title'}</th>
                 <th className="py-2.5 px-3">{language === 'ar' ? 'نوع المصدر' : 'Source Type'}</th>
@@ -723,7 +723,7 @@ export default function MarketIntelligencePage() {
                 <th className="py-2.5 px-3">{language === 'ar' ? 'الباحث' : 'Researcher'}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-white/40">
               {allSources.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="py-8 text-center text-gray-400">
@@ -732,7 +732,7 @@ export default function MarketIntelligencePage() {
                 </tr>
               ) : (
                 allSources.map((s) => (
-                  <tr key={s.id} className="hover:bg-gray-50">
+                  <tr key={s.id} className="hover:bg-white/20">
                     <td className="py-3 px-3">
                       <div className="font-bold text-gray-900">{s.publisher}</div>
                       <a
@@ -746,7 +746,7 @@ export default function MarketIntelligencePage() {
                       </a>
                     </td>
                     <td className="py-3 px-3">
-                      <span className="px-2 py-0.5 rounded bg-gray-100 font-semibold uppercase text-[10px] text-gray-700">
+                      <span className="px-2 py-0.5 rounded neu-pressed font-semibold uppercase text-[10px] text-gray-700">
                         {s.sourceType.replace('_', ' ')}
                       </span>
                     </td>

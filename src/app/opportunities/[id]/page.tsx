@@ -789,8 +789,8 @@ export default function OpportunityWorkspacePage({
       {/* ========================================================================= */}
       {activeTab === 'step1' && (
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
-            <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+          <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white">
+            <div className="flex items-center justify-between pb-4 border-b border-white/40">
               <div>
                 <h3 className="text-base font-bold text-gray-900">Step 1 — Market Opportunity & Customer Validation</h3>
                 <p className="text-xs text-gray-500 mt-0.5">
@@ -802,7 +802,7 @@ export default function OpportunityWorkspacePage({
                   type="button"
                   onClick={handleAiMarketEstimate}
                   disabled={aiLoadingAction === 'market'}
-                  className="px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all disabled:opacity-50"
+                  className="flex items-center gap-1.5 px-3 py-2 neu-btn text-indigo-700 text-xs font-bold disabled:opacity-50"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>
@@ -813,7 +813,7 @@ export default function OpportunityWorkspacePage({
                 </button>
                 <button
                   onClick={handleSaveMarket}
-                  className="px-4 py-2 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold flex items-center gap-2"
+                  className="neu-btn-primary px-4 py-2 text-white text-xs font-bold flex items-center gap-2"
                 >
                   <Save className="w-3.5 h-3.5" />
                   <span>Save Step 1</span>
@@ -822,11 +822,11 @@ export default function OpportunityWorkspacePage({
             </div>
 
             {/* Guidance Callout */}
-            <div className="p-3.5 mt-4 rounded-xl bg-blue-50/70 border border-blue-200/60 flex items-start gap-2.5 text-xs text-blue-900">
+            <div className="neu-pressed p-3.5 mt-4 rounded-2xl flex items-start gap-2.5 text-xs text-[#315EE8]">
               <Sparkles className="w-4 h-4 text-[#315EE8] shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold block mb-0.5">{t('guidanceTitle')}</span>
-                <p className="text-[11px] text-blue-800 leading-relaxed">
+                <p className="text-[11px] text-slate-700 leading-relaxed">
                   {isRtl
                     ? 'احرص على التمييز بين الحجم الكلي للسوق في السعودية (TAM) وبين الطلب المؤكد. لن يتم قبول أي مشروع دون وجود خطاب نية أو التزام تجربة مدفوعة من عميل سعودي حقيقي.'
                     : 'Distinguish between broad macro TAM and validated demand in Saudi Arabia. At least 1 letter of intent or paid pilot commitment is required to satisfy governance gate #1.'}
@@ -836,7 +836,7 @@ export default function OpportunityWorkspacePage({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
               {/* Sizing Calculations Card */}
-              <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-100 space-y-3">
+              <div className="neu-pressed p-4 rounded-2xl space-y-3">
                 <span className="text-[10px] font-bold text-[#315EE8] uppercase tracking-wider">Bottom-Up Market Sizing</span>
                 <div>
                   <div className="text-xs text-gray-500">TAM (Total Addressable)</div>
@@ -915,14 +915,14 @@ export default function OpportunityWorkspacePage({
                 {/* Validation Evidence Counters */}
                 <div className="pt-2">
                   <span className="block font-bold text-gray-800 mb-2">Verified Customer Validation Evidence</span>
-                  <div className="grid grid-cols-4 gap-3 bg-gray-50 p-3 rounded-xl border border-gray-200">
+                  <div className="grid grid-cols-4 gap-3 neu-pressed p-3 rounded-2xl">
                     <div>
                       <span className="text-[11px] text-gray-500 block">Customer Interviews</span>
                       <input
                         type="number"
                         value={marketForm.interviewCount || 0}
                         onChange={(e) => setMarketForm({ ...marketForm, interviewCount: Number(e.target.value) })}
-                        className="w-full px-2 py-1 border border-gray-300 rounded font-bold text-gray-900 mt-1"
+                        className="w-full px-2 py-1 neu-pressed rounded-xl font-bold text-gray-900 mt-1 outline-none"
                       />
                     </div>
                     <div>
@@ -931,7 +931,7 @@ export default function OpportunityWorkspacePage({
                         type="number"
                         value={marketForm.qualifiedLeadsCount || 0}
                         onChange={(e) => setMarketForm({ ...marketForm, qualifiedLeadsCount: Number(e.target.value) })}
-                        className="w-full px-2 py-1 border border-gray-300 rounded font-bold text-gray-900 mt-1"
+                        className="w-full px-2 py-1 neu-pressed rounded-xl font-bold text-gray-900 mt-1 outline-none"
                       />
                     </div>
                     <div>
@@ -940,7 +940,7 @@ export default function OpportunityWorkspacePage({
                         type="number"
                         value={marketForm.loiCount || 0}
                         onChange={(e) => setMarketForm({ ...marketForm, loiCount: Number(e.target.value) })}
-                        className="w-full px-2 py-1 border border-gray-300 rounded font-bold text-gray-900 mt-1"
+                        className="w-full px-2 py-1 neu-pressed rounded-xl font-bold text-gray-900 mt-1 outline-none"
                       />
                     </div>
                     <div>
@@ -949,7 +949,7 @@ export default function OpportunityWorkspacePage({
                         type="number"
                         value={marketForm.paidPilotCommitments || 0}
                         onChange={(e) => setMarketForm({ ...marketForm, paidPilotCommitments: Number(e.target.value) })}
-                        className="w-full px-2 py-1 border border-blue-400 bg-blue-50 text-[#315EE8] rounded font-extrabold mt-1"
+                        className="w-full px-2 py-1 neu-pressed text-[#315EE8] rounded-xl font-extrabold mt-1 outline-none"
                       />
                     </div>
                   </div>
@@ -961,7 +961,7 @@ export default function OpportunityWorkspacePage({
                     type="text"
                     value={marketForm.targetCustomerProfile || ''}
                     onChange={(e) => setMarketForm({ ...marketForm, targetCustomerProfile: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                    className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                   />
                 </div>
 
@@ -971,14 +971,14 @@ export default function OpportunityWorkspacePage({
                     rows={2}
                     value={marketForm.currentAlternatives || ''}
                     onChange={(e) => setMarketForm({ ...marketForm, currentAlternatives: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                    className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                   />
                 </div>
               </div>
             </div>
 
             {/* Sequential Step Footer */}
-            <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
+            <div className="mt-8 pt-5 border-t border-white/40 flex items-center justify-between">
               <span className="text-xs font-semibold text-gray-500">
                 {t('stepOf').replace('{current}', '1')}
               </span>
@@ -986,7 +986,7 @@ export default function OpportunityWorkspacePage({
                 <button
                   type="button"
                   onClick={handleSaveMarket}
-                  className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="neu-btn px-4 py-2 text-xs font-bold text-slate-700"
                 >
                   {t('saveDraftBtn')}
                 </button>
@@ -996,7 +996,7 @@ export default function OpportunityWorkspacePage({
                     await handleSaveMarket();
                     setActiveTab('step2');
                   }}
-                  className="px-5 py-2.5 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
+                  className="neu-btn-primary px-5 py-2.5 text-white text-xs font-bold flex items-center gap-2"
                 >
                   <span>{t('nextStepBtn')}</span>
                   <ChevronRight className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
@@ -1012,8 +1012,8 @@ export default function OpportunityWorkspacePage({
       {/* ========================================================================= */}
       {activeTab === 'step2' && (
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
-            <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+          <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white">
+            <div className="flex items-center justify-between pb-4 border-b border-white/40">
               <div>
                 <h3 className="text-base font-bold text-gray-900">Step 2 — Competitor & Differentiation Intelligence</h3>
                 <p className="text-xs text-gray-500 mt-0.5">
@@ -1025,7 +1025,7 @@ export default function OpportunityWorkspacePage({
                   type="button"
                   onClick={handleAiCompetitorDiscovery}
                   disabled={aiLoadingAction === 'competitor'}
-                  className="px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all disabled:opacity-50"
+                  className="flex items-center gap-1.5 px-3 py-2 neu-btn text-indigo-700 text-xs font-bold disabled:opacity-50"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>
@@ -1036,7 +1036,7 @@ export default function OpportunityWorkspacePage({
                 </button>
                 <button
                   onClick={() => setShowAddComp(true)}
-                  className="px-4 py-2 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold flex items-center gap-2"
+                  className="neu-btn-primary px-4 py-2 text-white text-xs font-bold flex items-center gap-2"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Add Competitor Benchmark</span>
@@ -1045,7 +1045,7 @@ export default function OpportunityWorkspacePage({
             </div>
 
             {/* Guidance Callout */}
-            <div className="p-3.5 mt-4 rounded-xl bg-indigo-50/70 border border-indigo-200/60 flex items-start gap-2.5 text-xs text-indigo-900">
+            <div className="neu-pressed p-3.5 mt-4 rounded-2xl flex items-start gap-2.5 text-xs text-indigo-900">
               <Sparkles className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold block mb-0.5">{t('guidanceTitle')}</span>
@@ -1059,7 +1059,7 @@ export default function OpportunityWorkspacePage({
 
             {/* AI Staged Competitors */}
             {step2AiCompetitors.length > 0 && (
-              <div className="p-4 mt-4 bg-indigo-50/60 border border-indigo-200 rounded-xl space-y-3">
+              <div className="neu-pressed p-4 mt-4 rounded-2xl space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-600 text-white uppercase">
@@ -1079,7 +1079,7 @@ export default function OpportunityWorkspacePage({
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {step2AiCompetitors.map((comp) => (
-                    <div key={comp.id} className="bg-white p-3.5 rounded-lg border border-indigo-100 shadow-2xs space-y-2 text-xs">
+                    <div key={comp.id} className="neu-raised-sm p-3.5 rounded-xl space-y-2 text-xs">
                       <div className="flex justify-between items-start">
                         <div>
                           <div className="font-bold text-gray-900">{comp.name}</div>
@@ -1088,11 +1088,11 @@ export default function OpportunityWorkspacePage({
                         <div className="font-bold text-[#315EE8]">{fmtSAR(comp.observedPriceSAR)} / {comp.pricingInterval}</div>
                       </div>
                       <div className="text-[11px] text-gray-600">{comp.mainWeaknesses}</div>
-                      <div className="pt-2 border-t border-gray-100 flex justify-end">
+                      <div className="pt-2 border-t border-white/40 flex justify-end">
                         <button
                           type="button"
                           onClick={() => handleAddAiCompetitorToOpp(comp)}
-                          className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-[11px] font-bold flex items-center gap-1"
+                          className="neu-btn-primary px-2.5 py-1 text-white rounded text-[11px] font-bold flex items-center gap-1"
                         >
                           <Check className="w-3 h-3" />
                           <span>{language === 'ar' ? 'اعتماد وإضافة' : 'Verify & Add'}</span>
@@ -1105,9 +1105,9 @@ export default function OpportunityWorkspacePage({
             )}
 
             {/* Competitor Table */}
-            <div className="mt-6 overflow-x-auto">
+            <div className="neu-pressed rounded-2xl overflow-x-auto mt-6">
               <table className="w-full text-left text-xs">
-                <thead className="bg-gray-50 text-gray-500 font-bold uppercase border-b border-gray-200">
+                <thead className="bg-[#EDF2F7]/80 text-gray-500 font-bold uppercase border-b border-white/40">
                   <tr>
                     <th className="py-3 px-4">Competitor & Product</th>
                     <th className="py-3 px-4">Observed Price</th>
@@ -1118,7 +1118,7 @@ export default function OpportunityWorkspacePage({
                     <th className="py-3 px-4 text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-white/40">
                   {opp.competitors.length === 0 ? (
                     <tr>
                       <td colSpan={7} className="py-8 text-center text-gray-400">
@@ -1127,7 +1127,7 @@ export default function OpportunityWorkspacePage({
                     </tr>
                   ) : (
                     opp.competitors.map((c) => (
-                      <tr key={c.id} className="hover:bg-gray-50">
+                      <tr key={c.id} className="hover:bg-white/20">
                         <td className="py-3 px-4 font-semibold text-gray-900">
                           <div>{c.name}</div>
                           <div className="text-[10px] text-gray-400">{c.productName} ({c.country})</div>
@@ -1163,11 +1163,11 @@ export default function OpportunityWorkspacePage({
             </div>
 
             {/* Sequential Step Footer */}
-            <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
+            <div className="mt-8 pt-5 border-t border-white/40 flex items-center justify-between">
               <button
                 type="button"
                 onClick={() => setActiveTab('step1')}
-                className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-1.5"
+                className="neu-btn px-4 py-2 text-xs font-bold text-slate-700 flex items-center gap-1.5"
               >
                 <ArrowLeft className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
                 <span>{t('prevStepBtn')}</span>
@@ -1179,7 +1179,7 @@ export default function OpportunityWorkspacePage({
                 <button
                   type="button"
                   onClick={() => setActiveTab('step3')}
-                  className="px-5 py-2.5 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
+                  className="neu-btn-primary px-5 py-2.5 text-white text-xs font-bold flex items-center gap-2"
                 >
                   <span>{t('nextStepBtn')}</span>
                   <ChevronRight className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
@@ -1195,8 +1195,8 @@ export default function OpportunityWorkspacePage({
       {/* ========================================================================= */}
       {activeTab === 'step3' && (
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
-            <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+          <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white">
+            <div className="flex items-center justify-between pb-4 border-b border-white/40">
               <div>
                 <h3 className="text-base font-bold text-gray-900">Step 3 — Technical Feasibility & Delivery Plan</h3>
                 <p className="text-xs text-gray-500 mt-0.5">
@@ -1205,7 +1205,7 @@ export default function OpportunityWorkspacePage({
               </div>
               <button
                 onClick={handleSaveTech}
-                className="px-4 py-2 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold flex items-center gap-2"
+                className="neu-btn-primary px-4 py-2 text-white text-xs font-bold flex items-center gap-2"
               >
                 <Save className="w-3.5 h-3.5" />
                 <span>Save Step 3</span>
@@ -1213,7 +1213,7 @@ export default function OpportunityWorkspacePage({
             </div>
 
             {/* Guidance Callout */}
-            <div className="p-3.5 mt-4 rounded-xl bg-purple-50/70 border border-purple-200/60 flex items-start gap-2.5 text-xs text-purple-900">
+            <div className="neu-pressed p-3.5 mt-4 rounded-2xl flex items-start gap-2.5 text-xs text-purple-900">
               <Sparkles className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold block mb-0.5">{t('guidanceTitle')}</span>
@@ -1232,7 +1232,7 @@ export default function OpportunityWorkspacePage({
                   rows={3}
                   value={techForm.architectureSummary || ''}
                   onChange={(e) => setTechForm({ ...techForm, architectureSummary: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                   placeholder="e.g. Next.js App Router with Postgres and Redis on AWS Riyadh"
                 />
               </div>
@@ -1242,7 +1242,7 @@ export default function OpportunityWorkspacePage({
                 <select
                   value={techForm.buildVsBuy || 'build'}
                   onChange={(e) => setTechForm({ ...techForm, buildVsBuy: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none bg-white font-medium"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none font-medium"
                 >
                   <option value="build">Build Custom In-House</option>
                   <option value="buy">Buy Off-the-Shelf Commercial License</option>
@@ -1252,7 +1252,7 @@ export default function OpportunityWorkspacePage({
               </div>
 
               {/* Delivery Effort Estimates in Days */}
-              <div className="md:col-span-2 p-4 bg-gray-50 rounded-xl border border-gray-200">
+              <div className="md:col-span-2 p-4 neu-pressed rounded-2xl">
                 <span className="font-bold text-gray-800 block mb-2">Delivery Effort Breakdown (Work Days)</span>
                 <div className="grid grid-cols-5 gap-3">
                   <div>
@@ -1261,7 +1261,7 @@ export default function OpportunityWorkspacePage({
                       type="number"
                       value={techForm.effortDiscoveryDays || 0}
                       onChange={(e) => setTechForm({ ...techForm, effortDiscoveryDays: Number(e.target.value) })}
-                      className="w-full px-2 py-1.5 border border-gray-300 rounded mt-1 font-bold"
+                      className="w-full px-2 py-1.5 neu-pressed rounded-xl mt-1 font-bold outline-none"
                     />
                   </div>
                   <div>
@@ -1270,7 +1270,7 @@ export default function OpportunityWorkspacePage({
                       type="number"
                       value={techForm.effortDesignDays || 0}
                       onChange={(e) => setTechForm({ ...techForm, effortDesignDays: Number(e.target.value) })}
-                      className="w-full px-2 py-1.5 border border-gray-300 rounded mt-1 font-bold"
+                      className="w-full px-2 py-1.5 neu-pressed rounded-xl mt-1 font-bold outline-none"
                     />
                   </div>
                   <div>
@@ -1279,7 +1279,7 @@ export default function OpportunityWorkspacePage({
                       type="number"
                       value={techForm.effortFrontendDays || 0}
                       onChange={(e) => setTechForm({ ...techForm, effortFrontendDays: Number(e.target.value) })}
-                      className="w-full px-2 py-1.5 border border-gray-300 rounded mt-1 font-bold"
+                      className="w-full px-2 py-1.5 neu-pressed rounded-xl mt-1 font-bold outline-none"
                     />
                   </div>
                   <div>
@@ -1288,7 +1288,7 @@ export default function OpportunityWorkspacePage({
                       type="number"
                       value={techForm.effortBackendDays || 0}
                       onChange={(e) => setTechForm({ ...techForm, effortBackendDays: Number(e.target.value) })}
-                      className="w-full px-2 py-1.5 border border-gray-300 rounded mt-1 font-bold"
+                      className="w-full px-2 py-1.5 neu-pressed rounded-xl mt-1 font-bold outline-none"
                     />
                   </div>
                   <div>
@@ -1297,12 +1297,12 @@ export default function OpportunityWorkspacePage({
                       type="number"
                       value={techForm.effortQaDays || 0}
                       onChange={(e) => setTechForm({ ...techForm, effortQaDays: Number(e.target.value) })}
-                      className="w-full px-2 py-1.5 border border-gray-300 rounded mt-1 font-bold"
+                      className="w-full px-2 py-1.5 neu-pressed rounded-xl mt-1 font-bold outline-none"
                     />
                   </div>
                 </div>
 
-                <div className="mt-3 flex items-center justify-between text-xs font-semibold text-gray-700 pt-2 border-t border-gray-200">
+                <div className="mt-3 flex items-center justify-between text-xs font-semibold text-gray-700 pt-2 border-t border-white/40">
                   <span>
                     Total Team Days:{' '}
                     {(techForm.effortDiscoveryDays || 0) +
@@ -1332,7 +1332,7 @@ export default function OpportunityWorkspacePage({
                   type="text"
                   value={techForm.reusableInternalComponents || ''}
                   onChange={(e) => setTechForm({ ...techForm, reusableInternalComponents: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                   placeholder="e.g. BI Technology Auth Service, UI Component Library"
                 />
               </div>
@@ -1355,11 +1355,11 @@ export default function OpportunityWorkspacePage({
             </div>
 
             {/* Sequential Step Footer */}
-            <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
+            <div className="mt-8 pt-5 border-t border-white/40 flex items-center justify-between">
               <button
                 type="button"
                 onClick={() => setActiveTab('step2')}
-                className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-1.5"
+                className="neu-btn px-4 py-2 text-xs font-bold text-slate-700 flex items-center gap-1.5"
               >
                 <ArrowLeft className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
                 <span>{t('prevStepBtn')}</span>
@@ -1368,7 +1368,7 @@ export default function OpportunityWorkspacePage({
                 <button
                   type="button"
                   onClick={handleSaveTech}
-                  className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="neu-btn px-4 py-2 text-xs font-bold text-slate-700"
                 >
                   {t('saveDraftBtn')}
                 </button>
@@ -1378,7 +1378,7 @@ export default function OpportunityWorkspacePage({
                     await handleSaveTech();
                     setActiveTab('step4');
                   }}
-                  className="px-5 py-2.5 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
+                  className="neu-btn-primary px-5 py-2.5 text-white text-xs font-bold flex items-center gap-2"
                 >
                   <span>{t('nextStepBtn')}</span>
                   <ChevronRight className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
@@ -1394,8 +1394,8 @@ export default function OpportunityWorkspacePage({
       {/* ========================================================================= */}
       {activeTab === 'step4' && (
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
-            <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-gray-100 gap-4">
+          <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white">
+            <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-white/40 gap-4">
               <div>
                 <h3 className="text-base font-bold text-gray-900">Step 4 — Deterministic Financial Modeling Engine</h3>
                 <p className="text-xs text-gray-500 mt-0.5">
@@ -1405,27 +1405,27 @@ export default function OpportunityWorkspacePage({
 
               <div className="flex items-center gap-3">
                 {/* Scenario Toggle */}
-                <div className="flex rounded-xl bg-gray-100 p-1 border border-gray-200 text-xs">
+                <div className="flex rounded-2xl neu-pressed p-1 text-xs">
                   <button
                     onClick={() => setActiveScenario('downside')}
-                    className={`px-3 py-1 rounded-lg font-bold transition-all ${
-                      activeScenario === 'downside' ? 'bg-red-500 text-white shadow-xs' : 'text-gray-600'
+                    className={`px-3 py-1 rounded-xl font-bold transition-all ${
+                      activeScenario === 'downside' ? 'bg-red-500 text-white shadow-sm' : 'text-gray-600'
                     }`}
                   >
                     Downside
                   </button>
                   <button
                     onClick={() => setActiveScenario('base')}
-                    className={`px-3 py-1 rounded-lg font-bold transition-all ${
-                      activeScenario === 'base' ? 'bg-[#315EE8] text-white shadow-xs' : 'text-gray-600'
+                    className={`px-3 py-1 rounded-xl font-bold transition-all ${
+                      activeScenario === 'base' ? 'bg-[#315EE8] text-white shadow-sm' : 'text-gray-600'
                     }`}
                   >
                     Base Case
                   </button>
                   <button
                     onClick={() => setActiveScenario('upside')}
-                    className={`px-3 py-1 rounded-lg font-bold transition-all ${
-                      activeScenario === 'upside' ? 'bg-emerald-600 text-white shadow-xs' : 'text-gray-600'
+                    className={`px-3 py-1 rounded-xl font-bold transition-all ${
+                      activeScenario === 'upside' ? 'bg-emerald-600 text-white shadow-sm' : 'text-gray-600'
                     }`}
                   >
                     Upside
@@ -1434,7 +1434,7 @@ export default function OpportunityWorkspacePage({
 
                 <button
                   onClick={handleSaveFinancial}
-                  className="px-4 py-2 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold flex items-center gap-2"
+                  className="neu-btn-primary px-4 py-2 text-white text-xs font-bold flex items-center gap-2"
                 >
                   <Save className="w-3.5 h-3.5" />
                   <span>Save Financial Model</span>
@@ -1443,7 +1443,7 @@ export default function OpportunityWorkspacePage({
             </div>
 
             {/* Guidance Callout */}
-            <div className="p-3.5 mt-4 rounded-xl bg-emerald-50/70 border border-emerald-200/60 flex items-start gap-2.5 text-xs text-emerald-900">
+            <div className="neu-pressed p-3.5 mt-4 rounded-2xl flex items-start gap-2.5 text-xs text-emerald-900">
               <Sparkles className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold block mb-0.5">{t('guidanceTitle')}</span>
@@ -1457,7 +1457,7 @@ export default function OpportunityWorkspacePage({
 
             {/* Top 4 Financial Diagnostic Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+              <div className="neu-raised-sm p-4 rounded-2xl">
                 <span className="text-[11px] font-bold text-gray-500 uppercase">Unit Contribution / Customer</span>
                 <div className={`text-xl font-extrabold mt-1 tabular-nums ${currentScenarioOutputs.breakEven.isContributionPositive ? 'text-emerald-700' : 'text-red-600'}`}>
                   {fmtSAR(currentScenarioOutputs.breakEven.monthlyContributionPerCustomer)}/mo
@@ -1467,7 +1467,7 @@ export default function OpportunityWorkspacePage({
                 </div>
               </div>
 
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+              <div className="neu-raised-sm p-4 rounded-2xl">
                 <span className="text-[11px] font-bold text-[#315EE8] uppercase">Operating Break-Even</span>
                 <div className="text-xl font-extrabold text-[#315EE8] mt-1 tabular-nums">
                   {currentScenarioOutputs.breakEven.operatingBreakEvenCustomers !== null
@@ -1477,7 +1477,7 @@ export default function OpportunityWorkspacePage({
                 <div className="text-[10px] text-gray-500 mt-1">To cover fixed costs</div>
               </div>
 
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+              <div className="neu-raised-sm p-4 rounded-2xl">
                 <span className="text-[11px] font-bold text-gray-500 uppercase">Investment Payback</span>
                 <div className="text-xl font-extrabold text-gray-900 mt-1 tabular-nums">
                   {currentScenarioOutputs.breakEven.investmentPaybackMonth !== null
@@ -1487,7 +1487,7 @@ export default function OpportunityWorkspacePage({
                 <div className="text-[10px] text-gray-500 mt-1">Cumulative cash recovery</div>
               </div>
 
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+              <div className="neu-raised-sm p-4 rounded-2xl">
                 <span className="text-[11px] font-bold text-gray-500 uppercase">Year 1 Operating Profit</span>
                 <div className="text-xl font-extrabold text-gray-900 mt-1 tabular-nums">
                   {fmtSAR(currentScenarioOutputs.summaryYear1.totalOperatingProfit)}
@@ -1500,7 +1500,7 @@ export default function OpportunityWorkspacePage({
 
             {/* Validation Warning Notice if Negative Contribution */}
             {!currentScenarioOutputs.breakEven.isContributionPositive && (
-              <div className="mt-4 p-3 rounded-xl bg-red-50 border border-red-200 flex items-center gap-3 text-red-800 text-xs">
+              <div className="neu-pressed mt-4 p-3 rounded-2xl flex items-center gap-3 text-red-800 text-xs">
                 <AlertOctagon className="w-5 h-5 shrink-0 text-red-600" />
                 <div>
                   <strong>Negative Unit Contribution Warning:</strong> Variable hosting and support costs exceed customer price. Every sale burns capital. The decision engine will block execution until unit economics are resolved.
@@ -1509,33 +1509,35 @@ export default function OpportunityWorkspacePage({
             )}
 
             {/* Cash Flow Timeline Chart */}
-            <div className="mt-6 pt-6 border-t border-gray-100">
+            <div className="mt-6 pt-6 border-t border-white/40">
               <h4 className="font-bold text-xs text-gray-700 mb-2">24-Month Cumulative Cash Flow Curve ({activeScenario.toUpperCase()} SCENARIO)</h4>
-              <div className="h-60 w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={currentScenarioOutputs.monthlyProjections}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
-                    <XAxis dataKey="month" tickFormatter={(m) => `M${m}`} tick={{ fontSize: 11 }} />
-                    <YAxis tickFormatter={(v) => `${v / 1000}k`} tick={{ fontSize: 11 }} />
-                    <Tooltip
-                      formatter={(val: any) => [`SAR ${Number(val).toLocaleString()}`, 'Cumulative Cash Flow']}
-                      contentStyle={{ backgroundColor: '#1E293B', color: '#fff', borderRadius: '8px', fontSize: '12px' }}
-                    />
-                    <Line type="monotone" dataKey="cumulativeCashFlow" stroke="#315EE8" strokeWidth={3} dot={false} />
-                  </LineChart>
-                </ResponsiveContainer>
+              <div className="neu-pressed p-4 rounded-2xl">
+                <div className="h-60 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={currentScenarioOutputs.monthlyProjections}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
+                      <XAxis dataKey="month" tickFormatter={(m) => `M${m}`} tick={{ fontSize: 11 }} />
+                      <YAxis tickFormatter={(v) => `${v / 1000}k`} tick={{ fontSize: 11 }} />
+                      <Tooltip
+                        formatter={(val: any) => [`SAR ${Number(val).toLocaleString()}`, 'Cumulative Cash Flow']}
+                        contentStyle={{ backgroundColor: '#1E293B', color: '#fff', borderRadius: '8px', fontSize: '12px' }}
+                      />
+                      <Line type="monotone" dataKey="cumulativeCashFlow" stroke="#315EE8" strokeWidth={3} dot={false} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
             </div>
 
             {/* Interactive Inputs Form */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-100 text-xs">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/40 text-xs">
               <div>
                 <label className="block font-bold text-gray-800 mb-1">Monthly Customer Price (SAR)</label>
                 <input
                   type="number"
                   value={finForm.monthlyPricePerCustomer || 0}
                   onChange={(e) => setFinForm({ ...finForm, monthlyPricePerCustomer: Number(e.target.value) })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                 />
               </div>
 
@@ -1545,7 +1547,7 @@ export default function OpportunityWorkspacePage({
                   type="number"
                   value={finForm.monthlyNewCustomers || 0}
                   onChange={(e) => setFinForm({ ...finForm, monthlyNewCustomers: Number(e.target.value) })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                 />
               </div>
 
@@ -1556,7 +1558,7 @@ export default function OpportunityWorkspacePage({
                   step="0.5"
                   value={finForm.monthlyChurnPercent || 0}
                   onChange={(e) => setFinForm({ ...finForm, monthlyChurnPercent: Number(e.target.value) })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                 />
               </div>
 
@@ -1566,7 +1568,7 @@ export default function OpportunityWorkspacePage({
                   type="number"
                   value={finForm.variableHostingPerCustomer || 0}
                   onChange={(e) => setFinForm({ ...finForm, variableHostingPerCustomer: Number(e.target.value) })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                 />
               </div>
 
@@ -1585,7 +1587,7 @@ export default function OpportunityWorkspacePage({
                       fixedGeneralAndAdmin: Math.round(total * 0.1),
                     });
                   }}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                 />
               </div>
 
@@ -1604,17 +1606,17 @@ export default function OpportunityWorkspacePage({
                       initialContingencyCash: 0,
                     });
                   }}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                 />
               </div>
             </div>
 
             {/* Sequential Step Footer */}
-            <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
+            <div className="mt-8 pt-5 border-t border-white/40 flex items-center justify-between">
               <button
                 type="button"
                 onClick={() => setActiveTab('step3')}
-                className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-1.5"
+                className="neu-btn px-4 py-2 text-xs font-bold text-slate-700 flex items-center gap-1.5"
               >
                 <ArrowLeft className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
                 <span>{t('prevStepBtn')}</span>
@@ -1623,7 +1625,7 @@ export default function OpportunityWorkspacePage({
                 <button
                   type="button"
                   onClick={handleSaveFinancial}
-                  className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="neu-btn px-4 py-2 text-xs font-bold text-slate-700"
                 >
                   {t('saveDraftBtn')}
                 </button>
@@ -1633,7 +1635,7 @@ export default function OpportunityWorkspacePage({
                     await handleSaveFinancial();
                     setActiveTab('step5');
                   }}
-                  className="px-5 py-2.5 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
+                  className="neu-btn-primary px-5 py-2.5 text-white text-xs font-bold flex items-center gap-2"
                 >
                   <span>{t('nextStepBtn')}</span>
                   <ChevronRight className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
@@ -1649,8 +1651,8 @@ export default function OpportunityWorkspacePage({
       {/* ========================================================================= */}
       {activeTab === 'step5' && (
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
-            <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+          <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white">
+            <div className="flex items-center justify-between pb-4 border-b border-white/40">
               <div>
                 <h3 className="text-base font-bold text-gray-900">Step 5 — 9 Mandatory Decision Gates</h3>
                 <p className="text-xs text-gray-500 mt-0.5">
@@ -1662,7 +1664,7 @@ export default function OpportunityWorkspacePage({
                   type="button"
                   onClick={handleAiRiskScan}
                   disabled={aiLoadingAction === 'risk'}
-                  className="px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all disabled:opacity-50"
+                  className="flex items-center gap-1.5 px-3 py-2 neu-btn text-amber-700 text-xs font-bold disabled:opacity-50"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>
@@ -1673,7 +1675,7 @@ export default function OpportunityWorkspacePage({
                 </button>
                 <button
                   onClick={() => setShowAddRisk(true)}
-                  className="px-4 py-2 bg-gray-800 hover:bg-black text-white rounded-xl text-xs font-bold flex items-center gap-2"
+                  className="neu-btn-black px-4 py-2 text-white text-xs font-bold flex items-center gap-2"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Log New Risk</span>
@@ -1682,7 +1684,7 @@ export default function OpportunityWorkspacePage({
             </div>
 
             {/* Guidance Callout */}
-            <div className="p-3.5 mt-4 rounded-xl bg-amber-50/70 border border-amber-200/60 flex items-start gap-2.5 text-xs text-amber-900">
+            <div className="neu-pressed p-3.5 mt-4 rounded-2xl flex items-start gap-2.5 text-xs text-amber-900">
               <Sparkles className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold block mb-0.5">{t('guidanceTitle')}</span>
@@ -1696,7 +1698,7 @@ export default function OpportunityWorkspacePage({
 
             {/* AI Staged Risks */}
             {step5AiRisks.length > 0 && (
-              <div className="p-4 mt-4 bg-amber-50/60 border border-amber-200 rounded-xl space-y-3">
+              <div className="neu-pressed p-4 mt-4 rounded-2xl space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-600 text-white uppercase">
@@ -1716,7 +1718,7 @@ export default function OpportunityWorkspacePage({
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {step5AiRisks.map((rsk) => (
-                    <div key={rsk.riskCode} className="bg-white p-3.5 rounded-lg border border-amber-200 shadow-2xs space-y-2 text-xs">
+                    <div key={rsk.riskCode} className="neu-raised-sm p-3.5 rounded-xl space-y-2 text-xs">
                       <div className="flex justify-between items-center">
                         <span className="font-bold text-gray-900">{rsk.riskCode}</span>
                         <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 uppercase">
@@ -1728,11 +1730,11 @@ export default function OpportunityWorkspacePage({
                         <strong className="text-gray-700">{language === 'ar' ? 'المعالجة:' : 'Mitigation:'}</strong>{' '}
                         {rsk.mitigation}
                       </p>
-                      <div className="pt-2 border-t border-gray-100 flex justify-end">
+                      <div className="pt-2 border-t border-white/40 flex justify-end">
                         <button
                           type="button"
                           onClick={() => handleAddAiRiskToOpp(rsk)}
-                          className="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded text-[11px] font-bold flex items-center gap-1"
+                          className="neu-btn px-2.5 py-1 text-amber-700 rounded text-[11px] font-bold flex items-center gap-1"
                         >
                           <Check className="w-3 h-3" />
                           <span>{language === 'ar' ? 'إضافة للسجل' : 'Add to Register'}</span>
@@ -1745,13 +1747,13 @@ export default function OpportunityWorkspacePage({
             )}
 
             {/* 9 Gates List */}
-            <div className="divide-y divide-gray-100 mt-4">
+            <div className="neu-pressed p-4 rounded-2xl mt-6 space-y-2.5">
               {opp.mandatoryGates.map((gate) => (
-                <div key={gate.id} className="py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+                <div key={gate.id} className="p-3.5 rounded-xl neu-raised-sm flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-gray-900">{gate.name}</span>
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-gray-100 text-gray-600">
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded neu-pressed text-gray-600">
                         {gate.category}
                       </span>
                       {gate.isCritical && (
@@ -1769,40 +1771,40 @@ export default function OpportunityWorkspacePage({
                   <div className="flex items-center gap-1.5">
                     <button
                       onClick={() => handleUpdateGate(gate.id, 'pass', gate.evidence || 'Verified compliant')}
-                      className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition-all ${
+                      className={`px-3 py-1.5 rounded-xl font-bold text-[11px] transition-all ${
                         gate.status === 'pass'
-                          ? 'bg-emerald-600 text-white shadow-xs'
-                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                          ? 'bg-emerald-600 text-white shadow-sm'
+                          : 'neu-btn text-gray-600'
                       }`}
                     >
                       Pass
                     </button>
                     <button
                       onClick={() => handleUpdateGate(gate.id, 'conditional_pass', gate.evidence || 'Conditional requirements')}
-                      className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition-all ${
+                      className={`px-3 py-1.5 rounded-xl font-bold text-[11px] transition-all ${
                         gate.status === 'conditional_pass'
-                          ? 'bg-blue-600 text-white shadow-xs'
-                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                          ? 'bg-blue-600 text-white shadow-sm'
+                          : 'neu-btn text-gray-600'
                       }`}
                     >
                       Conditional
                     </button>
                     <button
                       onClick={() => handleUpdateGate(gate.id, 'fail', gate.evidence || 'Failed criteria')}
-                      className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition-all ${
+                      className={`px-3 py-1.5 rounded-xl font-bold text-[11px] transition-all ${
                         gate.status === 'fail'
-                          ? 'bg-red-600 text-white shadow-xs'
-                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                          ? 'bg-red-600 text-white shadow-sm'
+                          : 'neu-btn text-gray-600'
                       }`}
                     >
                       Fail
                     </button>
                     <button
                       onClick={() => handleUpdateGate(gate.id, 'not_assessed', '')}
-                      className={`px-2.5 py-1.5 rounded-lg text-[11px] font-medium ${
+                      className={`px-2.5 py-1.5 rounded-xl text-[11px] font-bold ${
                         gate.status === 'not_assessed'
-                          ? 'bg-gray-300 text-gray-800'
-                          : 'text-gray-400 hover:text-gray-600'
+                          ? 'neu-pressed text-gray-800'
+                          : 'neu-btn text-gray-400'
                       }`}
                     >
                       Unassessed
@@ -1813,56 +1815,58 @@ export default function OpportunityWorkspacePage({
             </div>
 
             {/* Risk Register Table */}
-            <div className="mt-8 pt-6 border-t border-gray-100">
+            <div className="mt-8 pt-6 border-t border-white/40">
               <h4 className="font-bold text-xs text-gray-900 mb-3">Opportunity Risk Register</h4>
-              <table className="w-full text-left text-xs">
-                <thead className="bg-gray-50 text-gray-500 font-bold uppercase border-b border-gray-200">
-                  <tr>
-                    <th className="py-2.5 px-3">Code</th>
-                    <th className="py-2.5 px-3">Category</th>
-                    <th className="py-2.5 px-3">Risk Description</th>
-                    <th className="py-2.5 px-3">Severity</th>
-                    <th className="py-2.5 px-3">Mitigation Strategy</th>
-                    <th className="py-2.5 px-3">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {opp.risks.length === 0 ? (
+              <div className="neu-pressed rounded-2xl overflow-x-auto mt-2">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-[#EDF2F7]/80 text-gray-500 font-bold uppercase border-b border-white/40">
                     <tr>
-                      <td colSpan={6} className="py-6 text-center text-gray-400">
-                        No specific risks logged.
-                      </td>
+                      <th className="py-2.5 px-3">Code</th>
+                      <th className="py-2.5 px-3">Category</th>
+                      <th className="py-2.5 px-3">Risk Description</th>
+                      <th className="py-2.5 px-3">Severity</th>
+                      <th className="py-2.5 px-3">Mitigation Strategy</th>
+                      <th className="py-2.5 px-3">Status</th>
                     </tr>
-                  ) : (
-                    opp.risks.map((r) => (
-                      <tr key={r.id}>
-                        <td className="py-2.5 px-3 font-bold text-gray-900">{r.riskCode}</td>
-                        <td className="py-2.5 px-3 capitalize text-gray-600">{r.category}</td>
-                        <td className="py-2.5 px-3 text-gray-800 font-medium">{r.description}</td>
-                        <td className="py-2.5 px-3">
-                          <span
-                            className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                              r.severity === 'critical' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'
-                            }`}
-                          >
-                            {r.severity}
-                          </span>
+                  </thead>
+                  <tbody className="divide-y divide-white/40">
+                    {opp.risks.length === 0 ? (
+                      <tr>
+                        <td colSpan={6} className="py-6 text-center text-gray-400">
+                          No specific risks logged.
                         </td>
-                        <td className="py-2.5 px-3 text-gray-600">{r.mitigation}</td>
-                        <td className="py-2.5 px-3 capitalize font-semibold">{r.status}</td>
                       </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+                    ) : (
+                      opp.risks.map((r) => (
+                        <tr key={r.id} className="hover:bg-white/20">
+                          <td className="py-2.5 px-3 font-bold text-gray-900">{r.riskCode}</td>
+                          <td className="py-2.5 px-3 capitalize text-gray-600">{r.category}</td>
+                          <td className="py-2.5 px-3 text-gray-800 font-medium">{r.description}</td>
+                          <td className="py-2.5 px-3">
+                            <span
+                              className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                                r.severity === 'critical' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'
+                              }`}
+                            >
+                              {r.severity}
+                            </span>
+                          </td>
+                          <td className="py-2.5 px-3 text-gray-600">{r.mitigation}</td>
+                          <td className="py-2.5 px-3 capitalize font-semibold">{r.status}</td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             {/* Sequential Step Footer */}
-            <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
+            <div className="mt-8 pt-5 border-t border-white/40 flex items-center justify-between">
               <button
                 type="button"
                 onClick={() => setActiveTab('step4')}
-                className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-1.5"
+                className="neu-btn px-4 py-2 text-xs font-bold text-slate-700 flex items-center gap-1.5"
               >
                 <ArrowLeft className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
                 <span>{t('prevStepBtn')}</span>
@@ -1874,7 +1878,7 @@ export default function OpportunityWorkspacePage({
                 <button
                   type="button"
                   onClick={() => setActiveTab('step6')}
-                  className="px-5 py-2.5 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
+                  className="neu-btn-primary px-5 py-2.5 text-white text-xs font-bold flex items-center gap-2"
                 >
                   <span>{t('nextStepBtn')}</span>
                   <ChevronRight className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
@@ -1890,8 +1894,8 @@ export default function OpportunityWorkspacePage({
       {/* ========================================================================= */}
       {activeTab === 'step6' && (
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
-            <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-gray-100 gap-4">
+          <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white">
+            <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-white/40 gap-4">
               <div>
                 <h3 className="text-base font-bold text-gray-900">Step 6 — Business Decision & Management Approvals</h3>
                 <p className="text-xs text-gray-500 mt-0.5">
@@ -1902,7 +1906,7 @@ export default function OpportunityWorkspacePage({
               <div className="flex items-center gap-3">
                 <button
                   onClick={handleRunDecisionEngine}
-                  className="px-4 py-2 bg-gray-900 hover:bg-black text-white rounded-xl text-xs font-bold flex items-center gap-2"
+                  className="neu-btn-black px-4 py-2 text-white text-xs font-bold flex items-center gap-2"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-[#6484FF]" />
                   <span>Run Decision Engine</span>
@@ -1910,7 +1914,7 @@ export default function OpportunityWorkspacePage({
 
                 <button
                   onClick={() => setShowSubmitModal(true)}
-                  className="px-4 py-2 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold flex items-center gap-2"
+                  className="neu-btn-primary px-4 py-2 text-white text-xs font-bold flex items-center gap-2"
                 >
                   <Rocket className="w-3.5 h-3.5" />
                   <span>Submit for Review</span>
@@ -1919,7 +1923,7 @@ export default function OpportunityWorkspacePage({
             </div>
 
             {/* Guidance Callout */}
-            <div className="p-3.5 mt-4 rounded-xl bg-blue-50/70 border border-blue-200/60 flex items-start gap-2.5 text-xs text-blue-900">
+            <div className="neu-pressed p-3.5 mt-4 rounded-2xl flex items-start gap-2.5 text-xs text-blue-900">
               <Sparkles className="w-4 h-4 text-[#315EE8] shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold block mb-0.5">{t('guidanceTitle')}</span>
@@ -1932,7 +1936,7 @@ export default function OpportunityWorkspacePage({
             </div>
 
             {/* Recommendation Decision Memo Box */}
-            <div className="mt-6 p-6 rounded-2xl bg-[#F8FAFC] border border-[#E6EAF1]">
+            <div className="mt-6 p-6 rounded-3xl neu-pressed border border-white/40">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <span
@@ -1969,7 +1973,7 @@ export default function OpportunityWorkspacePage({
             </div>
 
             {/* Approvals History & Management Action Area */}
-            <div className="mt-8 pt-6 border-t border-gray-100">
+            <div className="mt-8 pt-6 border-t border-white/40">
               <h4 className="font-bold text-xs text-gray-900 mb-3">Management Approval Records & Decisions</h4>
 
               {opp.approvals.length === 0 ? (
@@ -1981,7 +1985,7 @@ export default function OpportunityWorkspacePage({
                   {opp.approvals.map((appr) => (
                     <div
                       key={appr.id}
-                      className="p-4 rounded-xl border border-gray-200 bg-white flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs"
+                      className="p-4 rounded-2xl neu-raised-sm border border-white/40 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs"
                     >
                       <div>
                         <div className="flex items-center gap-2">
@@ -2013,7 +2017,7 @@ export default function OpportunityWorkspacePage({
                               setShowDecideModal(appr.id);
                               setDecideChoice('approved');
                             }}
-                            className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs"
+                            className="neu-btn-primary px-3 py-1.5 text-white text-xs font-bold"
                           >
                             Approve
                           </button>
@@ -2022,7 +2026,7 @@ export default function OpportunityWorkspacePage({
                               setShowDecideModal(appr.id);
                               setDecideChoice('rejected');
                             }}
-                            className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold text-xs"
+                            className="neu-btn px-3 py-1.5 text-red-600 text-xs font-bold"
                           >
                             Reject
                           </button>
@@ -2035,11 +2039,11 @@ export default function OpportunityWorkspacePage({
             </div>
 
             {/* Sequential Step Footer */}
-            <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
+            <div className="mt-8 pt-5 border-t border-white/40 flex items-center justify-between">
               <button
                 type="button"
                 onClick={() => setActiveTab('step5')}
-                className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-1.5"
+                className="neu-btn px-4 py-2 text-xs font-bold text-slate-700 flex items-center gap-1.5"
               >
                 <ArrowLeft className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
                 <span>{t('prevStepBtn')}</span>
@@ -2047,7 +2051,7 @@ export default function OpportunityWorkspacePage({
               <div className="flex items-center gap-3">
                 <Link
                   href={`/reports?oppId=${opp.id}`}
-                  className="px-5 py-2.5 bg-gray-900 hover:bg-black text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-2"
+                  className="neu-btn-black px-5 py-2.5 text-white text-xs font-bold flex items-center gap-2"
                 >
                   <FileText className="w-3.5 h-3.5 text-[#6484FF]" />
                   <span>{isRtl ? 'عرض المذكرة الاستثمارية الرسمية ←' : 'View Decision Memorandum →'}</span>
@@ -2056,7 +2060,7 @@ export default function OpportunityWorkspacePage({
                   <button
                     type="button"
                     onClick={() => setActiveTab('pilot')}
-                    className="px-4 py-2.5 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2"
+                    className="neu-btn-primary px-4 py-2.5 text-white text-xs font-bold flex items-center gap-2"
                   >
                     <span>{t('pilotTab')}</span>
                     <ChevronRight className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
@@ -2073,8 +2077,8 @@ export default function OpportunityWorkspacePage({
       {/* ========================================================================= */}
       {activeTab === 'pilot' && (
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs text-xs">
-            <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+          <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white text-xs">
+            <div className="flex items-center justify-between pb-4 border-b border-white/40">
               <div>
                 <h3 className="text-base font-bold text-gray-900">Module 4 — Pilot Plan & Launch Readiness Checklist</h3>
                 <p className="text-xs text-gray-500 mt-0.5">
@@ -2084,7 +2088,7 @@ export default function OpportunityWorkspacePage({
             </div>
 
             {opp.pilotPlan && (
-              <div className="mt-4 p-4 rounded-xl bg-blue-50/50 border border-blue-100 space-y-2">
+              <div className="mt-4 neu-pressed p-4 rounded-2xl space-y-2">
                 <span className="font-bold text-[#315EE8] uppercase text-[10px]">Active Pilot Configuration</span>
                 <div className="font-semibold text-gray-900">{opp.pilotPlan.objective}</div>
                 <div className="grid grid-cols-3 gap-3 pt-2 text-[11px] text-gray-600">
@@ -2105,14 +2109,14 @@ export default function OpportunityWorkspacePage({
                 {opp.launchChecklist.map((task) => (
                   <div
                     key={task.id}
-                    className="flex items-center justify-between p-3 rounded-xl border border-gray-200 hover:bg-gray-50"
+                    className="neu-raised-sm p-3.5 rounded-xl border border-white/40 flex items-center justify-between"
                   >
                     <div className="flex items-center gap-3">
                       <input
                         type="checkbox"
                         checked={task.isCompleted}
                         onChange={(e) => handleToggleTask(task.id, e.target.checked)}
-                        className="w-4 h-4 text-[#315EE8] rounded"
+                        className="w-4 h-4 accent-[#315EE8] rounded"
                       />
                       <span className={`font-semibold ${task.isCompleted ? 'line-through text-gray-400' : 'text-gray-900'}`}>
                         {task.taskName}
@@ -2120,7 +2124,7 @@ export default function OpportunityWorkspacePage({
                     </div>
                     <div className="flex items-center gap-3 text-gray-500 text-[11px]">
                       <span>Assignee: {task.assigneeName}</span>
-                      <span className="px-2 py-0.5 rounded bg-gray-100 font-bold uppercase text-[9px]">
+                      <span className="neu-pressed px-2 py-0.5 rounded font-bold uppercase text-[9px]">
                         {task.category}
                       </span>
                     </div>
@@ -2137,8 +2141,8 @@ export default function OpportunityWorkspacePage({
       {/* ========================================================================= */}
       {activeTab === 'performance' && (
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs text-xs">
-            <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+          <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white text-xs">
+            <div className="flex items-center justify-between pb-4 border-b border-white/40">
               <div>
                 <h3 className="text-base font-bold text-gray-900">Module 5 — Post-Launch Performance Actuals</h3>
                 <p className="text-xs text-gray-500 mt-0.5">
@@ -2147,16 +2151,16 @@ export default function OpportunityWorkspacePage({
               </div>
               <button
                 onClick={() => setShowPerfModal(true)}
-                className="px-4 py-2 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold flex items-center gap-2"
+                className="neu-btn-primary px-4 py-2 text-white text-xs font-bold flex items-center gap-2"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Log Monthly Actuals</span>
               </button>
             </div>
 
-            <div className="mt-6 overflow-x-auto">
+            <div className="neu-pressed rounded-2xl overflow-x-auto mt-6">
               <table className="w-full text-left text-xs">
-                <thead className="bg-gray-50 text-gray-500 font-bold uppercase border-b border-gray-200">
+                <thead className="bg-[#EDF2F7]/80 text-gray-500 font-bold uppercase border-b border-white/40">
                   <tr>
                     <th className="py-2.5 px-3">Month</th>
                     <th className="py-2.5 px-3">Paying Customers</th>
@@ -2168,7 +2172,7 @@ export default function OpportunityWorkspacePage({
                     <th className="py-2.5 px-3">Notes</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-white/40">
                   {(!opp.actualPerformance || opp.actualPerformance.length === 0) ? (
                     <tr>
                       <td colSpan={8} className="py-8 text-center text-gray-400">
@@ -2177,7 +2181,7 @@ export default function OpportunityWorkspacePage({
                     </tr>
                   ) : (
                     opp.actualPerformance.map((p) => (
-                      <tr key={p.id}>
+                      <tr key={p.id} className="hover:bg-white/20">
                         <td className="py-2.5 px-3 font-bold text-gray-900">{p.reportingMonth}</td>
                         <td className="py-2.5 px-3 font-semibold tabular-nums">{p.payingCustomers}</td>
                         <td className="py-2.5 px-3 font-bold text-emerald-700 tabular-nums">{fmtSAR(p.mrrSAR)}</td>
@@ -2203,7 +2207,7 @@ export default function OpportunityWorkspacePage({
       {/* Add Competitor Modal */}
       {showAddComp && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-gray-200 text-xs">
+          <div className="neu-raised bg-[#EDF2F7] rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl border border-white text-xs">
             <h3 className="text-base font-bold text-gray-900 mb-3">Add Competitor Benchmark</h3>
             <form onSubmit={handleAddCompetitor} className="space-y-3">
               <div>
@@ -2213,7 +2217,7 @@ export default function OpportunityWorkspacePage({
                   required
                   value={compForm.name}
                   onChange={(e) => setCompForm({ ...compForm, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -2223,7 +2227,7 @@ export default function OpportunityWorkspacePage({
                     type="number"
                     value={compForm.observedPriceSAR}
                     onChange={(e) => setCompForm({ ...compForm, observedPriceSAR: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                    className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                   />
                 </div>
                 <div>
@@ -2231,7 +2235,7 @@ export default function OpportunityWorkspacePage({
                   <select
                     value={compForm.hasArabicSupport ? 'yes' : 'no'}
                     onChange={(e) => setCompForm({ ...compForm, hasArabicSupport: e.target.value === 'yes' })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none bg-white font-medium"
+                    className="w-full px-3 py-2 neu-pressed rounded-xl outline-none font-medium"
                   >
                     <option value="yes">Yes (Arabic Supported)</option>
                     <option value="no">No (English Only)</option>
@@ -2244,7 +2248,7 @@ export default function OpportunityWorkspacePage({
                   type="text"
                   value={compForm.mainWeaknesses}
                   onChange={(e) => setCompForm({ ...compForm, mainWeaknesses: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                   placeholder="e.g. No WhatsApp integration, USD billing"
                 />
               </div>
@@ -2254,7 +2258,7 @@ export default function OpportunityWorkspacePage({
                   type="text"
                   value={compForm.differentiationOpportunity}
                   onChange={(e) => setCompForm({ ...compForm, differentiationOpportunity: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                   placeholder="e.g. Local Saudi hosting + ZATCA e-invoice out of box"
                 />
               </div>
@@ -2262,15 +2266,92 @@ export default function OpportunityWorkspacePage({
                 <button
                   type="button"
                   onClick={() => setShowAddComp(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-lg font-bold text-gray-700"
+                  className="neu-btn px-4 py-2 font-bold text-slate-700"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#315EE8] text-white rounded-lg font-bold"
+                  className="neu-btn-primary px-4 py-2 text-white font-bold"
                 >
                   Save Competitor
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Log Risk Modal */}
+      {showAddRisk && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="neu-raised bg-[#EDF2F7] rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl border border-white text-xs">
+            <h3 className="text-base font-bold text-gray-900 mb-3">Log Risk in Opportunity Register</h3>
+            <form onSubmit={handleAddRisk} className="space-y-3">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-bold text-gray-700 mb-1">Category</label>
+                  <select
+                    value={riskForm.category}
+                    onChange={(e: any) => setRiskForm({ ...riskForm, category: e.target.value })}
+                    className="w-full px-3 py-2 neu-pressed rounded-xl outline-none font-medium"
+                  >
+                    <option value="regulatory">Regulatory & Legal</option>
+                    <option value="technical">Technical Architecture</option>
+                    <option value="commercial">Commercial / GTM</option>
+                    <option value="operational">Operational & Team</option>
+                    <option value="financial">Financial / Capital</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block font-bold text-gray-700 mb-1">Severity</label>
+                  <select
+                    value={riskForm.severity}
+                    onChange={(e: any) => setRiskForm({ ...riskForm, severity: e.target.value })}
+                    className="w-full px-3 py-2 neu-pressed rounded-xl outline-none font-medium"
+                  >
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                    <option value="critical">Critical</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="block font-bold text-gray-700 mb-1">Risk Description</label>
+                <textarea
+                  rows={2}
+                  required
+                  value={riskForm.description}
+                  onChange={(e) => setRiskForm({ ...riskForm, description: e.target.value })}
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
+                  placeholder="Detail the exact risk scenario..."
+                />
+              </div>
+              <div>
+                <label className="block font-bold text-gray-700 mb-1">Mitigation Strategy</label>
+                <textarea
+                  rows={2}
+                  required
+                  value={riskForm.mitigation}
+                  onChange={(e) => setRiskForm({ ...riskForm, mitigation: e.target.value })}
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
+                  placeholder="Concrete actions to neutralize or reduce this risk..."
+                />
+              </div>
+              <div className="flex items-center justify-end gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowAddRisk(false)}
+                  className="neu-btn px-4 py-2 font-bold text-slate-700"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="neu-btn-black px-4 py-2 text-white font-bold"
+                >
+                  Log Risk
                 </button>
               </div>
             </form>
@@ -2281,7 +2362,7 @@ export default function OpportunityWorkspacePage({
       {/* Submit Approval Modal */}
       {showSubmitModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-200 text-xs">
+          <div className="neu-raised bg-[#EDF2F7] rounded-3xl max-w-md w-full p-6 md:p-8 shadow-2xl border border-white text-xs">
             <h3 className="text-base font-bold text-gray-900 mb-1">Submit Decision for Review</h3>
             <p className="text-gray-500 mb-4">
               Submit recommendation ({opp.recommendation}) to executive management for approval.
@@ -2293,7 +2374,7 @@ export default function OpportunityWorkspacePage({
                   type="number"
                   value={submitRequestedBudget}
                   onChange={(e) => setSubmitRequestedBudget(Number(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                 />
               </div>
               <div>
@@ -2304,20 +2385,20 @@ export default function OpportunityWorkspacePage({
                   placeholder="Summarize evidence and justification for management..."
                   value={submitRationale}
                   onChange={(e) => setSubmitRationale(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                 />
               </div>
               <div className="flex items-center justify-end gap-2 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowSubmitModal(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-lg font-bold text-gray-700"
+                  className="neu-btn px-4 py-2 font-bold text-slate-700"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#315EE8] text-white rounded-lg font-bold"
+                  className="neu-btn-primary px-4 py-2 text-white font-bold"
                 >
                   Submit Review
                 </button>
@@ -2330,7 +2411,7 @@ export default function OpportunityWorkspacePage({
       {/* Decide Modal */}
       {showDecideModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-200 text-xs">
+          <div className="neu-raised bg-[#EDF2F7] rounded-3xl max-w-md w-full p-6 md:p-8 shadow-2xl border border-white text-xs">
             <h3 className="text-base font-bold text-gray-900 mb-1">
               Management Decision: {decideChoice.toUpperCase()}
             </h3>
@@ -2344,20 +2425,20 @@ export default function OpportunityWorkspacePage({
                 placeholder="e.g. Approved subject to 2 signed pilot client agreements"
                 value={decideConditions}
                 onChange={(e) => setDecideConditions(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none mb-3"
+                className="w-full px-3 py-2 neu-pressed rounded-xl outline-none mb-3"
               />
             </div>
             <div className="flex items-center justify-end gap-2">
               <button
                 onClick={() => setShowDecideModal(null)}
-                className="px-4 py-2 border border-gray-300 rounded-lg font-bold text-gray-700"
+                className="neu-btn px-4 py-2 font-bold text-slate-700"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDecideApproval(showDecideModal)}
-                className={`px-4 py-2 text-white rounded-lg font-bold ${
-                  decideChoice === 'approved' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-red-600 hover:bg-red-700'
+                className={`px-4 py-2 rounded-xl text-white font-bold ${
+                  decideChoice === 'approved' ? 'bg-emerald-600 hover:bg-emerald-700 shadow-sm' : 'bg-red-600 hover:bg-red-700 shadow-sm'
                 }`}
               >
                 Confirm {decideChoice === 'approved' ? 'Approval' : 'Rejection'}
@@ -2370,7 +2451,7 @@ export default function OpportunityWorkspacePage({
       {/* Monthly Performance Modal */}
       {showPerfModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-200 text-xs">
+          <div className="neu-raised bg-[#EDF2F7] rounded-3xl max-w-md w-full p-6 md:p-8 shadow-2xl border border-white text-xs">
             <h3 className="text-base font-bold text-gray-900 mb-3">Log Post-Launch Monthly Actuals</h3>
             <form onSubmit={handleAddPerformance} className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
@@ -2381,7 +2462,7 @@ export default function OpportunityWorkspacePage({
                     required
                     value={perfForm.reportingMonth}
                     onChange={(e) => setPerfForm({ ...perfForm, reportingMonth: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                    className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                   />
                 </div>
                 <div>
@@ -2390,7 +2471,7 @@ export default function OpportunityWorkspacePage({
                     type="number"
                     value={perfForm.payingCustomers}
                     onChange={(e) => setPerfForm({ ...perfForm, payingCustomers: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                    className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                   />
                 </div>
               </div>
@@ -2402,7 +2483,7 @@ export default function OpportunityWorkspacePage({
                     type="number"
                     value={perfForm.mrrSAR}
                     onChange={(e) => setPerfForm({ ...perfForm, mrrSAR: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                    className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                   />
                 </div>
                 <div>
@@ -2411,7 +2492,7 @@ export default function OpportunityWorkspacePage({
                     type="number"
                     value={perfForm.cashCollectedSAR}
                     onChange={(e) => setPerfForm({ ...perfForm, cashCollectedSAR: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                    className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                   />
                 </div>
               </div>
@@ -2422,7 +2503,7 @@ export default function OpportunityWorkspacePage({
                   type="text"
                   value={perfForm.forecastVarianceNotes}
                   onChange={(e) => setPerfForm({ ...perfForm, forecastVarianceNotes: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full px-3 py-2 neu-pressed rounded-xl outline-none"
                   placeholder="e.g. 10% ahead of forecast"
                 />
               </div>
@@ -2431,13 +2512,13 @@ export default function OpportunityWorkspacePage({
                 <button
                   type="button"
                   onClick={() => setShowPerfModal(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-lg font-bold text-gray-700"
+                  className="neu-btn px-4 py-2 font-bold text-slate-700"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#315EE8] text-white rounded-lg font-bold"
+                  className="neu-btn-primary px-4 py-2 text-white font-bold"
                 >
                   Save Monthly Record
                 </button>

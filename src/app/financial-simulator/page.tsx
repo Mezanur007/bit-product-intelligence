@@ -67,7 +67,7 @@ export default function FinancialSimulatorPage() {
   return (
     <div className="space-y-6">
       {/* Title */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 neu-raised p-6 rounded-3xl border border-white">
         <div>
           <div className="flex items-center gap-2 text-xs font-bold text-[#315EE8] uppercase tracking-wider mb-1">
             <ChartNoAxesCombined className="w-3.5 h-3.5" />
@@ -82,11 +82,11 @@ export default function FinancialSimulatorPage() {
         </div>
 
         {/* Scenario Toggle */}
-        <div className="flex items-center gap-2 bg-gray-100 p-1.5 rounded-xl border border-gray-200 text-xs">
+        <div className="flex items-center gap-2 neu-pressed p-1.5 rounded-2xl text-xs">
           <button
             onClick={() => setActiveScenario('downside')}
             className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
-              activeScenario === 'downside' ? 'bg-red-500 text-white shadow-xs' : 'text-gray-600'
+              activeScenario === 'downside' ? 'bg-red-500 text-white shadow-sm rounded-xl' : 'text-gray-600'
             }`}
           >
             {t('downsideTab')}
@@ -94,7 +94,7 @@ export default function FinancialSimulatorPage() {
           <button
             onClick={() => setActiveScenario('base')}
             className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
-              activeScenario === 'base' ? 'bg-[#315EE8] text-white shadow-xs' : 'text-gray-600'
+              activeScenario === 'base' ? 'bg-[#315EE8] text-white shadow-sm rounded-xl' : 'text-gray-600'
             }`}
           >
             {t('baseTab')}
@@ -102,7 +102,7 @@ export default function FinancialSimulatorPage() {
           <button
             onClick={() => setActiveScenario('upside')}
             className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
-              activeScenario === 'upside' ? 'bg-emerald-600 text-white shadow-xs' : 'text-gray-600'
+              activeScenario === 'upside' ? 'bg-emerald-600 text-white shadow-sm rounded-xl' : 'text-gray-600'
             }`}
           >
             {t('upsideTab')}
@@ -112,7 +112,7 @@ export default function FinancialSimulatorPage() {
 
       {/* KPI Outputs */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-2xl border border-[#E6EAF1] shadow-xs">
+        <div className="neu-raised p-5 rounded-3xl border border-white">
           <div className="text-[11px] font-bold text-gray-500 uppercase">{t('unitContribution')}</div>
           <div className={`text-2xl font-extrabold mt-1 tabular-nums ${currentModel.breakEven.isContributionPositive ? 'text-emerald-700' : 'text-red-600'}`}>
             {fmtSAR(currentModel.breakEven.monthlyContributionPerCustomer)}/{language === 'ar' ? 'شهر' : 'mo'}
@@ -122,7 +122,7 @@ export default function FinancialSimulatorPage() {
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E6EAF1] shadow-xs">
+        <div className="neu-raised p-5 rounded-3xl border border-white">
           <div className="text-[11px] font-bold text-[#315EE8] uppercase">{t('operatingBreakEven')}</div>
           <div className="text-2xl font-extrabold text-[#315EE8] mt-1 tabular-nums">
             {currentModel.breakEven.operatingBreakEvenCustomers !== null
@@ -134,7 +134,7 @@ export default function FinancialSimulatorPage() {
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E6EAF1] shadow-xs">
+        <div className="neu-raised p-5 rounded-3xl border border-white">
           <div className="text-[11px] font-bold text-gray-500 uppercase">{t('investmentPayback')}</div>
           <div className="text-2xl font-extrabold text-gray-900 mt-1 tabular-nums">
             {currentModel.breakEven.investmentPaybackMonth !== null
@@ -146,7 +146,7 @@ export default function FinancialSimulatorPage() {
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E6EAF1] shadow-xs">
+        <div className="neu-raised p-5 rounded-3xl border border-white">
           <div className="text-[11px] font-bold text-gray-500 uppercase">{t('year1OperatingProfit')}</div>
           <div className="text-2xl font-extrabold text-gray-900 mt-1 tabular-nums">
             {fmtSAR(currentModel.summaryYear1.totalOperatingProfit)}
@@ -158,7 +158,7 @@ export default function FinancialSimulatorPage() {
       </div>
 
       {/* Main Cash Flow Chart */}
-      <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
+      <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white">
         <h3 className="font-bold text-sm text-[#172033] mb-1">
           {language === 'ar'
             ? `مسار التدفقات النقدية التراكمية والاسترداد لـ 24 شهراً (${activeScenario === 'base' ? 'السيناريو الأساسي' : activeScenario === 'downside' ? 'السيناريو المتشائم' : 'السيناريو المتفائل'})`
@@ -192,7 +192,7 @@ export default function FinancialSimulatorPage() {
       {/* Interactive Assumption Sliders & Inputs */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Pricing & Acquisition */}
-        <div className="bg-white p-5 rounded-2xl border border-[#E6EAF1] shadow-xs text-xs space-y-4">
+        <div className="neu-raised p-5 rounded-3xl border border-white text-xs space-y-4">
           <span className="font-bold text-[#315EE8] uppercase text-[11px] block">
             {language === 'ar' ? 'التسعير وقاعدة العملاء' : 'Pricing & Customers'}
           </span>
@@ -242,7 +242,7 @@ export default function FinancialSimulatorPage() {
         </div>
 
         {/* Direct Variable Costs */}
-        <div className="bg-white p-5 rounded-2xl border border-[#E6EAF1] shadow-xs text-xs space-y-4">
+        <div className="neu-raised p-5 rounded-3xl border border-white text-xs space-y-4">
           <span className="font-bold text-[#315EE8] uppercase text-[11px] block">
             {language === 'ar' ? 'التكاليف المتغيرة المباشرة' : 'Direct Variable Costs'}
           </span>
@@ -287,7 +287,7 @@ export default function FinancialSimulatorPage() {
         </div>
 
         {/* Fixed Overhead & Capital Requirement */}
-        <div className="bg-white p-5 rounded-2xl border border-[#E6EAF1] shadow-xs text-xs space-y-4">
+        <div className="neu-raised p-5 rounded-3xl border border-white text-xs space-y-4">
           <span className="font-bold text-[#315EE8] uppercase text-[11px] block">
             {language === 'ar' ? 'التكاليف الثابتة ورأس المال الأولي' : 'Fixed Costs & Initial Cash'}
           </span>
@@ -345,7 +345,7 @@ export default function FinancialSimulatorPage() {
       </div>
 
       {/* Sensitivity Analysis Table */}
-      <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs text-xs">
+      <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white text-xs">
         <h3 className="font-bold text-sm text-[#172033] mb-1">
           {language === 'ar' ? 'تحليل حساسية السعر واختبارات التحمل' : 'Price Sensitivity Analysis'}
         </h3>
@@ -355,9 +355,9 @@ export default function FinancialSimulatorPage() {
             : 'Impact of varying monthly customer price by ±10% and ±20% on year 1 MRR and break-even customers.'}
         </p>
 
-        <div className="overflow-x-auto">
+        <div className="neu-pressed rounded-2xl overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-gray-50 text-gray-500 uppercase font-bold border-b border-gray-200">
+            <thead className="bg-[#EDF2F7]/60 text-gray-500 uppercase font-bold border-b border-gray-200">
               <tr>
                 <th className="py-2.5 px-3">{language === 'ar' ? 'تباين السعر' : 'Price Variance'}</th>
                 <th className="py-2.5 px-3">{language === 'ar' ? 'السعر الشهري المحاكى' : 'Simulated Monthly Price'}</th>
@@ -367,9 +367,9 @@ export default function FinancialSimulatorPage() {
                 <th className="py-2.5 px-3">{language === 'ar' ? 'أفق استرداد الاستثمار' : 'Payback Horizon'}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-white/40">
               {sensitivityPrice.map((s, idx) => (
-                <tr key={idx} className={s.deltaPercent === 0 ? 'bg-blue-50/60 font-bold' : ''}>
+                <tr key={idx} className={`hover:bg-white/30 ${s.deltaPercent === 0 ? 'bg-blue-50/60 font-bold' : ''}`}>
                   <td className="py-2.5 px-3 font-semibold">
                     {s.deltaPercent > 0 ? `+${s.deltaPercent}%` : `${s.deltaPercent}%`}
                     {s.deltaPercent === 0 && ` (${language === 'ar' ? 'الأساسي' : 'Baseline'})`}
