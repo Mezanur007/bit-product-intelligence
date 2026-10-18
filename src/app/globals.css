@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -22,8 +23,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Arabic typography styling */
+[dir="rtl"], .font-arabic {
+  font-family: 'Cairo', -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, sans-serif !important;
+}
+
 .tabular-nums {
   font-variant-numeric: tabular-nums;
+}
+
+/* RTL layout helpers */
+[dir="rtl"] .sidebar-left {
+  left: auto !important;
+  right: 0 !important;
 }
 
 /* Print styling for PDF Executive Report */

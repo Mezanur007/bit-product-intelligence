@@ -44,3 +44,5 @@ _legacy_archive/
 *.sqlite
 prisma/dev.db*
 .data/
+
+.vercel

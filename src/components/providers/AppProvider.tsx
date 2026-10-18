@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, UserRole } from '@/lib/db/types';
+import { Language, Direction, getTranslation, formatCurrency } from '@/lib/i18n';
 
 export const ALL_USERS: User[] = [
   {
@@ -65,6 +66,13 @@ interface AppContextType {
   setCurrentUser: (u: User) => void;
   isDemoMode: boolean;
   setIsDemoMode: (val: boolean) => void;
+  language: Language;
+  direction: Direction;
+  isRtl: boolean;
+  setLanguage: (lang: Language) => void;
+  toggleLanguage: () => void;
+  t: (key: string) => string;
+  fmtCurrency: (amount: number) => string;
   toast: string | null;
   showToast: (msg: string) => void;
 }
@@ -74,7 +82,43 @@ const AppContext = createContext<AppContextType | null>(null);
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User>(ALL_USERS[0]);
   const [isDemoMode, setIsDemoMode] = useState<boolean>(true);
+  const [language, setLanguageState] = useState<Language>('en');
   const [toast, setToast] = useState<string | null>(null);
+
+  // Load language from localStorage if available
+  useEffect(() => {
+    try {
+      const savedLang = localStorage.getItem('bit_lang') as Language;
+      if (savedLang === 'ar' || savedLang === 'en') {
+        setLanguageState(savedLang);
+        document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.lang = savedLang;
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    try {
+      localStorage.setItem('bit_lang', lang);
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+    } catch {
+      // ignore
+    }
+  };
+
+  const toggleLanguage = () => {
+    const next = language === 'en' ? 'ar' : 'en';
+    setLanguage(next);
+  };
+
+  const direction: Direction = language === 'ar' ? 'rtl' : 'ltr';
+
+  const t = (key: string) => getTranslation(key, language);
+  const fmtCurrency = (amount: number) => formatCurrency(amount, language);
 
   const showToast = (msg: string) => {
     setToast(msg);
@@ -90,13 +134,26 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setCurrentUser,
         isDemoMode,
         setIsDemoMode,
+        language,
+        direction,
+        isRtl: direction === 'rtl',
+        setLanguage,
+        toggleLanguage,
+        t,
+        fmtCurrency,
         toast,
         showToast,
       }}
     >
-      {children}
+      <div dir={direction} className={direction === 'rtl' ? 'font-arabic' : ''}>
+        {children}
+      </div>
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-[#111827] text-white px-5 py-3 rounded-xl shadow-2xl text-sm font-medium border border-gray-700 animate-fade-in">
+        <div
+          className={`fixed bottom-6 ${
+            direction === 'rtl' ? 'left-6' : 'right-6'
+          } z-50 flex items-center gap-3 bg-[#111827] text-white px-5 py-3 rounded-xl shadow-2xl text-sm font-medium border border-gray-700 animate-fade-in`}
+        >
           <span className="w-2 h-2 rounded-full bg-[#315EE8] animate-ping" />
           {toast}
         </div>

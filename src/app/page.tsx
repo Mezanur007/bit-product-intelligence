@@ -38,7 +38,7 @@ import { Opportunity } from '@/lib/db/types';
 import { useApp } from '@/components/providers/AppProvider';
 
 export default function ExecutiveDashboard() {
-  const { isDemoMode, showToast } = useApp();
+  const { isDemoMode, showToast, t, fmtCurrency, direction, language, isRtl } = useApp();
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [loading, setLoading] = useState(true);
   const [categoryFilter, setCategoryFilter] = useState('all');
@@ -105,12 +105,12 @@ export default function ExecutiveDashboard() {
 
   // Stage Distribution Data
   const stageData = [
-    { name: 'Discovery', count: opportunities.filter((o) => o.status === 'discovery' || o.status === 'idea').length, color: '#94A3B8' },
-    { name: 'Evaluation', count: opportunities.filter((o) => o.status === 'evaluation').length, color: '#6484FF' },
-    { name: 'Pilot', count: pilotApprovedCount, color: '#315EE8' },
-    { name: 'Active / Launch', count: activeProductsCount, color: '#159769' },
-    { name: 'On Hold', count: opportunities.filter((o) => o.status === 'on_hold').length, color: '#D99A2B' },
-    { name: 'Rejected', count: opportunities.filter((o) => o.status === 'rejected' || o.status === 'discontinued').length, color: '#D95360' },
+    { name: t('statusDiscovery'), count: opportunities.filter((o) => o.status === 'discovery' || o.status === 'idea').length, color: '#94A3B8' },
+    { name: t('statusEvaluation'), count: opportunities.filter((o) => o.status === 'evaluation').length, color: '#6484FF' },
+    { name: t('recPILOT'), count: pilotApprovedCount, color: '#315EE8' },
+    { name: t('statusActive'), count: activeProductsCount, color: '#159769' },
+    { name: t('statusOnHold'), count: opportunities.filter((o) => o.status === 'on_hold').length, color: '#D99A2B' },
+    { name: t('statusRejected'), count: opportunities.filter((o) => o.status === 'rejected' || o.status === 'discontinued').length, color: '#D95360' },
   ].filter((s) => s.count > 0);
 
   // Budget Allocation Data
@@ -130,7 +130,7 @@ export default function ExecutiveDashboard() {
     { month: 'Dec 26 (F)', forecastMRR: 8500, actualMRR: null, forecastSpend: 18000, actualSpend: null },
   ];
 
-  const fmtSAR = (n: number) => 'SAR ' + (n || 0).toLocaleString('en-US');
+  const fmtSAR = fmtCurrency;
 
   return (
     <div className="space-y-8">
@@ -139,13 +139,13 @@ export default function ExecutiveDashboard() {
         <div>
           <div className="flex items-center gap-2 text-xs font-bold text-[#315EE8] uppercase tracking-wider mb-1">
             <Building2 className="w-3.5 h-3.5" />
-            <span>Executive Portfolio & Investment Governance</span>
+            <span>{t('executivePortfolio')}</span>
           </div>
           <h1 className="text-2xl font-extrabold text-[#172033] tracking-tight">
-            Product Portfolio & Decision Dashboard
+            {t('decisionMakingClearer')}
           </h1>
           <p className="text-sm text-[#778397] mt-1">
-            Evaluate Saudi recurring-revenue opportunities with verified evidence, deterministic financial modeling, and strict mandatory gates.
+            {t('subtitle')}
           </p>
         </div>
 
@@ -155,14 +155,14 @@ export default function ExecutiveDashboard() {
             className="px-4 py-2.5 rounded-xl border border-[#E6EAF1] bg-white text-xs font-bold text-[#172033] hover:bg-gray-50 transition-colors flex items-center gap-2 shadow-xs"
           >
             <ChartNoAxesCombined className="w-4 h-4 text-[#315EE8]" />
-            <span>Financial Sandbox</span>
+            <span>{t('financialSandbox')}</span>
           </Link>
           <Link
             href="/opportunities?new=true"
             className="px-4 py-2.5 rounded-xl bg-[#315EE8] hover:bg-[#274ec4] text-white text-xs font-bold transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
-            <span>New Opportunity</span>
+            <span>{t('newOpportunity')}</span>
           </Link>
         </div>
       </div>
@@ -171,92 +171,92 @@ export default function ExecutiveDashboard() {
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3.5">
         {/* KPI 1 */}
         <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#778397] uppercase">Total Opportunities</div>
+          <div className="text-[11px] font-bold text-[#778397] uppercase">{t('kpiTotalOpps')}</div>
           <div className="text-2xl font-extrabold text-[#172033] mt-1 tabular-nums">
             {totalCount.toString().padStart(2, '0')}
           </div>
-          <div className="text-[11px] text-gray-500 mt-1">All pipeline stages</div>
+          <div className="text-[11px] text-gray-500 mt-1">{t('kpiSubAllStages')}</div>
         </div>
 
         {/* KPI 2 */}
         <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#6484FF] uppercase">Under Evaluation</div>
+          <div className="text-[11px] font-bold text-[#6484FF] uppercase">{t('kpiUnderEval')}</div>
           <div className="text-2xl font-extrabold text-[#172033] mt-1 tabular-nums">
             {underEvaluationCount.toString().padStart(2, '0')}
           </div>
-          <div className="text-[11px] text-gray-500 mt-1">Active 6-step review</div>
+          <div className="text-[11px] text-gray-500 mt-1">{t('kpiSubActive6Step')}</div>
         </div>
 
         {/* KPI 3 */}
         <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#315EE8] uppercase">Pilot Approved</div>
+          <div className="text-[11px] font-bold text-[#315EE8] uppercase">{t('kpiPilotApproved')}</div>
           <div className="text-2xl font-extrabold text-[#315EE8] mt-1 tabular-nums">
             {pilotApprovedCount.toString().padStart(2, '0')}
           </div>
-          <div className="text-[11px] text-gray-500 mt-1">Bounded client trials</div>
+          <div className="text-[11px] text-gray-500 mt-1">{t('kpiSubBoundedTrials')}</div>
         </div>
 
         {/* KPI 4 */}
         <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#159769] uppercase">Active Products</div>
+          <div className="text-[11px] font-bold text-[#159769] uppercase">{t('kpiActiveProducts')}</div>
           <div className="text-2xl font-extrabold text-[#159769] mt-1 tabular-nums">
             {activeProductsCount.toString().padStart(2, '0')}
           </div>
-          <div className="text-[11px] text-gray-500 mt-1">Commercialized</div>
+          <div className="text-[11px] text-gray-500 mt-1">{t('kpiSubCommercialized')}</div>
         </div>
 
         {/* KPI 5 */}
         <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-amber-600 uppercase">Attention Needed</div>
+          <div className="text-[11px] font-bold text-amber-600 uppercase">{t('kpiAttentionNeeded')}</div>
           <div className="text-2xl font-extrabold text-amber-600 mt-1 tabular-nums">
             {attentionItems.length.toString().padStart(2, '0')}
           </div>
-          <div className="text-[11px] text-gray-500 mt-1">Blockers / Gate checks</div>
+          <div className="text-[11px] text-gray-500 mt-1">{t('kpiSubBlockers')}</div>
         </div>
 
         {/* KPI 6 */}
         <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#778397] uppercase">Proposed Budget</div>
+          <div className="text-[11px] font-bold text-[#778397] uppercase">{t('kpiProposedBudget')}</div>
           <div className="text-lg font-bold text-[#172033] mt-1 tabular-nums">
             {fmtSAR(totalProposedBudget)}
           </div>
-          <div className="text-[11px] text-gray-400 mt-1">Requested by POs</div>
+          <div className="text-[11px] text-gray-400 mt-1">{t('kpiSubRequestedByPOs')}</div>
         </div>
 
         {/* KPI 7 */}
         <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#315EE8] uppercase">Approved Budget</div>
+          <div className="text-[11px] font-bold text-[#315EE8] uppercase">{t('kpiApprovedBudget')}</div>
           <div className="text-lg font-bold text-[#315EE8] mt-1 tabular-nums">
             {fmtSAR(totalApprovedBudget)}
           </div>
-          <div className="text-[11px] text-gray-400 mt-1">Authorized by Mgmt</div>
+          <div className="text-[11px] text-gray-400 mt-1">{t('kpiSubAuthorizedByMgmt')}</div>
         </div>
 
         {/* KPI 8 */}
         <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#778397] uppercase">Actual Expenditure</div>
+          <div className="text-[11px] font-bold text-[#778397] uppercase">{t('kpiActualSpend')}</div>
           <div className="text-lg font-bold text-[#172033] mt-1 tabular-nums">
             {fmtSAR(totalActualExpenditure)}
           </div>
-          <div className="text-[11px] text-gray-400 mt-1">Realized project cash</div>
+          <div className="text-[11px] text-gray-400 mt-1">{t('kpiSubRealizedCash')}</div>
         </div>
 
         {/* KPI 9 */}
         <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#159769] uppercase">Current Total MRR</div>
+          <div className="text-[11px] font-bold text-[#159769] uppercase">{t('kpiCurrentMRR')}</div>
           <div className="text-lg font-bold text-[#159769] mt-1 tabular-nums">
             {fmtSAR(totalCurrentMRR)}
           </div>
-          <div className="text-[11px] text-gray-400 mt-1">Active customer billing</div>
+          <div className="text-[11px] text-gray-400 mt-1">{t('kpiSubActiveBilling')}</div>
         </div>
 
         {/* KPI 10 */}
         <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#159769] uppercase">Actual Gross Margin</div>
+          <div className="text-[11px] font-bold text-[#159769] uppercase">{t('kpiGrossMargin')}</div>
           <div className="text-lg font-bold text-[#159769] mt-1 tabular-nums">
             {actualGrossMargin}%
           </div>
-          <div className="text-[11px] text-gray-400 mt-1">Direct delivery margin</div>
+          <div className="text-[11px] text-gray-400 mt-1">{t('kpiSubDirectMargin')}</div>
         </div>
       </div>
 
@@ -268,11 +268,11 @@ export default function ExecutiveDashboard() {
           <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="font-bold text-sm text-[#172033]">Portfolio MRR & Expenditure Timeline</h3>
-                <p className="text-xs text-[#778397]">Actual performance vs approved forecasts (SAR)</p>
+                <h3 className="font-bold text-sm text-[#172033]">{t('timelineTitle')}</h3>
+                <p className="text-xs text-[#778397]">{t('timelineSubtitle')}</p>
               </div>
               <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                MRR Growing +198% QoQ
+                {t('mrrGrowing')}
               </span>
             </div>
 
@@ -283,13 +283,13 @@ export default function ExecutiveDashboard() {
                   <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#64748B' }} />
                   <YAxis tick={{ fontSize: 11, fill: '#64748B' }} tickFormatter={(v) => `${v / 1000}k`} />
                   <Tooltip
-                    formatter={(val: any) => [`SAR ${Number(val).toLocaleString()}`, '']}
+                    formatter={(val: any) => [fmtCurrency(Number(val)), '']}
                     contentStyle={{ backgroundColor: '#1E293B', color: '#fff', borderRadius: '8px', fontSize: '12px' }}
                   />
                   <Legend iconType="circle" wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
-                  <Line type="monotone" dataKey="forecastMRR" name="Forecast MRR" stroke="#94A3B8" strokeDasharray="4 4" strokeWidth={2} />
-                  <Line type="monotone" dataKey="actualMRR" name="Actual MRR" stroke="#159769" strokeWidth={3} dot={{ r: 4 }} />
-                  <Line type="monotone" dataKey="actualSpend" name="Actual Cash Spend" stroke="#315EE8" strokeWidth={2} />
+                  <Line type="monotone" dataKey="forecastMRR" name={t('forecastMRR')} stroke="#94A3B8" strokeDasharray="4 4" strokeWidth={2} />
+                  <Line type="monotone" dataKey="actualMRR" name={t('actualMRR')} stroke="#159769" strokeWidth={3} dot={{ r: 4 }} />
+                  <Line type="monotone" dataKey="actualSpend" name={t('actualCashSpend')} stroke="#315EE8" strokeWidth={2} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -299,8 +299,8 @@ export default function ExecutiveDashboard() {
           <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="font-bold text-sm text-[#172033]">Proposed vs. Approved Budget Allocation</h3>
-                <p className="text-xs text-[#778397]">Validation budget per opportunity (SAR)</p>
+                <h3 className="font-bold text-sm text-[#172033]">{t('budgetAllocTitle')}</h3>
+                <p className="text-xs text-[#778397]">{t('budgetAllocSubtitle')}</p>
               </div>
             </div>
 
@@ -311,12 +311,12 @@ export default function ExecutiveDashboard() {
                   <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#64748B' }} />
                   <YAxis tick={{ fontSize: 11, fill: '#64748B' }} tickFormatter={(v) => `${v / 1000}k`} />
                   <Tooltip
-                    formatter={(val: any) => [`SAR ${Number(val).toLocaleString()}`, '']}
+                    formatter={(val: any) => [fmtCurrency(Number(val)), '']}
                     contentStyle={{ backgroundColor: '#1E293B', color: '#fff', borderRadius: '8px', fontSize: '12px' }}
                   />
                   <Legend iconType="circle" wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
-                  <Bar dataKey="proposed" name="Proposed Validation Budget" fill="#CBD5E1" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="approved" name="Approved Budget" fill="#315EE8" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="proposed" name={t('proposedValBudget')} fill="#CBD5E1" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="approved" name={t('approvedBudget')} fill="#315EE8" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -329,13 +329,13 @@ export default function ExecutiveDashboard() {
           <div className="bg-white p-5 rounded-2xl border border-amber-200/80 shadow-xs">
             <div className="flex items-center gap-2 text-amber-800 font-bold text-sm mb-3">
               <ShieldAlert className="w-4 h-4 text-amber-600" />
-              <span>Management Attention Panel</span>
+              <span>{t('attentionPanelTitle')}</span>
             </div>
 
             <div className="space-y-3">
               {attentionItems.length === 0 ? (
                 <div className="text-xs text-gray-500 py-3 text-center">
-                  No critical risks or blockers currently flagged.
+                  {t('noBlockers')}
                 </div>
               ) : (
                 attentionItems.map((item) => (
@@ -350,14 +350,14 @@ export default function ExecutiveDashboard() {
                     </div>
                     <div className="text-[11px] text-amber-900 mt-1">
                       {item.status === 'on_hold'
-                        ? 'Status: On Hold — Partner agreement pending'
+                        ? (language === 'ar' ? 'الحالة: معلق — بانتظار اتفاقية الشريك' : 'Status: On Hold — Partner agreement pending')
                         : item.mandatoryGates.some((g) => g.status === 'fail')
-                        ? 'Mandatory Gate Failure: Compliance / Unit economics check failed'
-                        : 'Unvalidated Customer Demand: 0 paid pilot commitments'}
+                        ? (language === 'ar' ? 'فشل بوابة إلزامية: فحص الامتثال / اقتصاديات الوحدة' : 'Mandatory Gate Failure: Compliance / Unit economics check failed')
+                        : (language === 'ar' ? 'طلب عملاء غير موثق: 0 التزامات تجارب مدفوعة' : 'Unvalidated Customer Demand: 0 paid pilot commitments')}
                     </div>
                     <div className="text-[10px] text-gray-500 mt-1.5 flex items-center justify-between">
                       <span>{item.id}</span>
-                      <span className="font-semibold text-amber-800">Review Record →</span>
+                      <span className="font-semibold text-amber-800">{t('btnReviewRecord')}</span>
                     </div>
                   </Link>
                 ))
@@ -367,8 +367,8 @@ export default function ExecutiveDashboard() {
 
           {/* Portfolio Stage Distribution */}
           <div className="bg-white p-5 rounded-2xl border border-[#E6EAF1] shadow-xs">
-            <h3 className="font-bold text-sm text-[#172033] mb-1">Portfolio Lifecycle Distribution</h3>
-            <p className="text-xs text-[#778397] mb-4">Opportunities across governance gates</p>
+            <h3 className="font-bold text-sm text-[#172033] mb-1">{t('lifecycleDistTitle')}</h3>
+            <p className="text-xs text-[#778397] mb-4">{t('lifecycleDistSubtitle')}</p>
 
             <div className="space-y-2.5">
               {stageData.map((s) => (
@@ -400,9 +400,9 @@ export default function ExecutiveDashboard() {
       <div className="bg-white rounded-2xl border border-[#E6EAF1] shadow-xs overflow-hidden">
         <div className="p-5 border-b border-[#E6EAF1] flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h3 className="font-bold text-base text-[#172033]">Tracked Product Opportunities</h3>
+            <h3 className="font-bold text-base text-[#172033]">{t('trackedOppsTitle')}</h3>
             <p className="text-xs text-[#778397] mt-0.5">
-              Explore evaluation readiness, unit economics, weighted score, and governance decisions.
+              {t('trackedOppsSubtitle')}
             </p>
           </div>
 
@@ -413,11 +413,11 @@ export default function ExecutiveDashboard() {
               onChange={(e) => setCategoryFilter(e.target.value)}
               className="text-xs bg-[#F5F7FB] border border-[#E6EAF1] rounded-lg px-3 py-1.5 font-medium text-gray-700 outline-none"
             >
-              <option value="all">All Categories</option>
-              <option value="saas">SaaS</option>
-              <option value="ai_agent">AI Agent</option>
-              <option value="custom_software">Custom Software</option>
-              <option value="partnership">Partnership</option>
+              <option value="all">{t('allCategories')}</option>
+              <option value="saas">{t('catSaaS')}</option>
+              <option value="ai_agent">{t('catAIAgent')}</option>
+              <option value="custom_software">{t('catCustomSoftware')}</option>
+              <option value="partnership">{t('catPartnership')}</option>
             </select>
 
             <select
@@ -425,20 +425,20 @@ export default function ExecutiveDashboard() {
               onChange={(e) => setStatusFilter(e.target.value)}
               className="text-xs bg-[#F5F7FB] border border-[#E6EAF1] rounded-lg px-3 py-1.5 font-medium text-gray-700 outline-none"
             >
-              <option value="all">All Statuses</option>
-              <option value="discovery">Discovery</option>
-              <option value="evaluation">Evaluation</option>
-              <option value="pilot_approved">Pilot Approved</option>
-              <option value="approved_for_launch">Approved for Launch</option>
-              <option value="on_hold">On Hold</option>
-              <option value="rejected">Rejected / Dropped</option>
+              <option value="all">{t('allStatuses')}</option>
+              <option value="discovery">{t('statusDiscovery')}</option>
+              <option value="evaluation">{t('statusEvaluation')}</option>
+              <option value="pilot_approved">{t('statusPilotApproved')}</option>
+              <option value="approved_for_launch">{t('statusApprovedForLaunch')}</option>
+              <option value="on_hold">{t('statusOnHold')}</option>
+              <option value="rejected">{t('statusRejected')}</option>
             </select>
 
             <Link
               href="/opportunities"
               className="text-xs text-[#315EE8] font-bold hover:underline ml-2"
             >
-              View Full Register →
+              {t('btnViewFullRegister')}
             </Link>
           </div>
         </div>
@@ -448,20 +448,20 @@ export default function ExecutiveDashboard() {
           <table className="w-full text-left text-xs">
             <thead className="bg-[#F8FAFC] text-[#778397] uppercase tracking-wider font-semibold border-b border-[#E6EAF1]">
               <tr>
-                <th className="py-3 px-5">Opportunity</th>
-                <th className="py-3 px-4">Category</th>
-                <th className="py-3 px-4">Weighted Score</th>
-                <th className="py-3 px-4">Validation Budget</th>
-                <th className="py-3 px-4">Recommendation</th>
-                <th className="py-3 px-4">Status</th>
-                <th className="py-3 px-5 text-right">Actions</th>
+                <th className="py-3 px-5">{t('thOpportunity')}</th>
+                <th className="py-3 px-4">{t('thCategory')}</th>
+                <th className="py-3 px-4">{t('thWeightedScore')}</th>
+                <th className="py-3 px-4">{t('thValidationBudget')}</th>
+                <th className="py-3 px-4">{t('thRecommendation')}</th>
+                <th className="py-3 px-4">{t('thStatus')}</th>
+                <th className="py-3 px-5 text-right">{t('thActions')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#E6EAF1]">
               {filtered.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-gray-500">
-                    No matching opportunities found.
+                    {t('noOpportunitiesFound')}
                   </td>
                 </tr>
               ) : (
@@ -512,7 +512,7 @@ export default function ExecutiveDashboard() {
                             : 'bg-red-100 text-red-800'
                         }`}
                       >
-                        {o.recommendation}
+                        {t(`rec${o.recommendation}`) || o.recommendation}
                       </span>
                     </td>
                     <td className="py-3.5 px-4">
@@ -525,7 +525,7 @@ export default function ExecutiveDashboard() {
                         href={`/opportunities/${o.id}`}
                         className="inline-flex items-center gap-1 text-[#315EE8] font-bold hover:underline"
                       >
-                        <span>Workspace</span>
+                        <span>{t('btnWorkspace')}</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
                       </Link>
                     </td>

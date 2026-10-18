@@ -12,8 +12,10 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import { Opportunity } from '@/lib/db/types';
+import { useApp } from '@/components/providers/AppProvider';
 
 export default function ReportsPage() {
+  const { t, fmtCurrency, language, isRtl } = useApp();
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [selectedOppId, setSelectedOppId] = useState<string>('');
 
@@ -29,7 +31,7 @@ export default function ReportsPage() {
   }, []);
 
   const selectedOpp = opportunities.find((o) => o.id === selectedOppId);
-  const fmtSAR = (n: number) => 'SAR ' + (n || 0).toLocaleString('en-US');
+  const fmtSAR = fmtCurrency;
 
   const exportCSV = () => {
     const headers = ['ID', 'Name', 'Category', 'Status', 'Score', 'Recommendation', 'Budget_SAR'];
@@ -59,13 +61,13 @@ export default function ReportsPage() {
         <div>
           <div className="flex items-center gap-2 text-xs font-bold text-[#315EE8] uppercase tracking-wider mb-1">
             <FileText className="w-3.5 h-3.5" />
-            <span>Module Eight — Executive Reporting & Memos</span>
+            <span>{t('moduleEight')}</span>
           </div>
           <h1 className="text-2xl font-extrabold text-[#172033] tracking-tight">
-            Executive Decision Memo & Portfolio Export
+            {t('decisionMemoTitle')}
           </h1>
           <p className="text-sm text-[#778397] mt-1">
-            Generate formal executive investment decision briefs formatted for management and print/PDF export.
+            {t('decisionMemoSubtitle')}
           </p>
         </div>
 
@@ -75,21 +77,21 @@ export default function ReportsPage() {
             className="px-4 py-2 rounded-xl border border-gray-300 bg-white text-xs font-bold text-gray-700 hover:bg-gray-50 flex items-center gap-2 shadow-xs"
           >
             <Download className="w-4 h-4 text-gray-600" />
-            <span>Export CSV</span>
+            <span>{t('exportCSV')}</span>
           </button>
           <button
             onClick={() => window.print()}
             className="px-4 py-2 rounded-xl bg-[#315EE8] hover:bg-[#274ec4] text-white text-xs font-bold flex items-center gap-2 shadow-md shadow-blue-600/20"
           >
             <Printer className="w-4 h-4" />
-            <span>Print Decision Memo</span>
+            <span>{t('printMemo')}</span>
           </button>
         </div>
       </div>
 
       {/* Selector */}
       <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs flex items-center gap-4 no-print">
-        <label className="text-xs font-bold text-gray-700">Select Opportunity for Memo:</label>
+        <label className="text-xs font-bold text-gray-700">{t('selectOppForMemo')}</label>
         <select
           value={selectedOppId}
           onChange={(e) => setSelectedOppId(e.target.value)}
@@ -97,7 +99,7 @@ export default function ReportsPage() {
         >
           {opportunities.map((o) => (
             <option key={o.id} value={o.id}>
-              {o.id} — {o.name} ({o.recommendation})
+              {o.id} — {o.name} ({t(`rec${o.recommendation}`) || o.recommendation})
             </option>
           ))}
         </select>
@@ -110,16 +112,16 @@ export default function ReportsPage() {
           <div className="border-b-2 border-gray-900 pb-6 flex items-start justify-between">
             <div>
               <div className="font-extrabold text-lg text-gray-900 tracking-wider">
-                B-IT <span className="text-[#315EE8]">TECHNOLOGY</span>
+                {t('brandName')}
               </div>
               <div className="text-[11px] font-bold text-gray-500 uppercase tracking-widest mt-0.5">
-                INTERNAL INVESTMENT DECISION MEMORANDUM
+                {language === 'ar' ? 'مذكرة قرار الاستثمار الداخلي المعتمدة' : 'INTERNAL INVESTMENT DECISION MEMORANDUM'}
               </div>
               <div className="text-xs text-gray-600 mt-2">
-                Document Ref: <strong>MEMO-{selectedOpp.id}</strong> · Riyadh, Saudi Arabia
+                {language === 'ar' ? 'مرجع الوثيقة:' : 'Document Ref:'} <strong>MEMO-{selectedOpp.id}</strong> · {language === 'ar' ? 'الرياض، المملكة العربية السعودية' : 'Riyadh, Saudi Arabia'}
               </div>
             </div>
-            <div className="text-right">
+            <div className={isRtl ? 'text-left' : 'text-right'}>
               <span
                 className={`inline-block px-3 py-1 rounded text-xs font-extrabold uppercase ${
                   selectedOpp.recommendation === 'EXECUTE'
@@ -129,10 +131,10 @@ export default function ReportsPage() {
                     : 'bg-amber-100 text-amber-900 border border-amber-300'
                 }`}
               >
-                RECOMMENDATION: {selectedOpp.recommendation}
+                {t('thRecommendation')}: {t(`rec${selectedOpp.recommendation}`) || selectedOpp.recommendation}
               </span>
               <div className="text-[10px] text-gray-400 mt-1">
-                Date: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                {language === 'ar' ? 'التاريخ:' : 'Date:'} {new Date().toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
               </div>
             </div>
           </div>
@@ -140,19 +142,19 @@ export default function ReportsPage() {
           {/* Memo Metadata Block */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
             <div>
-              <span className="text-gray-400 text-[10px] block font-bold uppercase">Opportunity</span>
+              <span className="text-gray-400 text-[10px] block font-bold uppercase">{t('thOpportunity')}</span>
               <strong className="text-gray-900 block text-sm">{selectedOpp.name}</strong>
             </div>
             <div>
-              <span className="text-gray-400 text-[10px] block font-bold uppercase">Category</span>
+              <span className="text-gray-400 text-[10px] block font-bold uppercase">{t('thCategory')}</span>
               <strong className="text-gray-900 block capitalize">{selectedOpp.category.replace('_', ' ')}</strong>
             </div>
             <div>
-              <span className="text-gray-400 text-[10px] block font-bold uppercase">Product Owner</span>
+              <span className="text-gray-400 text-[10px] block font-bold uppercase">{language === 'ar' ? 'مدير المنتج المسؤول' : 'Product Owner'}</span>
               <strong className="text-gray-900 block">{selectedOpp.ownerName}</strong>
             </div>
             <div>
-              <span className="text-gray-400 text-[10px] block font-bold uppercase">Weighted Score</span>
+              <span className="text-gray-400 text-[10px] block font-bold uppercase">{t('thWeightedScore')}</span>
               <strong className="text-[#315EE8] block text-sm font-extrabold">{selectedOpp.weightedScore}/100</strong>
             </div>
           </div>
@@ -160,23 +162,31 @@ export default function ReportsPage() {
           {/* 1. Problem & Solution */}
           <div>
             <h3 className="font-extrabold text-sm text-gray-900 uppercase tracking-wide border-b border-gray-200 pb-1.5 mb-2">
-              1. Commercial Opportunity & Customer Validation
+              {language === 'ar' ? '١. الفرصة التجارية والتحقق من طلب العملاء' : '1. Commercial Opportunity & Customer Validation'}
             </h3>
             <p className="text-gray-700 leading-relaxed mb-3">
               {selectedOpp.businessProblem || selectedOpp.description}
             </p>
             <div className="grid grid-cols-3 gap-3 p-3 bg-blue-50/40 rounded-xl border border-blue-100">
               <div>
-                <span className="text-gray-500 text-[10px] block font-bold">Total Addressable Market (TAM)</span>
+                <span className="text-gray-500 text-[10px] block font-bold">
+                  {language === 'ar' ? 'إجمالي السوق المتاح (TAM)' : 'Total Addressable Market (TAM)'}
+                </span>
                 <strong className="text-gray-900">{fmtSAR(selectedOpp.marketAssessment?.tamSAR || 0)}</strong>
               </div>
               <div>
-                <span className="text-gray-500 text-[10px] block font-bold">Serviceable Obtainable (SOM)</span>
+                <span className="text-gray-500 text-[10px] block font-bold">
+                  {language === 'ar' ? 'الحصة المستهدفة واقعياً (SOM)' : 'Serviceable Obtainable (SOM)'}
+                </span>
                 <strong className="text-[#315EE8]">{fmtSAR(selectedOpp.marketAssessment?.somSAR || 0)}</strong>
               </div>
               <div>
-                <span className="text-gray-500 text-[10px] block font-bold">Paid Pilot Commitments</span>
-                <strong className="text-emerald-700">{selectedOpp.marketAssessment?.paidPilotCommitments || 0} Committed</strong>
+                <span className="text-gray-500 text-[10px] block font-bold">
+                  {language === 'ar' ? 'التزامات التجارب المدفوعة' : 'Paid Pilot Commitments'}
+                </span>
+                <strong className="text-emerald-700">
+                  {selectedOpp.marketAssessment?.paidPilotCommitments || 0} {language === 'ar' ? 'عميل ملتزم' : 'Committed'}
+                </strong>
               </div>
             </div>
           </div>
@@ -184,31 +194,35 @@ export default function ReportsPage() {
           {/* 2. Financial Viability */}
           <div>
             <h3 className="font-extrabold text-sm text-gray-900 uppercase tracking-wide border-b border-gray-200 pb-1.5 mb-2">
-              2. Unit Economics & Break-Even Analysis (Deterministic Engine)
+              {language === 'ar' ? '٢. اقتصاديات الوحدة ونقطة التعادل (المحرك الحتمي)' : '2. Unit Economics & Break-Even Analysis (Deterministic Engine)'}
             </h3>
             <div className="grid grid-cols-4 gap-3 p-3 bg-gray-50 rounded-xl border border-gray-200 mb-3">
               <div>
-                <span className="text-gray-400 text-[10px] block font-bold">Customer Monthly Price</span>
-                <strong className="text-gray-900">{fmtSAR(selectedOpp.financialAssumptions?.monthlyPricePerCustomer || 0)}/mo</strong>
-              </div>
-              <div>
-                <span className="text-gray-400 text-[10px] block font-bold">Unit Contribution</span>
-                <strong className="text-emerald-700">
-                  {fmtSAR(selectedOpp.financialOutputs?.breakEven.monthlyContributionPerCustomer || 0)}/mo
-                </strong>
-              </div>
-              <div>
-                <span className="text-gray-400 text-[10px] block font-bold">Break-Even Customers</span>
+                <span className="text-gray-400 text-[10px] block font-bold">
+                  {language === 'ar' ? 'سعر الاشتراك الشهري' : 'Customer Monthly Price'}
+                </span>
                 <strong className="text-gray-900">
-                  {selectedOpp.financialOutputs?.breakEven.operatingBreakEvenCustomers || 'N/A'} Customers
+                  {fmtSAR(selectedOpp.financialAssumptions?.monthlyPricePerCustomer || 0)}/{language === 'ar' ? 'شهر' : 'mo'}
                 </strong>
               </div>
               <div>
-                <span className="text-gray-400 text-[10px] block font-bold">Investment Payback</span>
+                <span className="text-gray-400 text-[10px] block font-bold">{t('unitContribution')}</span>
+                <strong className="text-emerald-700">
+                  {fmtSAR(selectedOpp.financialOutputs?.breakEven.monthlyContributionPerCustomer || 0)}/{language === 'ar' ? 'شهر' : 'mo'}
+                </strong>
+              </div>
+              <div>
+                <span className="text-gray-400 text-[10px] block font-bold">{t('operatingBreakEven')}</span>
+                <strong className="text-gray-900">
+                  {selectedOpp.financialOutputs?.breakEven.operatingBreakEvenCustomers || 'N/A'} {language === 'ar' ? 'عميل' : 'Customers'}
+                </strong>
+              </div>
+              <div>
+                <span className="text-gray-400 text-[10px] block font-bold">{t('investmentPayback')}</span>
                 <strong className="text-gray-900">
                   {selectedOpp.financialOutputs?.breakEven.investmentPaybackMonth
-                    ? `Month ${selectedOpp.financialOutputs.breakEven.investmentPaybackMonth}`
-                    : '> 24 Months'}
+                    ? `${language === 'ar' ? 'الشهر' : 'Month'} ${selectedOpp.financialOutputs.breakEven.investmentPaybackMonth}`
+                    : (language === 'ar' ? '> ٢٤ شهراً' : '> 24 Months')}
                 </strong>
               </div>
             </div>
@@ -217,7 +231,7 @@ export default function ReportsPage() {
           {/* 3. Mandatory Governance Gates */}
           <div>
             <h3 className="font-extrabold text-sm text-gray-900 uppercase tracking-wide border-b border-gray-200 pb-1.5 mb-2">
-              3. Mandatory Governance Gates Audit
+              {language === 'ar' ? '٣. تدقيق بوابات الحوكمة التسع الإلزامية' : '3. Mandatory Governance Gates Audit'}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {selectedOpp.mandatoryGates?.map((g) => (
@@ -234,7 +248,7 @@ export default function ReportsPage() {
                         : 'bg-gray-100 text-gray-600'
                     }`}
                   >
-                    {g.status.replace('_', ' ')}
+                    {g.status === 'pass' ? t('pass') : g.status === 'conditional_pass' ? t('conditionalPass') : g.status === 'fail' ? t('fail') : t('unassessed')}
                   </span>
                 </div>
               ))}
@@ -244,26 +258,35 @@ export default function ReportsPage() {
           {/* 4. Recommendation & Approval Sign-off */}
           <div className="p-5 bg-gray-50 rounded-2xl border border-gray-300">
             <h3 className="font-extrabold text-sm text-gray-900 uppercase mb-2">
-              4. Executive Sign-Off & Capital Authorization
+              {language === 'ar' ? '٤. الاعتماد التنفيذي وتفويض الميزانية' : '4. Executive Sign-Off & Capital Authorization'}
             </h3>
             <p className="text-gray-700 leading-relaxed mb-6">
-              The Product Investment Office recommends proceeding with <strong>{selectedOpp.recommendation}</strong> under an authorized validation cap of{' '}
-              <strong>{fmtSAR(selectedOpp.approvedBudgetSAR || selectedOpp.proposedValidationBudgetSAR)}</strong>.
+              {language === 'ar'
+                ? `يوصي مكتب استثمار المنتجات بالمضي قُدماً بقرار (${t(`rec${selectedOpp.recommendation}`) || selectedOpp.recommendation}) تحت سقف ميزانية تحقق معتمد قدره ${fmtSAR(selectedOpp.approvedBudgetSAR || selectedOpp.proposedValidationBudgetSAR)}.`
+                : `The Product Investment Office recommends proceeding with ${selectedOpp.recommendation} under an authorized validation cap of ${fmtSAR(selectedOpp.approvedBudgetSAR || selectedOpp.proposedValidationBudgetSAR)}.`}
             </p>
 
             <div className="grid grid-cols-2 gap-8 pt-6 border-t border-gray-300 text-xs">
               <div>
-                <div className="text-gray-400 text-[10px] uppercase font-bold mb-8">Submitted By (Product Lead)</div>
+                <div className="text-gray-400 text-[10px] uppercase font-bold mb-8">
+                  {language === 'ar' ? 'مقدم الطلب (مسؤول المنتج)' : 'Submitted By (Product Lead)'}
+                </div>
                 <div className="border-b border-gray-400 pb-1 font-bold text-gray-900">{selectedOpp.ownerName}</div>
-                <div className="text-[10px] text-gray-500 mt-1">Lead Product Manager, B-IT Technology</div>
+                <div className="text-[10px] text-gray-500 mt-1">
+                  {language === 'ar' ? 'مدير أول المنتجات، تقنية بي-آي-تي' : 'Lead Product Manager, B-IT Technology'}
+                </div>
               </div>
 
               <div>
-                <div className="text-gray-400 text-[10px] uppercase font-bold mb-8">Authorized By (Executive Approver)</div>
-                <div className="border-b border-gray-400 pb-1 font-bold text-gray-900">
-                  {selectedOpp.approvals?.[0]?.reviewedBy || 'Tariq Al-Ghamdi / Khalid Al-Mansoor'}
+                <div className="text-gray-400 text-[10px] uppercase font-bold mb-8">
+                  {language === 'ar' ? 'المعتمد (الإدارة التنفيذية)' : 'Authorized By (Executive Approver)'}
                 </div>
-                <div className="text-[10px] text-gray-500 mt-1">Management Approver, B-IT Technology</div>
+                <div className="border-b border-gray-400 pb-1 font-bold text-gray-900">
+                  {selectedOpp.approvals?.[0]?.reviewedBy || (language === 'ar' ? 'طارق الغامدي / خالد المنصور' : 'Tariq Al-Ghamdi / Khalid Al-Mansoor')}
+                </div>
+                <div className="text-[10px] text-gray-500 mt-1">
+                  {language === 'ar' ? 'لجنة اعتماد الاستثمار، تقنية بي-آي-تي' : 'Management Approver, B-IT Technology'}
+                </div>
               </div>
             </div>
           </div>

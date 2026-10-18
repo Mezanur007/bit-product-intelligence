@@ -33,7 +33,7 @@ export default function OpportunitiesPage() {
 function OpportunitiesContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { currentUser, showToast } = useApp();
+  const { currentUser, showToast, t, fmtCurrency, language, isRtl } = useApp();
 
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [loading, setLoading] = useState(true);
@@ -171,7 +171,7 @@ function OpportunitiesContent() {
     return true;
   });
 
-  const fmtSAR = (n: number) => 'SAR ' + (n || 0).toLocaleString('en-US');
+  const fmtSAR = fmtCurrency;
 
   return (
     <div className="space-y-6">
@@ -180,13 +180,13 @@ function OpportunitiesContent() {
         <div>
           <div className="flex items-center gap-2 text-xs font-bold text-[#315EE8] uppercase tracking-wider mb-1">
             <Layers3 className="w-3.5 h-3.5" />
-            <span>Product Register & Pipeline</span>
+            <span>{t('productRegisterPipeline')}</span>
           </div>
           <h1 className="text-2xl font-extrabold text-[#172033] tracking-tight">
-            Product Opportunities Register
+            {t('productOppsRegister')}
           </h1>
           <p className="text-sm text-[#778397] mt-1">
-            Central repository of recurring-revenue product concepts, evaluated through our 6-step framework.
+            {t('oppsRegisterSubtitle')}
           </p>
         </div>
 
@@ -195,20 +195,22 @@ function OpportunitiesContent() {
           className="px-4 py-2.5 rounded-xl bg-[#315EE8] hover:bg-[#274ec4] text-white text-xs font-bold transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
         >
           <Plus className="w-4 h-4" />
-          <span>New Opportunity</span>
+          <span>{t('newOpportunity')}</span>
         </button>
       </div>
 
       {/* Filter and Search Bar */}
       <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
         <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
+          <Search className={`w-4 h-4 text-gray-400 absolute top-3 ${isRtl ? 'right-3' : 'left-3'}`} />
           <input
             type="text"
-            placeholder="Search by name, ID, or customer..."
+            placeholder={t('searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 bg-[#F5F7FB] border border-[#E6EAF1] rounded-lg text-xs font-medium text-gray-900 outline-none focus:border-[#315EE8]"
+            className={`w-full py-2 bg-[#F5F7FB] border border-[#E6EAF1] rounded-lg text-xs font-medium text-gray-900 outline-none focus:border-[#315EE8] ${
+              isRtl ? 'pr-9 pl-4' : 'pl-9 pr-4'
+            }`}
           />
         </div>
 
@@ -218,13 +220,13 @@ function OpportunitiesContent() {
             onChange={(e) => setSelectedCategory(e.target.value)}
             className="text-xs bg-[#F5F7FB] border border-[#E6EAF1] rounded-lg px-3 py-2 font-medium text-gray-700 outline-none"
           >
-            <option value="all">All Categories</option>
-            <option value="saas">SaaS</option>
-            <option value="ai_agent">AI Agent</option>
-            <option value="custom_software">Custom Software</option>
-            <option value="partnership">Partnership</option>
-            <option value="subscription_service">Subscription Service</option>
-            <option value="white_label">White Label</option>
+            <option value="all">{t('allCategories')}</option>
+            <option value="saas">{t('catSaaS')}</option>
+            <option value="ai_agent">{t('catAIAgent')}</option>
+            <option value="custom_software">{t('catCustomSoftware')}</option>
+            <option value="partnership">{t('catPartnership')}</option>
+            <option value="subscription_service">{t('catSubscriptionService')}</option>
+            <option value="white_label">{t('catWhiteLabel')}</option>
           </select>
 
           <select
@@ -232,15 +234,15 @@ function OpportunitiesContent() {
             onChange={(e) => setSelectedStatus(e.target.value)}
             className="text-xs bg-[#F5F7FB] border border-[#E6EAF1] rounded-lg px-3 py-2 font-medium text-gray-700 outline-none"
           >
-            <option value="all">All Statuses</option>
-            <option value="idea">Idea</option>
-            <option value="discovery">Discovery</option>
-            <option value="evaluation">Evaluation</option>
-            <option value="decision_pending">Decision Pending</option>
-            <option value="pilot_approved">Pilot Approved</option>
-            <option value="approved_for_launch">Approved for Launch</option>
-            <option value="on_hold">On Hold</option>
-            <option value="rejected">Rejected / Dropped</option>
+            <option value="all">{t('allStatuses')}</option>
+            <option value="idea">{t('statusIdea')}</option>
+            <option value="discovery">{t('statusDiscovery')}</option>
+            <option value="evaluation">{t('statusEvaluation')}</option>
+            <option value="decision_pending">{t('statusDecisionPending')}</option>
+            <option value="pilot_approved">{t('statusPilotApproved')}</option>
+            <option value="approved_for_launch">{t('statusApprovedForLaunch')}</option>
+            <option value="on_hold">{t('statusOnHold')}</option>
+            <option value="rejected">{t('statusRejected')}</option>
           </select>
 
           {(searchQuery || selectedCategory !== 'all' || selectedStatus !== 'all') && (
@@ -252,7 +254,7 @@ function OpportunitiesContent() {
               }}
               className="text-xs text-gray-500 hover:text-gray-900 px-2 py-1 font-semibold"
             >
-              Reset
+              {language === 'ar' ? 'إعادة تعيين' : 'Reset'}
             </button>
           )}
         </div>
@@ -264,26 +266,26 @@ function OpportunitiesContent() {
           <table className="w-full text-left text-xs">
             <thead className="bg-[#F8FAFC] text-[#778397] uppercase tracking-wider font-semibold border-b border-[#E6EAF1]">
               <tr>
-                <th className="py-3 px-5">Opportunity & Code</th>
-                <th className="py-3 px-4">Category</th>
-                <th className="py-3 px-4">Validation Budget</th>
-                <th className="py-3 px-4">Weighted Score</th>
-                <th className="py-3 px-4">Recommendation</th>
-                <th className="py-3 px-4">Lifecycle Status</th>
-                <th className="py-3 px-5 text-right">Actions</th>
+                <th className="py-3 px-5">{t('thOpportunity')}</th>
+                <th className="py-3 px-4">{t('thCategory')}</th>
+                <th className="py-3 px-4">{t('thValidationBudget')}</th>
+                <th className="py-3 px-4">{t('thWeightedScore')}</th>
+                <th className="py-3 px-4">{t('thRecommendation')}</th>
+                <th className="py-3 px-4">{t('thStatus')}</th>
+                <th className="py-3 px-5 text-right">{t('thActions')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#E6EAF1]">
               {loading ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-gray-400">
-                    Loading opportunities...
+                    {language === 'ar' ? 'جاري تحميل الفرص...' : 'Loading opportunities...'}
                   </td>
                 </tr>
               ) : filtered.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-gray-500">
-                    No matching opportunities. Try adjusting filters or create a new one.
+                    {t('noOpportunitiesFound')}
                   </td>
                 </tr>
               ) : (
@@ -294,7 +296,7 @@ function OpportunitiesContent() {
                         {o.name}
                       </Link>
                       <div className="text-[11px] text-gray-400 mt-0.5">
-                        {o.id} · <span className="text-gray-600">{o.targetCustomerSegment || 'Saudi SMEs'}</span> · Owner: {o.ownerName}
+                        {o.id} · <span className="text-gray-600">{o.targetCustomerSegment || (language === 'ar' ? 'المنشآت السعودية الصغيرة والمتوسطة' : 'Saudi SMEs')}</span> · {language === 'ar' ? 'المسؤول' : 'Owner'}: {o.ownerName}
                       </div>
                     </td>
                     <td className="py-4 px-4">
@@ -334,7 +336,7 @@ function OpportunitiesContent() {
                             : 'bg-red-100 text-red-800'
                         }`}
                       >
-                        {o.recommendation}
+                        {t(`rec${o.recommendation}`) || o.recommendation}
                       </span>
                     </td>
                     <td className="py-4 px-4">
@@ -358,17 +360,17 @@ function OpportunitiesContent() {
                         <button
                           onClick={() => {
                             setCloneModalOpp(o);
-                            setCloneNewTitle(`${o.name} (Alternative Pricing/Market)`);
+                            setCloneNewTitle(`${o.name} (${language === 'ar' ? 'نسخة بديلة' : 'Alternative Pricing/Market'})`);
                           }}
                           className="p-1.5 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
-                          title="Clone opportunity to test alternative scenario"
+                          title={t('cloneOpp')}
                         >
                           <Copy className="w-3.5 h-3.5" />
                         </button>
                         <button
                           onClick={() => handleArchive(o.id, o.name)}
                           className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                          title="Archive opportunity"
+                          title={t('archiveOpp')}
                         >
                           <Archive className="w-3.5 h-3.5" />
                         </button>
@@ -376,7 +378,7 @@ function OpportunitiesContent() {
                           href={`/opportunities/${o.id}`}
                           className="px-3 py-1.5 rounded-lg bg-blue-50 text-[#315EE8] font-bold text-xs hover:bg-blue-100 transition-colors flex items-center gap-1"
                         >
-                          <span>Workspace</span>
+                          <span>{t('btnWorkspace')}</span>
                           <ArrowUpRight className="w-3.5 h-3.5" />
                         </Link>
                       </div>
@@ -395,8 +397,10 @@ function OpportunitiesContent() {
           <div className="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-gray-200">
             <div className="flex items-center justify-between pb-4 border-b border-gray-100">
               <div>
-                <span className="text-[10px] font-bold text-[#315EE8] uppercase tracking-wider">New Record</span>
-                <h3 className="text-lg font-bold text-gray-900">Create Product Opportunity</h3>
+                <span className="text-[10px] font-bold text-[#315EE8] uppercase tracking-wider">
+                  {language === 'ar' ? 'سجل جديد' : 'New Record'}
+                </span>
+                <h3 className="text-lg font-bold text-gray-900">{t('createOppModalTitle')}</h3>
               </div>
               <button
                 onClick={() => setShowCreateModal(false)}
@@ -409,12 +413,12 @@ function OpportunitiesContent() {
             <form onSubmit={handleCreate} className="space-y-4 mt-4 text-xs">
               <div>
                 <label className="block font-bold text-gray-800 mb-1">
-                  Product / Opportunity Name <span className="text-red-500">*</span>
+                  {t('productName')} <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. SME WhatsApp IT Ticketing Desk"
+                  placeholder={language === 'ar' ? 'مثال: منصة دعم تذاكر تقنية عبر الواتساب للمنشآت' : 'e.g. SME WhatsApp IT Ticketing Desk'}
                   value={createForm.name}
                   onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
@@ -423,24 +427,24 @@ function OpportunitiesContent() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-bold text-gray-800 mb-1">Product Category</label>
+                  <label className="block font-bold text-gray-800 mb-1">{t('thCategory')}</label>
                   <select
                     value={createForm.category}
                     onChange={(e) => setCreateForm({ ...createForm, category: e.target.value as any })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none bg-white"
                   >
-                    <option value="saas">SaaS Product</option>
-                    <option value="ai_agent">AI Application / Agent</option>
-                    <option value="custom_software">Custom Software</option>
-                    <option value="partnership">Technology Partnership</option>
-                    <option value="white_label">White Label Product</option>
-                    <option value="subscription_service">Subscription Service</option>
-                    <option value="other">Other Business Opportunity</option>
+                    <option value="saas">{t('catSaaS')}</option>
+                    <option value="ai_agent">{t('catAIAgent')}</option>
+                    <option value="custom_software">{t('catCustomSoftware')}</option>
+                    <option value="partnership">{t('catPartnership')}</option>
+                    <option value="white_label">{t('catWhiteLabel')}</option>
+                    <option value="subscription_service">{t('catSubscriptionService')}</option>
+                    <option value="other">{t('catOther')}</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block font-bold text-gray-800 mb-1">Validation Budget Cap (SAR)</label>
+                  <label className="block font-bold text-gray-800 mb-1">{t('valBudgetSAR')}</label>
                   <input
                     type="number"
                     max={25000}
@@ -448,15 +452,17 @@ function OpportunitiesContent() {
                     onChange={(e) => setCreateForm({ ...createForm, proposedValidationBudgetSAR: Number(e.target.value) })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
                   />
-                  <span className="text-[10px] text-gray-400">Team cap: SAR 25,000</span>
+                  <span className="text-[10px] text-gray-400">
+                    {language === 'ar' ? 'سقف ميزانية الفريق: 25,000 ر.س' : 'Team cap: SAR 25,000'}
+                  </span>
                 </div>
               </div>
 
               <div>
-                <label className="block font-bold text-gray-800 mb-1">Target Customer Segment</label>
+                <label className="block font-bold text-gray-800 mb-1">{t('targetSegment')}</label>
                 <input
                   type="text"
-                  placeholder="e.g. Mid-sized Saudi logistics & e-commerce companies"
+                  placeholder={language === 'ar' ? 'مثال: شركات الخدمات اللوجستية والتجارة الإلكترونية المتوسطة بالسعودية' : 'e.g. Mid-sized Saudi logistics & e-commerce companies'}
                   value={createForm.targetCustomerSegment}
                   onChange={(e) => setCreateForm({ ...createForm, targetCustomerSegment: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
@@ -464,10 +470,10 @@ function OpportunitiesContent() {
               </div>
 
               <div>
-                <label className="block font-bold text-gray-800 mb-1">Customer Problem Statement</label>
+                <label className="block font-bold text-gray-800 mb-1">{t('businessProblem')}</label>
                 <textarea
                   rows={2}
-                  placeholder="What specific pain point does the customer experience today?"
+                  placeholder={language === 'ar' ? 'ما هي المشكلة المحددة التي يعاني منها العميل حالياً؟' : 'What specific pain point does the customer experience today?'}
                   value={createForm.businessProblem}
                   onChange={(e) => setCreateForm({ ...createForm, businessProblem: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
@@ -475,10 +481,10 @@ function OpportunitiesContent() {
               </div>
 
               <div>
-                <label className="block font-bold text-gray-800 mb-1">Proposed B-IT Solution</label>
+                <label className="block font-bold text-gray-800 mb-1">{t('proposedSolution')}</label>
                 <textarea
                   rows={2}
-                  placeholder="How does B-IT address this problem with differentiation?"
+                  placeholder={language === 'ar' ? 'كيف تعالج بي-آي-تي هذه المشكلة بتميّز وميزة تنافسية؟' : 'How does B-IT address this problem with differentiation?'}
                   value={createForm.proposedSolution}
                   onChange={(e) => setCreateForm({ ...createForm, proposedSolution: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
@@ -491,13 +497,13 @@ function OpportunitiesContent() {
                   onClick={() => setShowCreateModal(false)}
                   className="px-4 py-2 rounded-lg border border-gray-300 font-bold text-gray-700 hover:bg-gray-50"
                 >
-                  Cancel
+                  {t('cancel')}
                 </button>
                 <button
                   type="submit"
                   className="px-5 py-2 rounded-lg bg-[#315EE8] hover:bg-[#274ec4] text-white font-bold shadow-md shadow-blue-600/20"
                 >
-                  Create Opportunity
+                  {t('registerOpportunity')}
                 </button>
               </div>
             </form>
@@ -509,12 +515,14 @@ function OpportunitiesContent() {
       {cloneModalOpp && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-200 text-xs">
-            <h3 className="text-base font-bold text-gray-900 mb-1">Clone Opportunity</h3>
+            <h3 className="text-base font-bold text-gray-900 mb-1">{t('cloneModalTitle')}</h3>
             <p className="text-gray-500 mb-4">
-              Duplicate &quot;{cloneModalOpp.name}&quot; to test a new market segment, different pricing tiers, or a partnership variant.
+              {language === 'ar'
+                ? `استنساخ "${cloneModalOpp.name}" لاختبار شريحة سوقية جديدة، أو فئات تسعير بديلة، أو نموذج شراكة.`
+                : `Duplicate "${cloneModalOpp.name}" to test a new market segment, different pricing tiers, or a partnership variant.`}
             </p>
 
-            <label className="block font-bold text-gray-800 mb-1">New Opportunity Title</label>
+            <label className="block font-bold text-gray-800 mb-1">{t('cloneNewName')}</label>
             <input
               type="text"
               value={cloneNewTitle}
@@ -527,13 +535,13 @@ function OpportunitiesContent() {
                 onClick={() => setCloneModalOpp(null)}
                 className="px-4 py-2 border border-gray-300 rounded-lg font-bold text-gray-700 hover:bg-gray-50"
               >
-                Cancel
+                {t('cancel')}
               </button>
               <button
                 onClick={handleClone}
                 className="px-4 py-2 bg-[#315EE8] text-white rounded-lg font-bold hover:bg-[#274ec4]"
               >
-                Confirm Clone
+                {t('cloneAction')}
               </button>
             </div>
           </div>

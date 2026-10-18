@@ -15,8 +15,10 @@ import {
   Plus,
 } from 'lucide-react';
 import { Opportunity, Competitor, ResearchSource, VerificationStatus } from '@/lib/db/types';
+import { useApp } from '@/components/providers/AppProvider';
 
 export default function MarketIntelligencePage() {
+  const { t, fmtCurrency, language, isRtl } = useApp();
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -50,7 +52,7 @@ export default function MarketIntelligencePage() {
     }
   }
 
-  const fmtSAR = (n: number) => 'SAR ' + (n || 0).toLocaleString('en-US');
+  const fmtSAR = fmtCurrency;
 
   return (
     <div className="space-y-6">
@@ -59,13 +61,17 @@ export default function MarketIntelligencePage() {
         <div>
           <div className="flex items-center gap-2 text-xs font-bold text-[#315EE8] uppercase tracking-wider mb-1">
             <Search className="w-3.5 h-3.5" />
-            <span>Module Six — Market Research & Source Management</span>
+            <span>
+              {language === 'ar' ? 'الوحدة السادسة — أبحاث السوق وإدارة مصادر الأدلة' : 'Module Six — Market Research & Source Management'}
+            </span>
           </div>
           <h1 className="text-2xl font-extrabold text-[#172033] tracking-tight">
-            Market & Competitor Intelligence Hub
+            {language === 'ar' ? 'مركز استخبارات السوق والمنافسين' : 'Market & Competitor Intelligence Hub'}
           </h1>
           <p className="text-sm text-[#778397] mt-1">
-            Evidence classification, verified market sources, and competitive benchmarking for Saudi commercial IT products.
+            {language === 'ar'
+              ? 'تصنيف الأدلة، ومصادر السوق الموثقة، ومقارنة المنافسين للمنتجات التقنية التجارية في السعودية.'
+              : 'Evidence classification, verified market sources, and competitive benchmarking for Saudi commercial IT products.'}
           </p>
         </div>
 
@@ -73,10 +79,14 @@ export default function MarketIntelligencePage() {
         <div className="bg-blue-50/80 p-3 rounded-xl border border-blue-200/80 max-w-sm text-xs">
           <div className="flex items-center gap-2 text-[#315EE8] font-bold">
             <Sparkles className="w-4 h-4" />
-            <span>AI Automated Research Agent (Phase 2)</span>
+            <span>
+              {language === 'ar' ? 'وكيل أبحاث الذكاء الاصطناعي المؤتمت (المرحلة الثانية)' : 'AI Automated Research Agent (Phase 2)'}
+            </span>
           </div>
           <p className="text-gray-600 text-[11px] mt-0.5 leading-relaxed">
-            Autonomous web research, pricing extraction, and source verification with mandatory human approval.
+            {language === 'ar'
+              ? 'أبحاث ويب مستقلة، واستخراج للأسعار، وتوثيق للمصادر مع اشتراط موافقة بشرية إلزامية.'
+              : 'Autonomous web research, pricing extraction, and source verification with mandatory human approval.'}
           </p>
         </div>
       </div>
@@ -85,31 +95,37 @@ export default function MarketIntelligencePage() {
       <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
         <div className="flex items-center justify-between pb-4 border-b border-gray-100">
           <div>
-            <h3 className="font-bold text-base text-[#172033]">Competitive Pricing & Arabic Support Landscape</h3>
+            <h3 className="font-bold text-base text-[#172033]">
+              {language === 'ar' ? 'مشهد تسعير المنافسين ودعم اللغة العربية' : 'Competitive Pricing & Arabic Support Landscape'}
+            </h3>
             <p className="text-xs text-[#778397] mt-0.5">
-              Aggregated competitor benchmarks across all evaluated B-IT product opportunities.
+              {language === 'ar'
+                ? 'مقارنات معيارية مجمعة للمنافسين عبر كافة فرص منتجات بي-آي-تي قيد التقييم.'
+                : 'Aggregated competitor benchmarks across all evaluated B-IT product opportunities.'}
             </p>
           </div>
-          <span className="text-xs font-bold text-[#315EE8]">{allCompetitors.length} Benchmarks Logged</span>
+          <span className="text-xs font-bold text-[#315EE8]">
+            {allCompetitors.length} {language === 'ar' ? 'مقارنات مسجلة' : 'Benchmarks Logged'}
+          </span>
         </div>
 
         <div className="mt-4 overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="bg-[#F8FAFC] text-gray-500 font-bold uppercase border-b border-gray-200">
               <tr>
-                <th className="py-2.5 px-3">Competitor</th>
-                <th className="py-2.5 px-3">Associated Product</th>
-                <th className="py-2.5 px-3">Observed Price</th>
-                <th className="py-2.5 px-3">Arabic UX</th>
-                <th className="py-2.5 px-3">Key Weaknesses</th>
-                <th className="py-2.5 px-3">B-IT Differentiation</th>
+                <th className="py-2.5 px-3">{language === 'ar' ? 'المنافس' : 'Competitor'}</th>
+                <th className="py-2.5 px-3">{language === 'ar' ? 'المنتج المرتبط' : 'Associated Product'}</th>
+                <th className="py-2.5 px-3">{language === 'ar' ? 'السعر المرصود' : 'Observed Price'}</th>
+                <th className="py-2.5 px-3">{language === 'ar' ? 'دعم العربية' : 'Arabic UX'}</th>
+                <th className="py-2.5 px-3">{language === 'ar' ? 'نقاط الضعف الجوهرية' : 'Key Weaknesses'}</th>
+                <th className="py-2.5 px-3">{language === 'ar' ? 'فرصة التمايز لـ بي-آي-تي' : 'B-IT Differentiation'}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {allCompetitors.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="py-8 text-center text-gray-400">
-                    No competitor benchmarks recorded yet. Add competitors within an opportunity workspace.
+                    {language === 'ar' ? 'لم يتم تسجيل مقارنات منافسين بعد.' : 'No competitor benchmarks recorded yet. Add competitors within an opportunity workspace.'}
                   </td>
                 </tr>
               ) : (
@@ -133,7 +149,7 @@ export default function MarketIntelligencePage() {
                           c.hasArabicSupport ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
                         }`}
                       >
-                        {c.hasArabicSupport ? 'Arabic' : 'English Only'}
+                        {c.hasArabicSupport ? (language === 'ar' ? 'يدعم العربية' : 'Arabic') : (language === 'ar' ? 'إنجليزية فقط' : 'English Only')}
                       </span>
                     </td>
                     <td className="py-3 px-3 text-gray-600 max-w-xs">{c.mainWeaknesses}</td>
@@ -150,31 +166,37 @@ export default function MarketIntelligencePage() {
       <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
         <div className="flex items-center justify-between pb-4 border-b border-gray-100">
           <div>
-            <h3 className="font-bold text-base text-[#172033]">Market Research Sources & Evidence Classification</h3>
+            <h3 className="font-bold text-base text-[#172033]">
+              {language === 'ar' ? 'مصادر أبحاث السوق وتصنيف الأدلة' : 'Market Research Sources & Evidence Classification'}
+            </h3>
             <p className="text-xs text-[#778397] mt-0.5">
-              Classified records with clear distinction between verified data and management assumptions.
+              {language === 'ar'
+                ? 'سجلات مصنفة مع تمييز صريح بين البيانات الموثقة وافتراضات الإدارة.'
+                : 'Classified records with clear distinction between verified data and management assumptions.'}
             </p>
           </div>
-          <span className="text-xs font-bold text-[#159769]">{allSources.length} Classified Sources</span>
+          <span className="text-xs font-bold text-[#159769]">
+            {allSources.length} {language === 'ar' ? 'مصادر مصنفة' : 'Classified Sources'}
+          </span>
         </div>
 
         <div className="mt-4 overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="bg-[#F8FAFC] text-gray-500 font-bold uppercase border-b border-gray-200">
               <tr>
-                <th className="py-2.5 px-3">Publisher & Page Title</th>
-                <th className="py-2.5 px-3">Source Type</th>
-                <th className="py-2.5 px-3">Extracted Claim / Value</th>
-                <th className="py-2.5 px-3">Verification Status</th>
-                <th className="py-2.5 px-3">Date Accessed</th>
-                <th className="py-2.5 px-3">Researcher</th>
+                <th className="py-2.5 px-3">{language === 'ar' ? 'الناشر وعنوان الصفحة' : 'Publisher & Page Title'}</th>
+                <th className="py-2.5 px-3">{language === 'ar' ? 'نوع المصدر' : 'Source Type'}</th>
+                <th className="py-2.5 px-3">{language === 'ar' ? 'البيان المستخرج / القيمة' : 'Extracted Claim / Value'}</th>
+                <th className="py-2.5 px-3">{language === 'ar' ? 'حالة التوثيق' : 'Verification Status'}</th>
+                <th className="py-2.5 px-3">{language === 'ar' ? 'تاريخ الوصول' : 'Date Accessed'}</th>
+                <th className="py-2.5 px-3">{language === 'ar' ? 'الباحث' : 'Researcher'}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {allSources.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="py-8 text-center text-gray-400">
-                    No external research sources recorded.
+                    {language === 'ar' ? 'لم يتم تسجيل مصادر أبحاث خارجية بعد.' : 'No external research sources recorded.'}
                   </td>
                 </tr>
               ) : (
@@ -199,7 +221,7 @@ export default function MarketIntelligencePage() {
                     </td>
                     <td className="py-3 px-3 text-gray-800 font-medium max-w-sm">
                       {s.relevantClaim}
-                      {s.extractedValue && <span className="block font-bold text-emerald-700 mt-0.5">Value: {s.extractedValue}</span>}
+                      {s.extractedValue && <span className="block font-bold text-emerald-700 mt-0.5">{language === 'ar' ? 'القيمة:' : 'Value:'} {s.extractedValue}</span>}
                     </td>
                     <td className="py-3 px-3">
                       <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-100 text-emerald-800">

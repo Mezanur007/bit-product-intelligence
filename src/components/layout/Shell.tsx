@@ -18,29 +18,40 @@ import {
   Sparkles,
   Menu,
   X,
-  Database,
-  RefreshCw,
-  ExternalLink,
+  Languages,
 } from 'lucide-react';
 import { useApp, ALL_USERS } from '../providers/AppProvider';
 
 export default function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { currentUser, setCurrentUser, isDemoMode, setIsDemoMode, showToast } = useApp();
+  const {
+    currentUser,
+    setCurrentUser,
+    isDemoMode,
+    setIsDemoMode,
+    showToast,
+    language,
+    direction,
+    toggleLanguage,
+    t,
+  } = useApp();
+
   const [collapsed, setCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
 
+  const isRtl = direction === 'rtl';
+
   const navItems = [
-    { name: 'Overview', href: '/', icon: LayoutDashboard },
-    { name: 'Opportunities', href: '/opportunities', icon: Layers3 },
-    { name: 'Financial Simulator', href: '/financial-simulator', icon: ChartNoAxesCombined },
-    { name: 'Market Intelligence', href: '/market-intelligence', icon: Search },
-    { name: 'Portfolio & Launches', href: '/portfolio', icon: Rocket },
-    { name: 'Executive Reports', href: '/reports', icon: FileText },
-    { name: 'Team & Approvals', href: '/team', icon: Users },
-    { name: 'Settings', href: '/settings', icon: Settings },
+    { name: t('navOverview'), href: '/', icon: LayoutDashboard },
+    { name: t('navOpportunities'), href: '/opportunities', icon: Layers3 },
+    { name: t('navFinancialSimulator'), href: '/financial-simulator', icon: ChartNoAxesCombined },
+    { name: t('navMarketIntelligence'), href: '/market-intelligence', icon: Search },
+    { name: t('navPortfolio'), href: '/portfolio', icon: Rocket },
+    { name: t('navReports'), href: '/reports', icon: FileText },
+    { name: t('navTeam'), href: '/team', icon: Users },
+    { name: t('navSettings'), href: '/settings', icon: Settings },
   ];
 
   const handleResetDemo = async () => {
@@ -51,11 +62,11 @@ export default function Shell({ children }: { children: React.ReactNode }) {
       });
       if (res.ok) {
         setIsDemoMode(true);
-        showToast('Reset to standard B-IT demo portfolio');
+        showToast(isRtl ? 'تمت استعادة محفظة النماذج التجريبية' : 'Reset to standard B-IT demo portfolio');
         window.location.reload();
       }
     } catch {
-      showToast('Failed to reset demo data');
+      showToast(isRtl ? 'خطأ في استعادة النماذج' : 'Failed to reset demo data');
     }
   };
 
@@ -67,16 +78,16 @@ export default function Shell({ children }: { children: React.ReactNode }) {
       });
       if (res.ok) {
         setIsDemoMode(false);
-        showToast('All sample data cleared. Honest zero-data active.');
+        showToast(isRtl ? 'تم مسح البيانات. وضع الصفر الفعلي نشط.' : 'All sample data cleared. Honest zero-data active.');
         window.location.reload();
       }
     } catch {
-      showToast('Failed to clear data');
+      showToast(isRtl ? 'خطأ في مسح البيانات' : 'Failed to clear data');
     }
   };
 
   return (
-    <div className="min-h-screen flex bg-[#F5F7FB] text-[#172033]">
+    <div className={`min-h-screen flex bg-[#F5F7FB] text-[#172033] ${isRtl ? 'font-arabic' : ''}`}>
       {/* Mobile Backdrop */}
       {mobileMenuOpen && (
         <div
@@ -87,9 +98,15 @@ export default function Shell({ children }: { children: React.ReactNode }) {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-40 bg-[#111827] text-white transition-all duration-200 flex flex-col justify-between ${
-          collapsed ? 'w-20' : 'w-64'
-        } ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
+        className={`fixed top-0 bottom-0 z-40 bg-[#111827] text-white transition-all duration-200 flex flex-col justify-between ${
+          isRtl
+            ? `right-0 border-l border-gray-800 ${
+                mobileMenuOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
+              }`
+            : `left-0 border-r border-gray-800 ${
+                mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+              }`
+        } ${collapsed ? 'w-20' : 'w-64'}`}
       >
         <div>
           {/* Brand Header */}
@@ -101,10 +118,11 @@ export default function Shell({ children }: { children: React.ReactNode }) {
               {!collapsed && (
                 <div className="leading-tight">
                   <div className="font-bold text-sm tracking-wide text-white">
-                    B-IT <span className="text-[#6484FF]">TECHNOLOGY</span>
+                    {isRtl ? 'بي-آي-تي' : 'B-IT'}{' '}
+                    <span className="text-[#6484FF]">{isRtl ? 'للتقنية' : 'TECHNOLOGY'}</span>
                   </div>
                   <div className="text-[10px] text-gray-400 font-semibold tracking-wider uppercase">
-                    Product Intelligence
+                    {isRtl ? 'ذكاء المنتجات والاستثمار' : 'Product Intelligence'}
                   </div>
                 </div>
               )}
@@ -121,7 +139,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           {/* Navigation Links */}
           <div className="p-3">
             <div className="px-3 py-2 text-[11px] font-bold text-gray-400 tracking-wider uppercase">
-              {!collapsed && 'Workspace'}
+              {!collapsed && t('workspace')}
             </div>
             <nav className="space-y-1">
               {navItems.map((item) => {
@@ -153,13 +171,13 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             <div className="p-3 rounded-xl bg-gray-900/90 border border-gray-800 text-xs">
               <div className="flex items-center gap-2 text-[#6484FF] font-semibold mb-1">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>AI Research Agent</span>
+                <span>{t('aiAgentTitle')}</span>
               </div>
               <p className="text-gray-400 text-[11px] leading-relaxed mb-2">
-                Evidence-first market research with mandatory human approval.
+                {t('aiAgentDesc')}
               </p>
               <span className="inline-block px-2 py-0.5 rounded bg-blue-900/60 text-[#6484FF] text-[10px] font-bold">
-                PHASE 2 READY
+                {t('phase2Ready')}
               </span>
             </div>
           )}
@@ -180,7 +198,17 @@ export default function Shell({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Main Layout Area */}
-      <div className={`flex-1 flex flex-col transition-all duration-200 ${collapsed ? 'lg:pl-20' : 'lg:pl-64'}`}>
+      <div
+        className={`flex-1 flex flex-col transition-all duration-200 ${
+          isRtl
+            ? collapsed
+              ? 'lg:pr-20'
+              : 'lg:pr-64'
+            : collapsed
+            ? 'lg:pl-20'
+            : 'lg:pl-64'
+        }`}
+      >
         {/* Top Navbar */}
         <header className="h-16 bg-white border-b border-[#E6EAF1] px-5 flex items-center justify-between sticky top-0 z-30 shadow-xs">
           <div className="flex items-center gap-4">
@@ -191,23 +219,53 @@ export default function Shell({ children }: { children: React.ReactNode }) {
               <Menu className="w-5 h-5" />
             </button>
             <div className="text-xs text-[#778397] flex items-center gap-2">
-              <span className="font-semibold text-[#172033]">B-IT Intelligence</span>
+              <span className="font-semibold text-[#172033]">
+                {isRtl ? 'منصة بي-آي-تي الذكية' : 'B-IT Intelligence'}
+              </span>
               <span>/</span>
-              <span className="capitalize">{pathname === '/' ? 'Executive Dashboard' : pathname.replace('/', '').replace('-', ' ')}</span>
+              <span className="capitalize">
+                {pathname === '/'
+                  ? t('navOverview')
+                  : pathname === '/opportunities'
+                  ? t('navOpportunities')
+                  : pathname === '/financial-simulator'
+                  ? t('navFinancialSimulator')
+                  : pathname === '/market-intelligence'
+                  ? t('navMarketIntelligence')
+                  : pathname === '/portfolio'
+                  ? t('navPortfolio')
+                  : pathname === '/reports'
+                  ? t('navReports')
+                  : pathname === '/team'
+                  ? t('navTeam')
+                  : pathname === '/settings'
+                  ? t('navSettings')
+                  : pathname.replace('/', '')}
+              </span>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
+            {/* Language Switcher Pill */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#315EE8] bg-blue-50 text-[#315EE8] text-xs font-bold hover:bg-blue-100 transition-colors shadow-xs"
+              title={isRtl ? 'Switch to English (LTR)' : 'التحويل إلى العربية (RTL)'}
+            >
+              <Languages className="w-3.5 h-3.5" />
+              <span>{isRtl ? 'English (LTR)' : 'العربية (RTL)'}</span>
+            </button>
+
             {/* Demo / Zero Data Mode Switcher */}
             <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border border-amber-200 bg-amber-50 text-amber-800">
               <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-              <span>{isDemoMode ? 'Sample Data Active' : 'Zero Data Mode'}</span>
+              <span>{isDemoMode ? t('sampleDataActive') : t('zeroDataMode')}</span>
               <button
                 onClick={isDemoMode ? handleResetZero : handleResetDemo}
-                className="ml-2 underline text-[11px] hover:text-amber-900"
-                title={isDemoMode ? 'Clear all demo records to start with empty honest state' : 'Load sample demo opportunities'}
+                className="mx-1 underline text-[11px] hover:text-amber-900 font-bold"
+                title={isDemoMode ? 'Clear all demo records' : 'Load sample demo opportunities'}
               >
-                {isDemoMode ? 'Clear to Zero' : 'Load Demo'}
+                {isDemoMode ? t('clearToZero') : t('loadDemo')}
               </button>
             </div>
 
@@ -223,21 +281,33 @@ export default function Shell({ children }: { children: React.ReactNode }) {
               </button>
 
               {notifOpen && (
-                <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-200 p-4 z-50 text-xs">
+                <div
+                  className={`absolute ${
+                    isRtl ? 'left-0' : 'right-0'
+                  } mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-200 p-4 z-50 text-xs`}
+                >
                   <div className="flex items-center justify-between pb-2 border-b border-gray-100 font-semibold text-gray-800">
-                    <span>Platform Alerts</span>
-                    <span className="text-[10px] text-blue-600 font-bold">2 NEW</span>
+                    <span>{isRtl ? 'تنبيهات المنصة' : 'Platform Alerts'}</span>
+                    <span className="text-[10px] text-blue-600 font-bold">{isRtl ? '٢ جديد' : '2 NEW'}</span>
                   </div>
                   <div className="divide-y divide-gray-100 mt-2 space-y-2">
                     <div className="pt-2">
-                      <div className="font-semibold text-gray-900">Decision Pending: SME IT Helpdesk</div>
-                      <div className="text-gray-500 mt-0.5">Pilot approval requested by Mezanur Rahman.</div>
-                      <div className="text-[10px] text-gray-400 mt-1">Today 08:30 AM</div>
+                      <div className="font-semibold text-gray-900">
+                        {isRtl ? 'بانتظار القرار: مكتب الدعم الفني' : 'Decision Pending: SME IT Helpdesk'}
+                      </div>
+                      <div className="text-gray-500 mt-0.5">
+                        {isRtl ? 'طلب اعتماد التجربة مقدم من مزمل الرحمن.' : 'Pilot approval requested by Mezanur Rahman.'}
+                      </div>
+                      <div className="text-[10px] text-gray-400 mt-1">{isRtl ? 'اليوم ٠٨:٣٠ ص' : 'Today 08:30 AM'}</div>
                     </div>
                     <div className="pt-2">
-                      <div className="font-semibold text-amber-800">Saudi PDPL Review Required</div>
-                      <div className="text-gray-500 mt-0.5">Confirm AWS Riyadh residency compliance.</div>
-                      <div className="text-[10px] text-gray-400 mt-1">Yesterday</div>
+                      <div className="font-semibold text-amber-800">
+                        {isRtl ? 'فحص الامتثال لنظام حماية البيانات (PDPL)' : 'Saudi PDPL Review Required'}
+                      </div>
+                      <div className="text-gray-500 mt-0.5">
+                        {isRtl ? 'تأكيد استضافة البيانات داخل منطقة الرياض.' : 'Confirm AWS Riyadh residency compliance.'}
+                      </div>
+                      <div className="text-[10px] text-gray-400 mt-1">{isRtl ? 'أمس' : 'Yesterday'}</div>
                     </div>
                   </div>
                 </div>
@@ -261,9 +331,13 @@ export default function Shell({ children }: { children: React.ReactNode }) {
               </button>
 
               {userDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200 p-2 z-50 text-xs">
+                <div
+                  className={`absolute ${
+                    isRtl ? 'left-0' : 'right-0'
+                  } mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200 p-2 z-50 text-xs`}
+                >
                   <div className="px-3 py-2 border-b border-gray-100 font-semibold text-gray-500 text-[10px] uppercase tracking-wider">
-                    Switch Active User Role (RBAC)
+                    {t('switchRole')}
                   </div>
                   <div className="py-1">
                     {ALL_USERS.map((u) => (
@@ -272,7 +346,11 @@ export default function Shell({ children }: { children: React.ReactNode }) {
                         onClick={() => {
                           setCurrentUser(u);
                           setUserDropdownOpen(false);
-                          showToast(`Switched to ${u.name} (${u.roleTitle})`);
+                          showToast(
+                            isRtl
+                              ? `تم التبديل إلى: ${u.name} (${u.roleTitle})`
+                              : `Switched to ${u.name} (${u.roleTitle})`
+                          );
                         }}
                         className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2.5 transition-colors ${
                           currentUser.id === u.id ? 'bg-blue-50 text-[#315EE8] font-semibold' : 'text-gray-700 hover:bg-gray-50'
@@ -299,10 +377,14 @@ export default function Shell({ children }: { children: React.ReactNode }) {
 
         {/* Footer */}
         <footer className="h-14 border-t border-[#E6EAF1] bg-white px-5 md:px-8 flex items-center justify-between text-xs text-[#778397] no-print">
-          <div>© B-IT Technology · Product Intelligence & Investment Decision Platform</div>
+          <div>
+            {isRtl
+              ? '© تقنية بي-آي-تي · منصة ذكاء المنتجات وقرارات الاستثمار'
+              : '© B-IT Technology · Product Intelligence & Investment Decision Platform'}
+          </div>
           <div className="flex items-center gap-4">
-            <span>Currency: <strong>SAR</strong></span>
-            <span>Governance: <strong>Mandatory Human Gate Approval</strong></span>
+            <span>{t('currencyLabel')}</span>
+            <span>{t('governanceLabel')}</span>
           </div>
         </footer>
       </div>

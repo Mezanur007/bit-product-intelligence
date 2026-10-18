@@ -62,7 +62,7 @@ export default function OpportunityWorkspacePage({
 }) {
   const { id } = use(params);
   const router = useRouter();
-  const { currentUser, showToast } = useApp();
+  const { currentUser, showToast, t, fmtCurrency, language, isRtl } = useApp();
 
   const [opp, setOpp] = useState<Opportunity | null>(null);
   const [loading, setLoading] = useState(true);
@@ -414,17 +414,17 @@ export default function OpportunityWorkspacePage({
     }
   };
 
-  const fmtSAR = (n: number) => 'SAR ' + (n || 0).toLocaleString('en-US');
+  const fmtSAR = fmtCurrency;
 
   const steps = [
-    { id: 'step1', title: '1. Market & Demand', icon: Target },
-    { id: 'step2', title: '2. Competitors & UX', icon: Search },
-    { id: 'step3', title: '3. Tech & Delivery', icon: Cpu },
-    { id: 'step4', title: '4. Financial Engine', icon: DollarSign },
-    { id: 'step5', title: '5. Risks & 9 Gates', icon: ShieldCheck },
-    { id: 'step6', title: '6. Decision & Approvals', icon: FileText },
-    { id: 'pilot', title: 'Pilot & Launch Plan', icon: Rocket },
-    { id: 'performance', title: 'Post-Launch Actuals', icon: Activity },
+    { id: 'step1', title: t('step1Tab'), icon: Target },
+    { id: 'step2', title: t('step2Tab'), icon: Search },
+    { id: 'step3', title: t('step3Tab'), icon: Cpu },
+    { id: 'step4', title: t('step4Tab'), icon: DollarSign },
+    { id: 'step5', title: t('step5Tab'), icon: ShieldCheck },
+    { id: 'step6', title: t('step6Tab'), icon: FileText },
+    { id: 'pilot', title: t('pilotTab'), icon: Rocket },
+    { id: 'performance', title: t('performanceTab'), icon: Activity },
   ];
 
   return (
@@ -435,15 +435,15 @@ export default function OpportunityWorkspacePage({
           href="/opportunities"
           className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-gray-900 transition-colors"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Back to Opportunities Register</span>
+          <ArrowLeft className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
+          <span>{t('backToOpps')}</span>
         </Link>
         <button
           onClick={() => window.print()}
           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-300 bg-white text-xs font-bold text-gray-700 hover:bg-gray-50 shadow-xs"
         >
           <Printer className="w-3.5 h-3.5 text-gray-600" />
-          <span>Print / Export PDF</span>
+          <span>{t('printPDF')}</span>
         </button>
       </div>
 
@@ -468,8 +468,10 @@ export default function OpportunityWorkspacePage({
 
           <div className="flex flex-wrap items-center gap-3">
             {/* Recommendation Tag */}
-            <div className="text-right">
-              <div className="text-[10px] font-bold text-gray-400 uppercase">Engine Recommendation</div>
+            <div className={isRtl ? 'text-left' : 'text-right'}>
+              <div className="text-[10px] font-bold text-gray-400 uppercase">
+                {language === 'ar' ? 'توصية محرك القرار' : 'Engine Recommendation'}
+              </div>
               <span
                 className={`inline-block px-3 py-1 rounded-lg text-xs font-extrabold uppercase mt-0.5 ${
                   opp.recommendation === 'EXECUTE'
@@ -483,21 +485,21 @@ export default function OpportunityWorkspacePage({
                     : 'bg-red-100 text-red-800 border border-red-300'
                 }`}
               >
-                {opp.recommendation}
+                {t(`rec${opp.recommendation}`) || opp.recommendation}
               </span>
             </div>
 
             {/* Score Pill */}
-            <div className="bg-[#F5F7FB] px-4 py-2 rounded-xl border border-[#E6EAF1] text-right">
-              <div className="text-[10px] font-bold text-gray-500 uppercase">Weighted Score</div>
+            <div className="bg-[#F5F7FB] px-4 py-2 rounded-xl border border-[#E6EAF1] text-center">
+              <div className="text-[10px] font-bold text-gray-500 uppercase">{t('thWeightedScore')}</div>
               <div className="text-lg font-extrabold text-gray-900 tabular-nums">
                 {opp.weightedScore ? `${opp.weightedScore}/100` : '—'}
               </div>
             </div>
 
             {/* Status Pill */}
-            <div className="bg-[#F5F7FB] px-4 py-2 rounded-xl border border-[#E6EAF1] text-right">
-              <div className="text-[10px] font-bold text-gray-500 uppercase">Lifecycle Status</div>
+            <div className="bg-[#F5F7FB] px-4 py-2 rounded-xl border border-[#E6EAF1] text-center">
+              <div className="text-[10px] font-bold text-gray-500 uppercase">{t('thStatus')}</div>
               <div className="text-xs font-bold text-gray-800 capitalize mt-0.5">
                 {opp.status.replace(/_/g, ' ')}
               </div>
