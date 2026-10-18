@@ -149,14 +149,14 @@ export default function TeamPage() {
           </h1>
           <p className="text-sm text-[#778397] mt-1">
             {language === 'ar'
-              ? 'إدارة حسابات الفريق وتحديد الأدوار وصلاحيات الاعتماد لمشاريع بي-آي-تي.'
-              : 'Manage team accounts, assign governance roles, and simulate authorization permissions for B-IT projects.'}
+              ? 'إدارة حسابات الفريق وتحديد الأدوار وصلاحيات الاعتماد لمشاريع بي آي للتكنولوجيا.'
+              : 'Manage team accounts, assign governance roles, and simulate authorization permissions for BI Technology projects.'}
           </p>
         </div>
 
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2.5 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm transition-all"
+          className="px-5 py-2.5 bg-gradient-to-r from-[#315EE8] to-blue-600 hover:from-blue-600 hover:to-indigo-600 text-white rounded-xl text-sm font-bold flex items-center gap-2 shadow-md transition-all polymorphic-btn-primary"
         >
           <UserPlus className="w-4 h-4" />
           <span>{language === 'ar' ? '+ إضافة مستخدم جديد' : '+ Create New User'}</span>

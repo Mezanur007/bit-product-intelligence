@@ -1017,7 +1017,7 @@ export default function OpportunityWorkspacePage({
               <div>
                 <h3 className="text-base font-bold text-gray-900">Step 2 — Competitor & Differentiation Intelligence</h3>
                 <p className="text-xs text-gray-500 mt-0.5">
-                  Understand existing alternatives and identify defensible reasons for Saudi businesses to purchase from B-IT.
+                  Understand existing alternatives and identify defensible reasons for Saudi businesses to purchase from BI Technology.
                 </p>
               </div>
               <div className="flex items-center gap-2">
@@ -1114,7 +1114,7 @@ export default function OpportunityWorkspacePage({
                     <th className="py-3 px-4">Arabic UX</th>
                     <th className="py-3 px-4">Strengths</th>
                     <th className="py-3 px-4">Weaknesses</th>
-                    <th className="py-3 px-4">B-IT Differentiation</th>
+                    <th className="py-3 px-4">BI Technology Differentiation</th>
                     <th className="py-3 px-4 text-right">Action</th>
                   </tr>
                 </thead>
@@ -1327,13 +1327,13 @@ export default function OpportunityWorkspacePage({
               </div>
 
               <div>
-                <label className="block font-bold text-gray-700 mb-1">Reusable Internal B-IT Components</label>
+                <label className="block font-bold text-gray-700 mb-1">Reusable Internal BI Technology Components</label>
                 <input
                   type="text"
                   value={techForm.reusableInternalComponents || ''}
                   onChange={(e) => setTechForm({ ...techForm, reusableInternalComponents: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
-                  placeholder="e.g. B-IT Auth Service, UI Component Library"
+                  placeholder="e.g. BI Technology Auth Service, UI Component Library"
                 />
               </div>
 
@@ -2249,7 +2249,7 @@ export default function OpportunityWorkspacePage({
                 />
               </div>
               <div>
-                <label className="block font-bold text-gray-700 mb-1">B-IT Differentiation Opportunity</label>
+                <label className="block font-bold text-gray-700 mb-1">BI Technology Differentiation Opportunity</label>
                 <input
                   type="text"
                   value={compForm.differentiationOpportunity}

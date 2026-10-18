@@ -109,21 +109,24 @@ export default function ReportsPage() {
       {selectedOpp && (
         <div className="bg-white p-8 md:p-12 rounded-2xl border border-gray-200 shadow-md print-page max-w-4xl mx-auto space-y-8 text-xs text-gray-800 leading-relaxed">
           {/* Header Memo Banner */}
-          <div className="border-b-2 border-gray-900 pb-6 flex items-start justify-between">
-            <div>
-              <div className="font-extrabold text-lg text-gray-900 tracking-wider">
-                {t('brandName')}
-              </div>
-              <div className="text-[11px] font-bold text-gray-500 uppercase tracking-widest mt-0.5">
-                {language === 'ar' ? 'مذكرة قرار الاستثمار الداخلي المعتمدة' : 'INTERNAL INVESTMENT DECISION MEMORANDUM'}
-              </div>
-              <div className="text-xs text-gray-600 mt-2">
-                {language === 'ar' ? 'مرجع الوثيقة:' : 'Document Ref:'} <strong>MEMO-{selectedOpp.id}</strong> · {language === 'ar' ? 'الرياض، المملكة العربية السعودية' : 'Riyadh, Saudi Arabia'}
+          <div className="border-b-2 border-slate-900 pb-6 flex items-start justify-between">
+            <div className="flex items-center gap-3.5">
+              <img src="/brand/logo.webp" alt="BI Technology" className="w-12 h-12 object-contain" />
+              <div>
+                <div className="font-extrabold text-xl text-slate-900 tracking-wider">
+                  {t('brandName')}
+                </div>
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-0.5">
+                  {language === 'ar' ? 'مذكرة قرار الاستثمار الداخلي المعتمدة' : 'INTERNAL INVESTMENT DECISION MEMORANDUM'}
+                </div>
+                <div className="text-xs text-slate-600 mt-1 font-medium">
+                  {language === 'ar' ? 'مرجع الوثيقة:' : 'Document Ref:'} <strong>MEMO-{selectedOpp.id}</strong> · {language === 'ar' ? 'الرياض، المملكة العربية السعودية' : 'Riyadh, Saudi Arabia'}
+                </div>
               </div>
             </div>
             <div className={isRtl ? 'text-left' : 'text-right'}>
               <span
-                className={`inline-block px-3 py-1 rounded text-xs font-extrabold uppercase ${
+                className={`inline-block px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider ${
                   selectedOpp.recommendation === 'EXECUTE'
                     ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
                     : selectedOpp.recommendation === 'PILOT'
@@ -133,7 +136,7 @@ export default function ReportsPage() {
               >
                 {t('thRecommendation')}: {t(`rec${selectedOpp.recommendation}`) || selectedOpp.recommendation}
               </span>
-              <div className="text-[10px] text-gray-400 mt-1">
+              <div className="text-xs text-slate-400 mt-1 font-medium">
                 {language === 'ar' ? 'التاريخ:' : 'Date:'} {new Date().toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
               </div>
             </div>
@@ -272,20 +275,20 @@ export default function ReportsPage() {
                   {language === 'ar' ? 'مقدم الطلب (مسؤول المنتج)' : 'Submitted By (Product Lead)'}
                 </div>
                 <div className="border-b border-gray-400 pb-1 font-bold text-gray-900">{selectedOpp.ownerName}</div>
-                <div className="text-[10px] text-gray-500 mt-1">
-                  {language === 'ar' ? 'مدير أول المنتجات، تقنية بي-آي-تي' : 'Lead Product Manager, B-IT Technology'}
+                <div className="text-xs text-gray-500 mt-1">
+                  {language === 'ar' ? 'مدير أول المنتجات، بي آي للتكنولوجيا' : 'Lead Product Manager, BI Technology'}
                 </div>
               </div>
 
               <div>
-                <div className="text-gray-400 text-[10px] uppercase font-bold mb-8">
+                <div className="text-gray-400 text-xs uppercase font-bold mb-8">
                   {language === 'ar' ? 'المعتمد (الإدارة التنفيذية)' : 'Authorized By (Executive Approver)'}
                 </div>
                 <div className="border-b border-gray-400 pb-1 font-bold text-gray-900">
-                  {selectedOpp.approvals?.[0]?.reviewedBy || (language === 'ar' ? 'طارق الغامدي / خالد المنصور' : 'Tariq Al-Ghamdi / Khalid Al-Mansoor')}
+                  {selectedOpp.approvals?.[0]?.reviewedBy || (language === 'ar' ? 'فيصل محمد (COO) / مزمل معروف (CTO)' : 'Faisal Mohammed (COO) / Mezanur Maruf (CTO)')}
                 </div>
-                <div className="text-[10px] text-gray-500 mt-1">
-                  {language === 'ar' ? 'لجنة اعتماد الاستثمار، تقنية بي-آي-تي' : 'Management Approver, B-IT Technology'}
+                <div className="text-xs text-gray-500 mt-1">
+                  {language === 'ar' ? 'لجنة اعتماد الاستثمار، بي آي للتكنولوجيا' : 'Management Approver, BI Technology'}
                 </div>
               </div>
             </div>

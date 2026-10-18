@@ -717,7 +717,7 @@ function OpportunitiesContent() {
                 <label className="block font-bold text-gray-800 mb-1">{t('proposedSolution')}</label>
                 <textarea
                   rows={2}
-                  placeholder={language === 'ar' ? 'كيف تعالج بي-آي-تي هذه المشكلة بتميّز وميزة تنافسية؟' : 'How does B-IT address this problem with differentiation?'}
+                  placeholder={language === 'ar' ? 'كيف تعالج بي آي للتكنولوجيا هذه المشكلة بتميّز وميزة تنافسية؟' : 'How does BI Technology address this problem with differentiation?'}
                   value={createForm.proposedSolution}
                   onChange={(e) => setCreateForm({ ...createForm, proposedSolution: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"

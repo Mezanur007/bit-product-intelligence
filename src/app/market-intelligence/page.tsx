@@ -325,10 +325,18 @@ export default function MarketIntelligencePage() {
           </p>
         </div>
 
-        {/* Status Badge */}
-        <div className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-emerald-600 animate-pulse" />
-          <span>{language === 'ar' ? 'المرحلة الثانية مفعّلة ونشطة' : 'Phase 2 AI Engine Active'}</span>
+        {/* Status Badge with Mascot */}
+        <div className="bg-gradient-to-r from-emerald-50 to-cyan-50 text-emerald-900 border border-emerald-200 px-4 py-2 rounded-2xl text-xs md:text-sm font-extrabold flex items-center gap-2.5 shadow-xs">
+          <img src="/brand/mascot.png" alt="BI Mascot" className="w-8 h-8 object-contain" />
+          <div>
+            <div className="flex items-center gap-1.5">
+              <span>{language === 'ar' ? 'محرك الذكاء الاصطناعي نشط' : 'AI Intelligence Engine Active'}</span>
+              <Sparkles className="w-3.5 h-3.5 text-cyan-600 animate-pulse" />
+            </div>
+            <div className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+              {language === 'ar' ? 'بي آي للتكنولوجيا' : 'BI Technology'}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -641,7 +649,7 @@ export default function MarketIntelligencePage() {
                 <th className="py-2.5 px-3">{language === 'ar' ? 'السعر المرصود' : 'Observed Price'}</th>
                 <th className="py-2.5 px-3">{language === 'ar' ? 'دعم العربية' : 'Arabic UX'}</th>
                 <th className="py-2.5 px-3">{language === 'ar' ? 'نقاط الضعف الجوهرية' : 'Key Weaknesses'}</th>
-                <th className="py-2.5 px-3">{language === 'ar' ? 'فرصة التمايز لـ بي-آي-تي' : 'B-IT Differentiation'}</th>
+                <th className="py-2.5 px-3">{language === 'ar' ? 'فرصة التمايز لـ بي آي للتكنولوجيا' : 'BI Technology Differentiation'}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">

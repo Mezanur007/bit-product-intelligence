@@ -15,9 +15,9 @@ export interface TranslationDictionary {
 
 export const DICTIONARY: TranslationDictionary = {
   // Brand
-  brandName: { en: 'B-IT TECHNOLOGY', ar: 'تقنية بي-آي-تي' },
-  productIntelligence: { en: 'Product Intelligence', ar: 'ذكاء المنتجات وقرارات الاستثمار' },
-  executivePortfolio: { en: 'Executive Portfolio & Investment Governance', ar: 'محفظة المنتجات التنفيذية وحوكمة الاستثمار' },
+  brandName: { en: 'BI TECHNOLOGY', ar: 'بي آي للتكنولوجيا' },
+  productIntelligence: { en: 'Business Intelligence', ar: 'ذكاء الأعمال' },
+  executivePortfolio: { en: 'Executive Business Intelligence & Investment Governance', ar: 'منصة ذكاء الأعمال وحوكمة الاستثمار' },
   decisionMakingClearer: { en: 'Decision-making, made clearer.', ar: 'اتخاذ القرارات الاستثمارية، بوضوح وموثوقية.' },
   subtitle: {
     en: 'Evaluate Saudi recurring-revenue opportunities with verified evidence, deterministic financial modeling, and strict mandatory gates.',
@@ -253,7 +253,7 @@ export const DICTIONARY: TranslationDictionary = {
     ar: 'يمكن للمسؤولين تعديل أوزان الفئات. يجب أن يكون الإجمالي 100% بدقة.',
   },
   saveWeights: { en: 'Save Criteria Weights', ar: 'حفظ أوزان المعايير' },
-  restoreDemo: { en: 'Restore B-IT Demo Portfolio', ar: 'استعادة المحفظة التجريبية' },
+  restoreDemo: { en: 'Restore Demo Portfolio', ar: 'استعادة المحفظة التجريبية' },
   clearDataTitle: { en: 'Reset to Honest Zero-Data Mode', ar: 'تصفير البيانات إلى وضع الصفر الصادق' },
   clearDataSub: {
     en: 'Wipes all sample records to simulate day-1 clean production.',
@@ -272,7 +272,7 @@ export const DICTIONARY: TranslationDictionary = {
 
   // Workflow Guide Modal
   workflowGuide: { en: 'Workflow Guide', ar: 'دليل العمليات' },
-  workflowModalTitle: { en: 'How B-IT Product Intelligence Works', ar: 'كيف تعمل منصة ذكاء المنتجات في بي-آي-تي' },
+  workflowModalTitle: { en: 'How BI Technology Business Intelligence Works', ar: 'كيف تعمل منصة ذكاء الأعمال في بي آي للتكنولوجيا' },
   workflowModalSubtitle: {
     en: 'A disciplined 4-stage governance journey from Saudi market hypothesis to recurring revenue.',
     ar: 'رحلة حوكمة منضبطة من 4 مراحل لتحويل الفرضيات إلى إيرادات متكررة مستدامة.',
@@ -311,7 +311,7 @@ export const DICTIONARY: TranslationDictionary = {
   },
   queueEmpty: { en: 'All opportunities are clear. No pending management blockers.', ar: 'جميع الفرص تسير بانتظام. لا توجد معوقات معلقة للإدارة حالياً.' },
   actionReviewNow: { en: 'Review & Sign-off', ar: 'مراجعة واعتماد' },
-  processBannerTitle: { en: 'B-IT Investment & Evaluation Framework', ar: 'منهجية بي-آي-تي في الاستثمار وتطوير المنتجات' },
+  processBannerTitle: { en: 'BI Technology Investment & Evaluation Framework', ar: 'منهجية بي آي للتكنولوجيا في الاستثمار وتطوير المنتجات' },
   processBannerDesc: {
     en: 'Four structured steps to eliminate guesswork and protect company capital before code is written.',
     ar: 'أربع خطوات منهجية لإلغاء التخمين وحماية رأس مال الشركة قبل كتابة أي كود برمجي.',
@@ -342,7 +342,7 @@ export const DICTIONARY: TranslationDictionary = {
   gatesPassedCount: { en: 'Passed', ar: 'مكتملة' },
   gatesPendingCount: { en: 'Pending', ar: 'قيد الانتظار' },
   gatesFailedCount: { en: 'Action Needed', ar: 'معوقات' },
-  guidanceTitle: { en: 'Saudi Market Guidance & B-IT Criteria', ar: 'إرشادات السوق السعودي ومعايير بي-آي-تي' },
+  guidanceTitle: { en: 'Saudi Market Guidance & BI Technology Criteria', ar: 'إرشادات السوق السعودي ومعايير بي آي للتكنولوجيا' },
   emptySearchTitle: { en: 'No matching opportunities found', ar: 'لم يتم العثور على فرص مطابقة' },
   emptySearchDesc: {
     en: 'Try adjusting your search filters or start by creating a new opportunity.',

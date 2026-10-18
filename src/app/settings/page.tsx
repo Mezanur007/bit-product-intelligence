@@ -90,6 +90,34 @@ export default function SettingsPage() {
         </p>
       </div>
 
+      {/* Organization Profile Card with Official Logo & Mascot */}
+      <div className="glass-panel polymorphic-card p-6 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="flex items-center gap-4">
+          <div className="relative p-2.5 rounded-2xl bg-white border border-slate-200/80 shadow-sm shrink-0">
+            <img src="/brand/logo.webp" alt="BI Technology Logo" className="w-14 h-14 object-contain" />
+          </div>
+          <div>
+            <div className="text-xs font-extrabold text-cyan-700 uppercase tracking-wider flex items-center gap-1.5">
+              <span>{language === 'ar' ? 'ملف المنشأة الرسمي' : 'Official Enterprise Profile'}</span>
+            </div>
+            <h2 className="text-xl font-extrabold text-slate-900">
+              {language === 'ar' ? 'شركة بي آي للتكنولوجيا' : 'BI Technology'}
+            </h2>
+            <div className="text-xs text-slate-500 font-bold mt-0.5">
+              {language === 'ar' ? 'المشروع: منصة ذكاء الأعمال (Business Intelligence)' : 'Project: Business Intelligence Platform'}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3.5 bg-gradient-to-r from-blue-50/90 to-cyan-50/90 p-3.5 rounded-2xl border border-blue-200/80 shrink-0">
+          <img src="/brand/mascot.png" alt="BI Mascot" className="w-12 h-12 object-contain drop-shadow-md" />
+          <div className="text-xs">
+            <div className="font-extrabold text-slate-900">{language === 'ar' ? 'التميمة الرسمية لشركة بي آي' : 'Official Company Mascot'}</div>
+            <div className="text-slate-600 font-medium">{language === 'ar' ? 'روبوت الذكاء الاصطناعي السعودي' : 'Saudi AI Intelligence Assistant'}</div>
+          </div>
+        </div>
+      </div>
+
       {/* Decision Criteria Weights Form */}
       <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
         <div className="flex items-center justify-between pb-4 border-b border-gray-100">
@@ -214,7 +242,7 @@ export default function SettingsPage() {
       {/* Capital Cap & Saudi Compliance Settings */}
       <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs text-xs space-y-4">
         <h3 className="font-bold text-base text-[#172033]">
-          {language === 'ar' ? 'ضوابط رأس المال والانضباط الاستثماري لـ بي-آي-تي' : 'B-IT Capital Discipline & Compliance Controls'}
+          {language === 'ar' ? 'ضوابط رأس المال والانضباط الاستثماري لـ بي آي للتكنولوجيا' : 'BI Technology Capital Discipline & Compliance Controls'}
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -255,8 +283,8 @@ export default function SettingsPage() {
         <h3 className="font-bold text-base text-[#172033] mb-1">{t('clearDataTitle')}</h3>
         <p className="text-gray-500 mb-4">
           {language === 'ar'
-            ? 'وفقاً لمتطلبات حوكمة بي-آي-تي، يمكن تشغيل البيئة في وضع الصفر الصادق الخالي من البيانات أو تحميل سجلات تجريبية موسومة بوضوح.'
-            : 'As required by B-IT governance, new environments can operate in an honest zero-data state or load clearly labeled demo records.'}
+            ? 'وفقاً لمتطلبات حوكمة بي آي للتكنولوجيا، يمكن تشغيل البيئة في وضع الصفر الصادق الخالي من البيانات أو تحميل سجلات تجريبية موسومة بوضوح.'
+            : 'As required by BI Technology governance, new environments can operate in an honest zero-data state or load clearly labeled demo records.'}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-3">
