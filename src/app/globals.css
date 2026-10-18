@@ -1,1 +1,46 @@
 @import "tailwindcss";
+
+:root {
+  --navy: #111827;
+  --primary-blue: #315EE8;
+  --accent-blue: #6484FF;
+  --bg-main: #F5F7FB;
+  --text-main: #172033;
+  --text-muted: #778397;
+  --success: #159769;
+  --warning: #D99A2B;
+  --danger: #D95360;
+  --border-color: #E6EAF1;
+  --card-bg: #FFFFFF;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Print styling for PDF Executive Report */
+@media print {
+  aside, header, nav, button, .no-print {
+    display: none !important;
+  }
+  body, main {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .print-page {
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}

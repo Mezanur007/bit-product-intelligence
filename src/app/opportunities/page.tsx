@@ -1,0 +1,544 @@
+'use client';
+
+import React, { useState, useEffect, Suspense } from 'react';
+import Link from 'next/link';
+import { useSearchParams, useRouter } from 'next/navigation';
+import {
+  Layers3,
+  Plus,
+  Search,
+  SlidersHorizontal,
+  Copy,
+  Archive,
+  ArrowUpRight,
+  Filter,
+  Building,
+  Calendar,
+  X,
+  CheckCircle2,
+  AlertCircle,
+  HelpCircle,
+} from 'lucide-react';
+import { Opportunity, ProductCategory, OpportunityStatus } from '@/lib/db/types';
+import { useApp } from '@/components/providers/AppProvider';
+
+export default function OpportunitiesPage() {
+  return (
+    <Suspense fallback={<div className="py-20 text-center text-xs text-gray-500">Loading opportunities register...</div>}>
+      <OpportunitiesContent />
+    </Suspense>
+  );
+}
+
+function OpportunitiesContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { currentUser, showToast } = useApp();
+
+  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedStatus, setSelectedStatus] = useState<string>('all');
+
+  // New Opportunity Modal
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [createForm, setCreateForm] = useState({
+    name: '',
+    category: 'saas' as ProductCategory,
+    businessProblem: '',
+    proposedSolution: '',
+    targetCustomerSegment: '',
+    primaryGeography: 'Saudi Arabia',
+    proposedValidationBudgetSAR: 15000,
+    targetDecisionDate: '',
+  });
+
+  // Clone Modal
+  const [cloneModalOpp, setCloneModalOpp] = useState<Opportunity | null>(null);
+  const [cloneNewTitle, setCloneNewTitle] = useState('');
+
+  const loadData = () => {
+    fetch('/api/opportunities')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setOpportunities(data.data);
+        }
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    loadData();
+    if (searchParams.get('new') === 'true') {
+      setShowCreateModal(true);
+    }
+  }, [searchParams]);
+
+  const handleCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!createForm.name.trim()) return;
+
+    try {
+      const res = await fetch('/api/opportunities', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-user-id': currentUser.id,
+        },
+        body: JSON.stringify(createForm),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast(`Opportunity "${data.data.name}" registered successfully.`);
+        setShowCreateModal(false);
+        setCreateForm({
+          name: '',
+          category: 'saas',
+          businessProblem: '',
+          proposedSolution: '',
+          targetCustomerSegment: '',
+          primaryGeography: 'Saudi Arabia',
+          proposedValidationBudgetSAR: 15000,
+          targetDecisionDate: '',
+        });
+        loadData();
+        router.push(`/opportunities/${data.data.id}`);
+      } else {
+        showToast(data.error || 'Failed to create opportunity');
+      }
+    } catch {
+      showToast('Network error during opportunity creation');
+    }
+  };
+
+  const handleClone = async () => {
+    if (!cloneModalOpp || !cloneNewTitle.trim()) return;
+
+    try {
+      const res = await fetch(`/api/opportunities/${cloneModalOpp.id}/clone`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-user-id': currentUser.id,
+        },
+        body: JSON.stringify({ newName: cloneNewTitle.trim() }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast(`Cloned opportunity created: ${data.data.name}`);
+        setCloneModalOpp(null);
+        setCloneNewTitle('');
+        loadData();
+        router.push(`/opportunities/${data.data.id}`);
+      }
+    } catch {
+      showToast('Error cloning opportunity');
+    }
+  };
+
+  const handleArchive = async (id: string, name: string) => {
+    if (!confirm(`Are you sure you want to archive "${name}"?`)) return;
+
+    try {
+      const res = await fetch(`/api/opportunities/${id}`, {
+        method: 'DELETE',
+        headers: { 'x-user-id': currentUser.id },
+      });
+      if (res.ok) {
+        showToast(`Archived "${name}"`);
+        loadData();
+      }
+    } catch {
+      showToast('Error archiving opportunity');
+    }
+  };
+
+  const filtered = opportunities.filter((o) => {
+    if (selectedCategory !== 'all' && o.category !== selectedCategory) return false;
+    if (selectedStatus !== 'all' && o.status !== selectedStatus) return false;
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      return (
+        o.name.toLowerCase().includes(q) ||
+        o.id.toLowerCase().includes(q) ||
+        o.targetCustomerSegment.toLowerCase().includes(q) ||
+        o.description.toLowerCase().includes(q)
+      );
+    }
+    return true;
+  });
+
+  const fmtSAR = (n: number) => 'SAR ' + (n || 0).toLocaleString('en-US');
+
+  return (
+    <div className="space-y-6">
+      {/* Top Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
+        <div>
+          <div className="flex items-center gap-2 text-xs font-bold text-[#315EE8] uppercase tracking-wider mb-1">
+            <Layers3 className="w-3.5 h-3.5" />
+            <span>Product Register & Pipeline</span>
+          </div>
+          <h1 className="text-2xl font-extrabold text-[#172033] tracking-tight">
+            Product Opportunities Register
+          </h1>
+          <p className="text-sm text-[#778397] mt-1">
+            Central repository of recurring-revenue product concepts, evaluated through our 6-step framework.
+          </p>
+        </div>
+
+        <button
+          onClick={() => setShowCreateModal(true)}
+          className="px-4 py-2.5 rounded-xl bg-[#315EE8] hover:bg-[#274ec4] text-white text-xs font-bold transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
+        >
+          <Plus className="w-4 h-4" />
+          <span>New Opportunity</span>
+        </button>
+      </div>
+
+      {/* Filter and Search Bar */}
+      <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
+        <div className="relative w-full md:w-80">
+          <Search className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
+          <input
+            type="text"
+            placeholder="Search by name, ID, or customer..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-9 pr-4 py-2 bg-[#F5F7FB] border border-[#E6EAF1] rounded-lg text-xs font-medium text-gray-900 outline-none focus:border-[#315EE8]"
+          />
+        </div>
+
+        <div className="flex items-center gap-2.5 w-full md:w-auto">
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="text-xs bg-[#F5F7FB] border border-[#E6EAF1] rounded-lg px-3 py-2 font-medium text-gray-700 outline-none"
+          >
+            <option value="all">All Categories</option>
+            <option value="saas">SaaS</option>
+            <option value="ai_agent">AI Agent</option>
+            <option value="custom_software">Custom Software</option>
+            <option value="partnership">Partnership</option>
+            <option value="subscription_service">Subscription Service</option>
+            <option value="white_label">White Label</option>
+          </select>
+
+          <select
+            value={selectedStatus}
+            onChange={(e) => setSelectedStatus(e.target.value)}
+            className="text-xs bg-[#F5F7FB] border border-[#E6EAF1] rounded-lg px-3 py-2 font-medium text-gray-700 outline-none"
+          >
+            <option value="all">All Statuses</option>
+            <option value="idea">Idea</option>
+            <option value="discovery">Discovery</option>
+            <option value="evaluation">Evaluation</option>
+            <option value="decision_pending">Decision Pending</option>
+            <option value="pilot_approved">Pilot Approved</option>
+            <option value="approved_for_launch">Approved for Launch</option>
+            <option value="on_hold">On Hold</option>
+            <option value="rejected">Rejected / Dropped</option>
+          </select>
+
+          {(searchQuery || selectedCategory !== 'all' || selectedStatus !== 'all') && (
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedCategory('all');
+                setSelectedStatus('all');
+              }}
+              className="text-xs text-gray-500 hover:text-gray-900 px-2 py-1 font-semibold"
+            >
+              Reset
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Opportunities List Table */}
+      <div className="bg-white rounded-2xl border border-[#E6EAF1] shadow-xs overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-[#F8FAFC] text-[#778397] uppercase tracking-wider font-semibold border-b border-[#E6EAF1]">
+              <tr>
+                <th className="py-3 px-5">Opportunity & Code</th>
+                <th className="py-3 px-4">Category</th>
+                <th className="py-3 px-4">Validation Budget</th>
+                <th className="py-3 px-4">Weighted Score</th>
+                <th className="py-3 px-4">Recommendation</th>
+                <th className="py-3 px-4">Lifecycle Status</th>
+                <th className="py-3 px-5 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#E6EAF1]">
+              {loading ? (
+                <tr>
+                  <td colSpan={7} className="py-12 text-center text-gray-400">
+                    Loading opportunities...
+                  </td>
+                </tr>
+              ) : filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="py-12 text-center text-gray-500">
+                    No matching opportunities. Try adjusting filters or create a new one.
+                  </td>
+                </tr>
+              ) : (
+                filtered.map((o) => (
+                  <tr key={o.id} className="hover:bg-blue-50/40 transition-colors group">
+                    <td className="py-4 px-5">
+                      <Link href={`/opportunities/${o.id}`} className="font-bold text-gray-900 group-hover:text-[#315EE8] block text-sm">
+                        {o.name}
+                      </Link>
+                      <div className="text-[11px] text-gray-400 mt-0.5">
+                        {o.id} · <span className="text-gray-600">{o.targetCustomerSegment || 'Saudi SMEs'}</span> · Owner: {o.ownerName}
+                      </div>
+                    </td>
+                    <td className="py-4 px-4">
+                      <span className="inline-block px-2.5 py-1 rounded-md bg-gray-100 font-semibold text-gray-700 uppercase text-[10px]">
+                        {o.category.replace('_', ' ')}
+                      </span>
+                    </td>
+                    <td className="py-4 px-4 tabular-nums font-semibold text-gray-900">
+                      {fmtSAR(o.proposedValidationBudgetSAR)}
+                    </td>
+                    <td className="py-4 px-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-16 bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${
+                              o.weightedScore >= 75 ? 'bg-emerald-600' : o.weightedScore >= 60 ? 'bg-blue-600' : 'bg-amber-500'
+                            }`}
+                            style={{ width: `${o.weightedScore}%` }}
+                          />
+                        </div>
+                        <span className="font-bold text-gray-900 tabular-nums">
+                          {o.weightedScore ? `${o.weightedScore}/100` : '—'}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="py-4 px-4">
+                      <span
+                        className={`inline-block px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase ${
+                          o.recommendation === 'EXECUTE'
+                            ? 'bg-emerald-100 text-emerald-800'
+                            : o.recommendation === 'PILOT'
+                            ? 'bg-blue-100 text-blue-800'
+                            : o.recommendation === 'HOLD'
+                            ? 'bg-amber-100 text-amber-800'
+                            : o.recommendation === 'PARTNER'
+                            ? 'bg-purple-100 text-purple-800'
+                            : 'bg-red-100 text-red-800'
+                        }`}
+                      >
+                        {o.recommendation}
+                      </span>
+                    </td>
+                    <td className="py-4 px-4">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-gray-100 text-gray-800 capitalize">
+                        <span
+                          className={`w-1.5 h-1.5 rounded-full ${
+                            o.status.includes('approved') || o.status === 'active'
+                              ? 'bg-emerald-500'
+                              : o.status === 'on_hold'
+                              ? 'bg-amber-500'
+                              : o.status === 'rejected'
+                              ? 'bg-red-500'
+                              : 'bg-blue-500'
+                          }`}
+                        />
+                        {o.status.replace(/_/g, ' ')}
+                      </span>
+                    </td>
+                    <td className="py-4 px-5 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <button
+                          onClick={() => {
+                            setCloneModalOpp(o);
+                            setCloneNewTitle(`${o.name} (Alternative Pricing/Market)`);
+                          }}
+                          className="p-1.5 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+                          title="Clone opportunity to test alternative scenario"
+                        >
+                          <Copy className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handleArchive(o.id, o.name)}
+                          className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          title="Archive opportunity"
+                        >
+                          <Archive className="w-3.5 h-3.5" />
+                        </button>
+                        <Link
+                          href={`/opportunities/${o.id}`}
+                          className="px-3 py-1.5 rounded-lg bg-blue-50 text-[#315EE8] font-bold text-xs hover:bg-blue-100 transition-colors flex items-center gap-1"
+                        >
+                          <span>Workspace</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Create Opportunity Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-gray-200">
+            <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+              <div>
+                <span className="text-[10px] font-bold text-[#315EE8] uppercase tracking-wider">New Record</span>
+                <h3 className="text-lg font-bold text-gray-900">Create Product Opportunity</h3>
+              </div>
+              <button
+                onClick={() => setShowCreateModal(false)}
+                className="p-1 text-gray-400 hover:text-gray-700 rounded-lg"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreate} className="space-y-4 mt-4 text-xs">
+              <div>
+                <label className="block font-bold text-gray-800 mb-1">
+                  Product / Opportunity Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. SME WhatsApp IT Ticketing Desk"
+                  value={createForm.name}
+                  onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-bold text-gray-800 mb-1">Product Category</label>
+                  <select
+                    value={createForm.category}
+                    onChange={(e) => setCreateForm({ ...createForm, category: e.target.value as any })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none bg-white"
+                  >
+                    <option value="saas">SaaS Product</option>
+                    <option value="ai_agent">AI Application / Agent</option>
+                    <option value="custom_software">Custom Software</option>
+                    <option value="partnership">Technology Partnership</option>
+                    <option value="white_label">White Label Product</option>
+                    <option value="subscription_service">Subscription Service</option>
+                    <option value="other">Other Business Opportunity</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block font-bold text-gray-800 mb-1">Validation Budget Cap (SAR)</label>
+                  <input
+                    type="number"
+                    max={25000}
+                    value={createForm.proposedValidationBudgetSAR}
+                    onChange={(e) => setCreateForm({ ...createForm, proposedValidationBudgetSAR: Number(e.target.value) })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
+                  />
+                  <span className="text-[10px] text-gray-400">Team cap: SAR 25,000</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block font-bold text-gray-800 mb-1">Target Customer Segment</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Mid-sized Saudi logistics & e-commerce companies"
+                  value={createForm.targetCustomerSegment}
+                  onChange={(e) => setCreateForm({ ...createForm, targetCustomerSegment: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block font-bold text-gray-800 mb-1">Customer Problem Statement</label>
+                <textarea
+                  rows={2}
+                  placeholder="What specific pain point does the customer experience today?"
+                  value={createForm.businessProblem}
+                  onChange={(e) => setCreateForm({ ...createForm, businessProblem: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block font-bold text-gray-800 mb-1">Proposed B-IT Solution</label>
+                <textarea
+                  rows={2}
+                  placeholder="How does B-IT address this problem with differentiation?"
+                  value={createForm.proposedSolution}
+                  onChange={(e) => setCreateForm({ ...createForm, proposedSolution: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-gray-100">
+                <button
+                  type="button"
+                  onClick={() => setShowCreateModal(false)}
+                  className="px-4 py-2 rounded-lg border border-gray-300 font-bold text-gray-700 hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-lg bg-[#315EE8] hover:bg-[#274ec4] text-white font-bold shadow-md shadow-blue-600/20"
+                >
+                  Create Opportunity
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Clone Modal */}
+      {cloneModalOpp && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-200 text-xs">
+            <h3 className="text-base font-bold text-gray-900 mb-1">Clone Opportunity</h3>
+            <p className="text-gray-500 mb-4">
+              Duplicate &quot;{cloneModalOpp.name}&quot; to test a new market segment, different pricing tiers, or a partnership variant.
+            </p>
+
+            <label className="block font-bold text-gray-800 mb-1">New Opportunity Title</label>
+            <input
+              type="text"
+              value={cloneNewTitle}
+              onChange={(e) => setCloneNewTitle(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none mb-4"
+            />
+
+            <div className="flex items-center justify-end gap-2.5">
+              <button
+                onClick={() => setCloneModalOpp(null)}
+                className="px-4 py-2 border border-gray-300 rounded-lg font-bold text-gray-700 hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleClone}
+                className="px-4 py-2 bg-[#315EE8] text-white rounded-lg font-bold hover:bg-[#274ec4]"
+              >
+                Confirm Clone
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
