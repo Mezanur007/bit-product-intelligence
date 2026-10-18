@@ -74,7 +74,7 @@ interface AppContextType {
   t: (key: string) => string;
   fmtCurrency: (amount: number) => string;
   toast: string | null;
-  showToast: (msg: string) => void;
+  showToast: (msg: string, type?: 'info' | 'error' | 'success') => void;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -120,7 +120,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const t = (key: string) => getTranslation(key, language);
   const fmtCurrency = (amount: number) => formatCurrency(amount, language);
 
-  const showToast = (msg: string) => {
+  const showToast = (msg: string, _type?: 'info' | 'error' | 'success') => {
     setToast(msg);
     setTimeout(() => {
       setToast(null);

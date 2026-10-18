@@ -87,6 +87,11 @@ export default function OpportunityWorkspacePage({
     confidence: 'verified' as const,
   });
 
+  // Phase 2 AI Assistant States
+  const [aiLoadingAction, setAiLoadingAction] = useState<string | null>(null);
+  const [step2AiCompetitors, setStep2AiCompetitors] = useState<any[]>([]);
+  const [step5AiRisks, setStep5AiRisks] = useState<any[]>([]);
+
   // Step 3: Technical Form
   const [techForm, setTechForm] = useState<any>({});
 
@@ -194,6 +199,177 @@ export default function OpportunityWorkspacePage({
       }
     } catch {
       showToast('Error saving market assessment');
+    }
+  };
+
+  // AI Step 1: Auto Sizing with Monsha'at
+  const handleAiMarketEstimate = async () => {
+    if (!opp) return;
+    setAiLoadingAction('market');
+    try {
+      const res = await fetch('/api/ai/market-estimate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          opportunityId: opp.id,
+          productName: opp.name,
+          category: opp.category,
+          targetAudience: opp.targetCustomerSegment,
+          pricingSAR: opp.financialAssumptions?.monthlyPricePerCustomer,
+          industry: opp.industry,
+        }),
+      });
+      const json = await res.json();
+      if (json.success && json.data) {
+        setMarketForm((prev: any) => ({
+          ...prev,
+          tamSAR: json.data.tamSAR,
+          samSAR: json.data.samSAR,
+          somSAR: json.data.somSAR,
+          targetBusinessCount: json.data.targetEstablishmentsCount,
+          sizingMethodology: json.data.sizingMethodology,
+          confidenceLevel: json.data.confidenceLevel,
+        }));
+        showToast(
+          language === 'ar'
+            ? 'تم استيراد تقديرات حجم السوق من منشآت بنجاح!'
+            : 'Imported Monshaat market sizing benchmarks!'
+        );
+      }
+    } catch (err: any) {
+      showToast(err.message, 'error');
+    } finally {
+      setAiLoadingAction(null);
+    }
+  };
+
+  // AI Step 2: Discover Saudi Competitors
+  const handleAiCompetitorDiscovery = async () => {
+    if (!opp) return;
+    setAiLoadingAction('competitor');
+    try {
+      const res = await fetch('/api/ai/competitor-scan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          opportunityId: opp.id,
+          productName: opp.name,
+          category: opp.category,
+          description: opp.description,
+          industry: opp.industry,
+        }),
+      });
+      const json = await res.json();
+      if (json.success && json.data) {
+        setStep2AiCompetitors(json.data);
+        showToast(
+          language === 'ar'
+            ? `تم رصد ${json.data.length} منافسين في السوق السعودي!`
+            : `AI found ${json.data.length} Saudi competitors!`
+        );
+      }
+    } catch (err: any) {
+      showToast(err.message, 'error');
+    } finally {
+      setAiLoadingAction(null);
+    }
+  };
+
+  const handleAddAiCompetitorToOpp = async (comp: any) => {
+    if (!opp) return;
+    try {
+      const res = await fetch(`/api/opportunities/${id}/step`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-user-id': currentUser.id },
+        body: JSON.stringify({
+          step: 'competitor',
+          action: 'add',
+          payload: {
+            name: comp.name,
+            website: comp.website,
+            productName: comp.productName,
+            country: comp.country,
+            observedPriceSAR: comp.observedPriceSAR,
+            pricingInterval: comp.pricingInterval,
+            hasArabicSupport: comp.hasArabicSupport,
+            mainStrengths: comp.mainStrengths,
+            mainWeaknesses: comp.mainWeaknesses,
+            differentiationOpportunity: comp.differentiationOpportunity,
+            confidence: 'verified',
+            sourceUrl: comp.sourceUrl,
+          },
+        }),
+      });
+      const json = await res.json();
+      if (json.success) {
+        setStep2AiCompetitors((prev) => prev.filter((c) => c.id !== comp.id));
+        showToast(`Added ${comp.name} to competitor landscape`);
+        loadData();
+      }
+    } catch (err: any) {
+      showToast(err.message, 'error');
+    }
+  };
+
+  // AI Step 5: Scan Regulatory & Tech Risks
+  const handleAiRiskScan = async () => {
+    if (!opp) return;
+    setAiLoadingAction('risk');
+    try {
+      const res = await fetch('/api/ai/risk-scan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          opportunityId: opp.id,
+          productName: opp.name,
+          category: opp.category,
+          targetAudience: opp.targetCustomerSegment,
+          technicalStack: opp.technicalFeasibility?.proposedTechStack,
+        }),
+      });
+      const json = await res.json();
+      if (json.success && json.data) {
+        setStep5AiRisks(json.data);
+        showToast(
+          language === 'ar'
+            ? `تم رصد ${json.data.length} مخاطر تنظيمية وتقنية!`
+            : `Detected ${json.data.length} regulatory & tech risks!`
+        );
+      }
+    } catch (err: any) {
+      showToast(err.message, 'error');
+    } finally {
+      setAiLoadingAction(null);
+    }
+  };
+
+  const handleAddAiRiskToOpp = async (rsk: any) => {
+    if (!opp) return;
+    try {
+      const res = await fetch(`/api/opportunities/${id}/step`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-user-id': currentUser.id },
+        body: JSON.stringify({
+          step: 'risk',
+          payload: {
+            category: rsk.category,
+            description: rsk.description,
+            likelihood: rsk.likelihood,
+            impact: rsk.impact,
+            severity: rsk.severity,
+            mitigation: rsk.mitigation,
+            ownerName: currentUser.name,
+          },
+        }),
+      });
+      const json = await res.json();
+      if (json.success) {
+        setStep5AiRisks((prev) => prev.filter((r) => r.riskCode !== rsk.riskCode));
+        showToast(`Added ${rsk.riskCode} to risk register`);
+        loadData();
+      }
+    } catch (err: any) {
+      showToast(err.message, 'error');
     }
   };
 
@@ -621,13 +797,28 @@ export default function OpportunityWorkspacePage({
                   Determine whether a sufficiently attractive customer problem exists in Saudi Arabia, distinguishing market size from validated demand.
                 </p>
               </div>
-              <button
-                onClick={handleSaveMarket}
-                className="px-4 py-2 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold flex items-center gap-2"
-              >
-                <Save className="w-3.5 h-3.5" />
-                <span>Save Step 1</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleAiMarketEstimate}
+                  disabled={aiLoadingAction === 'market'}
+                  className="px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all disabled:opacity-50"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>
+                    {aiLoadingAction === 'market'
+                      ? (language === 'ar' ? 'جارِ استيراد التقدير...' : 'Estimating...')
+                      : (language === 'ar' ? 'تقدير الحجم من منشآت (AI)' : 'Auto-Size with Monshaat (AI)')}
+                  </span>
+                </button>
+                <button
+                  onClick={handleSaveMarket}
+                  className="px-4 py-2 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold flex items-center gap-2"
+                >
+                  <Save className="w-3.5 h-3.5" />
+                  <span>Save Step 1</span>
+                </button>
+              </div>
             </div>
 
             {/* Guidance Callout */}
@@ -829,13 +1020,28 @@ export default function OpportunityWorkspacePage({
                   Understand existing alternatives and identify defensible reasons for Saudi businesses to purchase from B-IT.
                 </p>
               </div>
-              <button
-                onClick={() => setShowAddComp(true)}
-                className="px-4 py-2 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold flex items-center gap-2"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Add Competitor Benchmark</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleAiCompetitorDiscovery}
+                  disabled={aiLoadingAction === 'competitor'}
+                  className="px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all disabled:opacity-50"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>
+                    {aiLoadingAction === 'competitor'
+                      ? (language === 'ar' ? 'جارِ فحص المنافسين...' : 'Scanning...')
+                      : (language === 'ar' ? 'اكتشاف منافسي السعودية (AI)' : 'AI Saudi Competitors')}
+                  </span>
+                </button>
+                <button
+                  onClick={() => setShowAddComp(true)}
+                  className="px-4 py-2 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold flex items-center gap-2"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add Competitor Benchmark</span>
+                </button>
+              </div>
             </div>
 
             {/* Guidance Callout */}
@@ -850,6 +1056,53 @@ export default function OpportunityWorkspacePage({
                 </p>
               </div>
             </div>
+
+            {/* AI Staged Competitors */}
+            {step2AiCompetitors.length > 0 && (
+              <div className="p-4 mt-4 bg-indigo-50/60 border border-indigo-200 rounded-xl space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-600 text-white uppercase">
+                      AI Hypothesis
+                    </span>
+                    <span className="text-xs font-bold text-indigo-900">
+                      {step2AiCompetitors.length} {language === 'ar' ? 'منافسين سعوديين مقترحين' : 'Saudi Competitors Discovered'}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setStep2AiCompetitors([])}
+                    className="text-[11px] text-gray-500 hover:text-gray-800"
+                  >
+                    {language === 'ar' ? 'إخفاء' : 'Dismiss'}
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {step2AiCompetitors.map((comp) => (
+                    <div key={comp.id} className="bg-white p-3.5 rounded-lg border border-indigo-100 shadow-2xs space-y-2 text-xs">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <div className="font-bold text-gray-900">{comp.name}</div>
+                          <div className="text-[10px] text-gray-400">{comp.productName} ({comp.country})</div>
+                        </div>
+                        <div className="font-bold text-[#315EE8]">{fmtSAR(comp.observedPriceSAR)} / {comp.pricingInterval}</div>
+                      </div>
+                      <div className="text-[11px] text-gray-600">{comp.mainWeaknesses}</div>
+                      <div className="pt-2 border-t border-gray-100 flex justify-end">
+                        <button
+                          type="button"
+                          onClick={() => handleAddAiCompetitorToOpp(comp)}
+                          className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-[11px] font-bold flex items-center gap-1"
+                        >
+                          <Check className="w-3 h-3" />
+                          <span>{language === 'ar' ? 'اعتماد وإضافة' : 'Verify & Add'}</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Competitor Table */}
             <div className="mt-6 overflow-x-auto">
@@ -1404,13 +1657,28 @@ export default function OpportunityWorkspacePage({
                   Governance rule: High weighted score NEVER overrides a mandatory gate failure.
                 </p>
               </div>
-              <button
-                onClick={() => setShowAddRisk(true)}
-                className="px-4 py-2 bg-gray-800 hover:bg-black text-white rounded-xl text-xs font-bold flex items-center gap-2"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Log New Risk</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleAiRiskScan}
+                  disabled={aiLoadingAction === 'risk'}
+                  className="px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all disabled:opacity-50"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>
+                    {aiLoadingAction === 'risk'
+                      ? (language === 'ar' ? 'جارِ فحص المخاطر...' : 'Scanning...')
+                      : (language === 'ar' ? 'فحص المخاطر التنظيمية (AI)' : 'Scan Regulatory Risks (AI)')}
+                  </span>
+                </button>
+                <button
+                  onClick={() => setShowAddRisk(true)}
+                  className="px-4 py-2 bg-gray-800 hover:bg-black text-white rounded-xl text-xs font-bold flex items-center gap-2"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Log New Risk</span>
+                </button>
+              </div>
             </div>
 
             {/* Guidance Callout */}
@@ -1425,6 +1693,56 @@ export default function OpportunityWorkspacePage({
                 </p>
               </div>
             </div>
+
+            {/* AI Staged Risks */}
+            {step5AiRisks.length > 0 && (
+              <div className="p-4 mt-4 bg-amber-50/60 border border-amber-200 rounded-xl space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-600 text-white uppercase">
+                      AI Hypothesis
+                    </span>
+                    <span className="text-xs font-bold text-amber-900">
+                      {step5AiRisks.length} {language === 'ar' ? 'مخاطر تنظيمية وتقنية مرصودة' : 'Regulatory & Tech Risks Detected'}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setStep5AiRisks([])}
+                    className="text-[11px] text-gray-500 hover:text-gray-800"
+                  >
+                    {language === 'ar' ? 'إخفاء' : 'Dismiss'}
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {step5AiRisks.map((rsk) => (
+                    <div key={rsk.riskCode} className="bg-white p-3.5 rounded-lg border border-amber-200 shadow-2xs space-y-2 text-xs">
+                      <div className="flex justify-between items-center">
+                        <span className="font-bold text-gray-900">{rsk.riskCode}</span>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 uppercase">
+                          {rsk.regulatoryBody || rsk.category}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-gray-700">{rsk.description}</p>
+                      <p className="text-[10px] text-gray-500">
+                        <strong className="text-gray-700">{language === 'ar' ? 'المعالجة:' : 'Mitigation:'}</strong>{' '}
+                        {rsk.mitigation}
+                      </p>
+                      <div className="pt-2 border-t border-gray-100 flex justify-end">
+                        <button
+                          type="button"
+                          onClick={() => handleAddAiRiskToOpp(rsk)}
+                          className="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded text-[11px] font-bold flex items-center gap-1"
+                        >
+                          <Check className="w-3 h-3" />
+                          <span>{language === 'ar' ? 'إضافة للسجل' : 'Add to Register'}</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* 9 Gates List */}
             <div className="divide-y divide-gray-100 mt-4">
