@@ -227,50 +227,52 @@ function OpportunitiesContent() {
 
   return (
     <div className="space-y-6">
-      {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
+      {/* Top Header — Neomorphic */}
+      <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold text-[#315EE8] uppercase tracking-wider mb-1">
-            <Layers3 className="w-3.5 h-3.5" />
+          <div className="flex items-center gap-2 text-xs font-black text-[#315EE8] uppercase tracking-wider mb-1.5">
+            <span className="p-1 rounded-md neu-pressed text-[#315EE8]">
+              <Layers3 className="w-3.5 h-3.5" />
+            </span>
             <span>{t('productRegisterPipeline')}</span>
           </div>
-          <h1 className="text-2xl font-extrabold text-[#172033] tracking-tight">
+          <h1 className="text-2xl md:text-3xl font-black text-black tracking-tight">
             {t('productOppsRegister')}
           </h1>
-          <p className="text-sm text-[#778397] mt-1">
+          <p className="text-xs md:text-sm text-slate-600 font-semibold mt-1">
             {t('oppsRegisterSubtitle')}
           </p>
         </div>
 
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2.5 rounded-xl bg-[#315EE8] hover:bg-[#274ec4] text-white text-xs font-bold transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
+          className="neu-btn-primary px-5 py-3 text-white text-xs md:text-sm font-black flex items-center gap-2 self-start md:self-auto"
         >
           <Plus className="w-4 h-4" />
           <span>{t('newOpportunity')}</span>
         </button>
       </div>
 
-      {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
+      {/* Filter and Search Bar — Neomorphic */}
+      <div className="neu-raised p-4 md:p-5 rounded-2xl border border-white flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="relative w-full md:w-80">
-          <Search className={`w-4 h-4 text-gray-400 absolute top-3 ${isRtl ? 'right-3' : 'left-3'}`} />
+          <Search className={`w-4 h-4 text-slate-400 absolute top-3.5 ${isRtl ? 'right-3.5' : 'left-3.5'}`} />
           <input
             type="text"
             placeholder={t('searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={`w-full py-2 bg-[#F5F7FB] border border-[#E6EAF1] rounded-lg text-xs font-medium text-gray-900 outline-none focus:border-[#315EE8] ${
-              isRtl ? 'pr-9 pl-4' : 'pl-9 pr-4'
+            className={`neu-pressed w-full py-2.5 rounded-xl text-xs font-bold text-black outline-none ${
+              isRtl ? 'pr-10 pl-4' : 'pl-10 pr-4'
             }`}
           />
         </div>
 
-        <div className="flex items-center gap-2.5 w-full md:w-auto">
+        <div className="flex items-center gap-3 w-full md:w-auto flex-wrap">
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="text-xs bg-[#F5F7FB] border border-[#E6EAF1] rounded-lg px-3 py-2 font-medium text-gray-700 outline-none"
+            className="neu-btn text-xs px-3.5 py-2.5 font-bold text-slate-800 outline-none rounded-xl"
           >
             <option value="all">{t('allCategories')}</option>
             <option value="saas">{t('catSaaS')}</option>
@@ -284,7 +286,7 @@ function OpportunitiesContent() {
           <select
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
-            className="text-xs bg-[#F5F7FB] border border-[#E6EAF1] rounded-lg px-3 py-2 font-medium text-gray-700 outline-none"
+            className="neu-btn text-xs px-3.5 py-2.5 font-bold text-slate-800 outline-none rounded-xl"
           >
             <option value="all">{t('allStatuses')}</option>
             <option value="idea">{t('statusIdea')}</option>
@@ -304,7 +306,7 @@ function OpportunitiesContent() {
                 setSelectedCategory('all');
                 setSelectedStatus('all');
               }}
-              className="text-xs text-gray-500 hover:text-gray-900 px-2 py-1 font-semibold"
+              className="neu-btn text-xs text-slate-600 hover:text-black px-3 py-2 font-bold rounded-xl"
             >
               {language === 'ar' ? 'إعادة تعيين' : 'Reset'}
             </button>
@@ -315,23 +317,23 @@ function OpportunitiesContent() {
       {/* Subheader Toolbar with Quick Filters & View Switcher */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         {/* Quick Filter Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
+        <div className="flex items-center gap-2.5 overflow-x-auto pb-1 sm:pb-0">
           <button
             onClick={() => setQuickFilter('all')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+            className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${
               quickFilter === 'all'
-                ? 'bg-[#172033] text-white shadow-xs'
-                : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                ? 'neu-btn-black text-white'
+                : 'neu-btn text-slate-700'
             }`}
           >
             {t('filterAll')} ({opportunities.length})
           </button>
           <button
             onClick={() => setQuickFilter('needs_action')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 ${
               quickFilter === 'needs_action'
-                ? 'bg-amber-600 text-white shadow-xs'
-                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+                ? 'neu-raised-sm bg-amber-600 text-white shadow-sm'
+                : 'neu-btn text-amber-700 hover:text-amber-900'
             }`}
           >
             <ShieldAlert className="w-3.5 h-3.5" />
@@ -339,10 +341,10 @@ function OpportunitiesContent() {
           </button>
           <button
             onClick={() => setQuickFilter('high_priority')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+            className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${
               quickFilter === 'high_priority'
-                ? 'bg-[#315EE8] text-white shadow-xs'
-                : 'bg-white text-[#315EE8] border border-blue-200 hover:bg-blue-50'
+                ? 'neu-btn-primary text-white'
+                : 'neu-btn text-[#315EE8]'
             }`}
           >
             {t('filterHighPriority')}
@@ -350,13 +352,13 @@ function OpportunitiesContent() {
         </div>
 
         {/* View Switcher: Kanban Board vs Table */}
-        <div className="flex items-center bg-gray-200/80 p-1 rounded-xl self-start sm:self-auto border border-gray-300/60">
+        <div className="neu-pressed p-1 rounded-xl flex items-center self-start sm:self-auto">
           <button
             onClick={() => setViewMode('board')}
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-black transition-all ${
               viewMode === 'board'
-                ? 'bg-white text-gray-900 shadow-xs'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'neu-raised-sm bg-[#EDF2F7] text-black shadow-xs'
+                : 'text-slate-600 hover:text-black'
             }`}
           >
             <Columns3 className="w-3.5 h-3.5" />
@@ -364,10 +366,10 @@ function OpportunitiesContent() {
           </button>
           <button
             onClick={() => setViewMode('table')}
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-black transition-all ${
               viewMode === 'table'
-                ? 'bg-white text-gray-900 shadow-xs'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'neu-raised-sm bg-[#EDF2F7] text-black shadow-xs'
+                : 'text-slate-600 hover:text-black'
             }`}
           >
             <ListFilter className="w-3.5 h-3.5" />
@@ -384,13 +386,13 @@ function OpportunitiesContent() {
             return (
               <div
                 key={col.id}
-                className={`bg-[#F8FAFC] rounded-2xl border border-gray-200 border-t-4 ${col.accent} p-3.5 space-y-3 min-h-[420px] flex flex-col justify-between`}
+                className={`neu-raised p-4 rounded-3xl border border-white space-y-3.5 min-h-[460px] flex flex-col justify-between`}
               >
                 <div className="space-y-3">
                   {/* Column Header */}
-                  <div className="flex items-center justify-between pb-2 border-b border-gray-200/80">
-                    <span className="font-bold text-xs text-gray-800">{col.title}</span>
-                    <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full ${col.badgeBg}`}>
+                  <div className="flex items-center justify-between pb-2.5 border-b border-slate-200">
+                    <span className="font-black text-xs text-slate-800 uppercase tracking-wider">{col.title}</span>
+                    <span className="neu-pressed text-[11px] font-black px-2.5 py-0.5 rounded-full text-slate-700">
                       {colOpps.length}
                     </span>
                   </div>
@@ -402,52 +404,52 @@ function OpportunitiesContent() {
                       return (
                         <div
                           key={opp.id}
-                          className="bg-white p-3.5 rounded-xl border border-[#E6EAF1] shadow-2xs hover:shadow-md hover:border-[#315EE8]/40 transition-all duration-200 space-y-2.5"
+                          className="neu-raised-sm p-4 rounded-2xl border border-white hover:translate-y-[-2px] transition-all space-y-3"
                         >
                           <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-gray-100 text-gray-700 uppercase">
+                            <span className="neu-pressed text-[10px] font-black px-2.5 py-0.5 rounded uppercase text-slate-700">
                               {opp.category.replace('_', ' ')}
                             </span>
-                            <span className="text-[10px] font-bold text-gray-400">
+                            <span className="text-[10px] font-bold text-slate-400">
                               {opp.id}
                             </span>
                           </div>
 
                           <Link
                             href={`/opportunities/${opp.id}`}
-                            className="font-bold text-xs text-gray-900 hover:text-[#315EE8] block leading-snug line-clamp-2"
+                            className="font-black text-sm text-black hover:text-[#315EE8] block leading-snug line-clamp-2"
                           >
                             {opp.name}
                           </Link>
 
-                          <div className="text-[11px] text-gray-500 line-clamp-1">
+                          <div className="text-xs text-slate-600 font-medium line-clamp-1">
                             {opp.targetCustomerSegment || (isRtl ? 'منشآت سعودية' : 'Saudi SMEs')}
                           </div>
 
                           {/* Score & Gates Pill */}
-                          <div className="pt-2 border-t border-gray-100 flex items-center justify-between text-[11px]">
-                            <div className="flex items-center gap-1 font-bold text-gray-700">
-                              <span className="text-[10px] text-gray-400">{t('cardGates')}</span>
-                              <span className={gatesPassed === 9 ? 'text-emerald-700' : 'text-amber-700'}>
+                          <div className="pt-2.5 border-t border-slate-200 flex items-center justify-between text-xs">
+                            <div className="flex items-center gap-1.5 font-bold text-slate-700">
+                              <span className="text-[10px] text-slate-500 font-bold">{t('cardGates')}</span>
+                              <span className={gatesPassed === 9 ? 'text-emerald-700 font-black' : 'text-amber-700 font-black'}>
                                 {gatesPassed}/9
                               </span>
                             </div>
-                            <div className="font-extrabold tabular-nums px-2 py-0.5 rounded-md bg-gray-50 border border-gray-200 text-gray-800 text-[10px]">
+                            <div className="neu-pressed font-black tabular-nums px-2.5 py-0.5 rounded-md text-black text-xs">
                               {opp.weightedScore ? `${opp.weightedScore}/100` : '—'}
                             </div>
                           </div>
 
                           {/* Budget & Open Link */}
                           <div className="flex items-center justify-between pt-1">
-                            <span className="text-[10px] font-bold text-gray-600 tabular-nums">
+                            <span className="text-xs font-black text-slate-800 tabular-nums">
                               {fmtSAR(opp.proposedValidationBudgetSAR)}
                             </span>
                             <Link
                               href={`/opportunities/${opp.id}`}
-                              className="text-[11px] font-bold text-[#315EE8] hover:underline inline-flex items-center gap-0.5"
+                              className="neu-btn px-2.5 py-1 text-xs font-black text-[#315EE8] hover:text-[#274ec4] inline-flex items-center gap-1"
                             >
                               <span>{t('cardOpenWorkspace')}</span>
-                              <ArrowUpRight className="w-3 h-3" />
+                              <ArrowUpRight className="w-3.5 h-3.5" />
                             </Link>
                           </div>
                         </div>
@@ -455,7 +457,7 @@ function OpportunitiesContent() {
                     })}
 
                     {colOpps.length === 0 && (
-                      <div className="py-8 text-center text-gray-400 text-[11px] border border-dashed border-gray-200 rounded-xl">
+                      <div className="neu-pressed py-10 text-center text-slate-400 font-bold text-xs rounded-2xl">
                         {isRtl ? 'لا توجد فرص في هذه المرحلة' : 'No items in this stage'}
                       </div>
                     )}
@@ -465,7 +467,7 @@ function OpportunitiesContent() {
                 {col.id === 'idea' && (
                   <button
                     onClick={() => setShowCreateModal(true)}
-                    className="w-full py-2 rounded-xl border border-dashed border-gray-300 text-gray-600 hover:text-gray-900 hover:border-gray-400 text-xs font-semibold flex items-center justify-center gap-1 transition-colors"
+                    className="neu-btn w-full py-2.5 text-slate-700 hover:text-black text-xs font-black flex items-center justify-center gap-1.5 rounded-xl transition-all"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>{t('newOpportunity')}</span>
@@ -479,24 +481,24 @@ function OpportunitiesContent() {
 
       {/* VIEW 2: AUDIT TABLE */}
       {viewMode === 'table' && (
-        <div className="bg-white rounded-2xl border border-[#E6EAF1] shadow-xs overflow-hidden">
-          <div className="overflow-x-auto">
+        <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white space-y-4">
+          <div className="neu-pressed p-2 rounded-2xl overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#F8FAFC] text-[#778397] uppercase tracking-wider font-semibold border-b border-[#E6EAF1]">
+              <thead className="text-slate-600 uppercase tracking-wider font-black border-b border-slate-200">
                 <tr>
-                  <th className="py-3 px-5">{t('thOpportunity')}</th>
-                  <th className="py-3 px-4">{t('thCategory')}</th>
-                  <th className="py-3 px-4">{t('thValidationBudget')}</th>
-                  <th className="py-3 px-4">{t('thWeightedScore')}</th>
-                  <th className="py-3 px-4">{t('thRecommendation')}</th>
-                  <th className="py-3 px-4">{t('thStatus')}</th>
-                  <th className="py-3 px-5 text-right">{t('thActions')}</th>
+                  <th className="py-3.5 px-5">{t('thOpportunity')}</th>
+                  <th className="py-3.5 px-4">{t('thCategory')}</th>
+                  <th className="py-3.5 px-4">{t('thValidationBudget')}</th>
+                  <th className="py-3.5 px-4">{t('thWeightedScore')}</th>
+                  <th className="py-3.5 px-4">{t('thRecommendation')}</th>
+                  <th className="py-3.5 px-4">{t('thStatus')}</th>
+                  <th className="py-3.5 px-5 text-right">{t('thActions')}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E6EAF1]">
+              <tbody className="divide-y divide-slate-200">
                 {loading ? (
                   <tr>
-                    <td colSpan={7} className="py-12 text-center text-gray-400">
+                    <td colSpan={7} className="py-12 text-center text-slate-500 font-bold">
                       {language === 'ar' ? 'جاري تحميل الفرص...' : 'Loading opportunities...'}
                     </td>
                   </tr>
@@ -504,15 +506,15 @@ function OpportunitiesContent() {
                   <tr>
                     <td colSpan={7} className="py-12 text-center">
                       <div className="max-w-md mx-auto space-y-3">
-                        <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#315EE8] flex items-center justify-center mx-auto">
+                        <div className="w-12 h-12 rounded-2xl neu-raised text-[#315EE8] flex items-center justify-center mx-auto">
                           <Layers3 className="w-6 h-6" />
                         </div>
-                        <h4 className="text-sm font-bold text-gray-900">{t('emptySearchTitle')}</h4>
-                        <p className="text-xs text-gray-500">{t('emptySearchDesc')}</p>
-                        <div className="flex items-center justify-center gap-3 pt-1">
+                        <h4 className="text-sm font-black text-black">{t('emptySearchTitle')}</h4>
+                        <p className="text-xs text-slate-600 font-semibold">{t('emptySearchDesc')}</p>
+                        <div className="flex items-center justify-center gap-3 pt-2">
                           <button
                             onClick={() => setShowCreateModal(true)}
-                            className="px-4 py-2 bg-[#315EE8] text-white rounded-xl text-xs font-bold hover:bg-[#274ec4] transition-colors"
+                            className="neu-btn-primary px-5 py-2.5 text-white rounded-xl text-xs font-black"
                           >
                             {t('createFirstOpp')}
                           </button>
@@ -522,59 +524,59 @@ function OpportunitiesContent() {
                   </tr>
                 ) : (
                   filtered.map((o) => (
-                    <tr key={o.id} className="hover:bg-blue-50/40 transition-colors group">
+                    <tr key={o.id} className="hover:bg-white/40 transition-colors group">
                       <td className="py-4 px-5">
-                        <Link href={`/opportunities/${o.id}`} className="font-bold text-gray-900 group-hover:text-[#315EE8] block text-sm">
+                        <Link href={`/opportunities/${o.id}`} className="font-black text-black group-hover:text-[#315EE8] block text-sm">
                           {o.name}
                         </Link>
-                        <div className="text-[11px] text-gray-400 mt-0.5">
-                          {o.id} · <span className="text-gray-600">{o.targetCustomerSegment || (language === 'ar' ? 'المنشآت السعودية الصغيرة والمتوسطة' : 'Saudi SMEs')}</span> · {language === 'ar' ? 'المسؤول' : 'Owner'}: {o.ownerName}
+                        <div className="text-[11px] text-slate-500 font-semibold mt-0.5">
+                          {o.id} · <span className="text-slate-700">{o.targetCustomerSegment || (language === 'ar' ? 'المنشآت السعودية الصغيرة والمتوسطة' : 'Saudi SMEs')}</span> · {language === 'ar' ? 'المسؤول' : 'Owner'}: {o.ownerName}
                         </div>
                       </td>
                       <td className="py-4 px-4">
-                        <span className="inline-block px-2.5 py-1 rounded-md bg-gray-100 font-semibold text-gray-700 uppercase text-[10px]">
+                        <span className="neu-pressed inline-block px-2.5 py-1 rounded-md font-black text-slate-700 uppercase text-[10px]">
                           {o.category.replace('_', ' ')}
                         </span>
                       </td>
-                      <td className="py-4 px-4 tabular-nums font-semibold text-gray-900">
+                      <td className="py-4 px-4 tabular-nums font-black text-black">
                         {fmtSAR(o.proposedValidationBudgetSAR)}
                       </td>
                       <td className="py-4 px-4">
                         <div className="flex items-center gap-2">
-                          <div className="w-16 bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                          <div className="w-16 neu-pressed h-2 rounded-full overflow-hidden p-0.5">
                             <div
                               className={`h-full rounded-full ${
-                                o.weightedScore >= 75 ? 'bg-emerald-600' : o.weightedScore >= 60 ? 'bg-blue-600' : 'bg-amber-500'
+                                o.weightedScore >= 75 ? 'bg-emerald-600' : o.weightedScore >= 60 ? 'bg-[#315EE8]' : 'bg-amber-500'
                               }`}
                               style={{ width: `${o.weightedScore}%` }}
                             />
                           </div>
-                          <span className="font-bold text-gray-900 tabular-nums">
+                          <span className="font-black text-black tabular-nums">
                             {o.weightedScore ? `${o.weightedScore}/100` : '—'}
                           </span>
                         </div>
                       </td>
                       <td className="py-4 px-4">
                         <span
-                          className={`inline-block px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase ${
+                          className={`neu-raised-sm inline-block px-2.5 py-1 rounded-md text-[10px] font-black uppercase ${
                             o.recommendation === 'EXECUTE'
-                              ? 'bg-emerald-100 text-emerald-800'
+                              ? 'text-emerald-700'
                               : o.recommendation === 'PILOT'
-                              ? 'bg-blue-100 text-blue-800'
+                              ? 'text-[#315EE8]'
                               : o.recommendation === 'HOLD'
-                              ? 'bg-amber-100 text-amber-800'
+                              ? 'text-amber-700'
                               : o.recommendation === 'PARTNER'
-                              ? 'bg-purple-100 text-purple-800'
-                              : 'bg-red-100 text-red-800'
+                              ? 'text-purple-700'
+                              : 'text-red-700'
                           }`}
                         >
                           {t(`rec${o.recommendation}`) || o.recommendation}
                         </span>
                       </td>
                       <td className="py-4 px-4">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-gray-100 text-gray-800 capitalize">
+                        <span className="neu-pressed inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black text-slate-800 capitalize">
                           <span
-                            className={`w-1.5 h-1.5 rounded-full ${
+                            className={`w-2 h-2 rounded-full ${
                               o.status.includes('approved') || o.status === 'active'
                                 ? 'bg-emerald-500'
                                 : o.status === 'on_hold'
@@ -594,21 +596,21 @@ function OpportunitiesContent() {
                               setCloneModalOpp(o);
                               setCloneNewTitle(`${o.name} (${language === 'ar' ? 'نسخة بديلة' : 'Alternative Pricing/Market'})`);
                             }}
-                            className="p-1.5 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+                            className="neu-btn p-2 text-slate-600 hover:text-black rounded-lg"
                             title={t('cloneOpp')}
                           >
                             <Copy className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={() => handleArchive(o.id, o.name)}
-                            className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            className="neu-btn p-2 text-slate-600 hover:text-red-600 rounded-lg"
                             title={t('archiveOpp')}
                           >
                             <Archive className="w-3.5 h-3.5" />
                           </button>
                           <Link
                             href={`/opportunities/${o.id}`}
-                            className="px-3 py-1.5 rounded-lg bg-blue-50 text-[#315EE8] font-bold text-xs hover:bg-blue-100 transition-colors flex items-center gap-1"
+                            className="neu-btn-primary px-3 py-1.5 text-white font-black text-xs inline-flex items-center gap-1"
                           >
                             <span>{t('btnWorkspace')}</span>
                             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -624,28 +626,28 @@ function OpportunitiesContent() {
         </div>
       )}
 
-      {/* Create Opportunity Modal */}
+      {/* Create Opportunity Modal — Neomorphic */}
       {showCreateModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-gray-200">
-            <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+          <div className="neu-raised bg-[#EDF2F7] rounded-3xl border border-white max-w-xl w-full p-7 space-y-5 shadow-2xl animate-fade-in">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200">
               <div>
-                <span className="text-[10px] font-bold text-[#315EE8] uppercase tracking-wider">
+                <span className="text-[11px] font-black text-[#315EE8] uppercase tracking-wider">
                   {language === 'ar' ? 'سجل جديد' : 'New Record'}
                 </span>
-                <h3 className="text-lg font-bold text-gray-900">{t('createOppModalTitle')}</h3>
+                <h3 className="text-lg font-black text-black">{t('createOppModalTitle')}</h3>
               </div>
               <button
                 onClick={() => setShowCreateModal(false)}
-                className="p-1 text-gray-400 hover:text-gray-700 rounded-lg"
+                className="neu-btn p-2 text-slate-500 hover:text-black"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleCreate} className="space-y-4 mt-4 text-xs">
+            <form onSubmit={handleCreate} className="space-y-4 text-xs md:text-sm">
               <div>
-                <label className="block font-bold text-gray-800 mb-1">
+                <label className="block font-black text-slate-800 mb-1">
                   {t('productName')} <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -654,17 +656,17 @@ function OpportunitiesContent() {
                   placeholder={language === 'ar' ? 'مثال: منصة دعم تذاكر تقنية عبر الواتساب للمنشآت' : 'e.g. SME WhatsApp IT Ticketing Desk'}
                   value={createForm.name}
                   onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
+                  className="neu-pressed w-full px-4 py-2.5 rounded-xl outline-none font-bold text-black"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-bold text-gray-800 mb-1">{t('thCategory')}</label>
+                  <label className="block font-black text-slate-800 mb-1">{t('thCategory')}</label>
                   <select
                     value={createForm.category}
                     onChange={(e) => setCreateForm({ ...createForm, category: e.target.value as any })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none bg-white"
+                    className="neu-btn w-full px-4 py-2.5 rounded-xl outline-none font-bold text-black"
                   >
                     <option value="saas">{t('catSaaS')}</option>
                     <option value="ai_agent">{t('catAIAgent')}</option>
@@ -677,64 +679,64 @@ function OpportunitiesContent() {
                 </div>
 
                 <div>
-                  <label className="block font-bold text-gray-800 mb-1">{t('valBudgetSAR')}</label>
+                  <label className="block font-black text-slate-800 mb-1">{t('valBudgetSAR')}</label>
                   <input
                     type="number"
                     max={25000}
                     value={createForm.proposedValidationBudgetSAR}
                     onChange={(e) => setCreateForm({ ...createForm, proposedValidationBudgetSAR: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
+                    className="neu-pressed w-full px-4 py-2.5 rounded-xl outline-none font-bold text-black"
                   />
-                  <span className="text-[10px] text-gray-400">
+                  <span className="text-[10px] text-slate-500 font-bold block mt-1">
                     {language === 'ar' ? 'سقف ميزانية الفريق: 25,000 ر.س' : 'Team cap: SAR 25,000'}
                   </span>
                 </div>
               </div>
 
               <div>
-                <label className="block font-bold text-gray-800 mb-1">{t('targetSegment')}</label>
+                <label className="block font-black text-slate-800 mb-1">{t('targetSegment')}</label>
                 <input
                   type="text"
                   placeholder={language === 'ar' ? 'مثال: شركات الخدمات اللوجستية والتجارة الإلكترونية المتوسطة بالسعودية' : 'e.g. Mid-sized Saudi logistics & e-commerce companies'}
                   value={createForm.targetCustomerSegment}
                   onChange={(e) => setCreateForm({ ...createForm, targetCustomerSegment: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
+                  className="neu-pressed w-full px-4 py-2.5 rounded-xl outline-none font-bold text-black"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-gray-800 mb-1">{t('businessProblem')}</label>
+                <label className="block font-black text-slate-800 mb-1">{t('businessProblem')}</label>
                 <textarea
                   rows={2}
                   placeholder={language === 'ar' ? 'ما هي المشكلة المحددة التي يعاني منها العميل حالياً؟' : 'What specific pain point does the customer experience today?'}
                   value={createForm.businessProblem}
                   onChange={(e) => setCreateForm({ ...createForm, businessProblem: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
+                  className="neu-pressed w-full px-4 py-2.5 rounded-xl outline-none font-medium text-black"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-gray-800 mb-1">{t('proposedSolution')}</label>
+                <label className="block font-black text-slate-800 mb-1">{t('proposedSolution')}</label>
                 <textarea
                   rows={2}
                   placeholder={language === 'ar' ? 'كيف تعالج بي آي للتكنولوجيا هذه المشكلة بتميّز وميزة تنافسية؟' : 'How does BI Technology address this problem with differentiation?'}
                   value={createForm.proposedSolution}
                   onChange={(e) => setCreateForm({ ...createForm, proposedSolution: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none"
+                  className="neu-pressed w-full px-4 py-2.5 rounded-xl outline-none font-medium text-black"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-gray-100">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="px-4 py-2 rounded-lg border border-gray-300 font-bold text-gray-700 hover:bg-gray-50"
+                  className="neu-btn px-5 py-2.5 text-slate-700 font-bold"
                 >
                   {t('cancel')}
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-lg bg-[#315EE8] hover:bg-[#274ec4] text-white font-bold shadow-md shadow-blue-600/20"
+                  className="neu-btn-primary px-6 py-2.5 text-white font-black"
                 >
                   {t('registerOpportunity')}
                 </button>
@@ -744,35 +746,35 @@ function OpportunitiesContent() {
         </div>
       )}
 
-      {/* Clone Modal */}
+      {/* Clone Modal — Neomorphic */}
       {cloneModalOpp && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-200 text-xs">
-            <h3 className="text-base font-bold text-gray-900 mb-1">{t('cloneModalTitle')}</h3>
-            <p className="text-gray-500 mb-4">
+          <div className="neu-raised bg-[#EDF2F7] rounded-3xl border border-white max-w-md w-full p-7 space-y-4 shadow-2xl animate-fade-in text-xs md:text-sm">
+            <h3 className="text-base font-black text-black mb-1">{t('cloneModalTitle')}</h3>
+            <p className="text-slate-600 font-semibold mb-3">
               {language === 'ar'
                 ? `استنساخ "${cloneModalOpp.name}" لاختبار شريحة سوقية جديدة، أو فئات تسعير بديلة، أو نموذج شراكة.`
                 : `Duplicate "${cloneModalOpp.name}" to test a new market segment, different pricing tiers, or a partnership variant.`}
             </p>
 
-            <label className="block font-bold text-gray-800 mb-1">{t('cloneNewName')}</label>
+            <label className="block font-black text-slate-800 mb-1">{t('cloneNewName')}</label>
             <input
               type="text"
               value={cloneNewTitle}
               onChange={(e) => setCloneNewTitle(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-[#315EE8] outline-none mb-4"
+              className="neu-pressed w-full px-4 py-2.5 rounded-xl outline-none font-bold text-black mb-4"
             />
 
-            <div className="flex items-center justify-end gap-2.5">
+            <div className="flex items-center justify-end gap-3 pt-2">
               <button
                 onClick={() => setCloneModalOpp(null)}
-                className="px-4 py-2 border border-gray-300 rounded-lg font-bold text-gray-700 hover:bg-gray-50"
+                className="neu-btn px-5 py-2.5 text-slate-700 font-bold"
               >
                 {t('cancel')}
               </button>
               <button
                 onClick={handleClone}
-                className="px-4 py-2 bg-[#315EE8] text-white rounded-lg font-bold hover:bg-[#274ec4]"
+                className="neu-btn-primary px-6 py-2.5 text-white font-black"
               >
                 {t('cloneAction')}
               </button>

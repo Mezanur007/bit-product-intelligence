@@ -2,18 +2,30 @@
 @import "tailwindcss";
 
 :root {
-  --navy: #111827;
+  /* BI Technology Neomorphic Palette: White, Black, and Blue */
+  --bg-main: #EDF2F7;
+  --surface-light: #F4F7FB;
+  --surface-card: #FFFFFF;
+  --surface-dark: #0B0F17;
+  --surface-dark-card: #131A26;
+
+  /* Corporate Blue Identity */
   --primary-blue: #315EE8;
-  --accent-blue: #6484FF;
+  --primary-blue-hover: #234EC7;
   --accent-cyan: #06B6D4;
-  --bg-main: #F4F7FB;
-  --text-main: #0F172A;
-  --text-muted: #64748B;
+  --accent-blue: #6484FF;
+
+  /* High-Contrast Black & Slate Typography */
+  --text-main: #0B0F17;
+  --text-body: #1E293B;
+  --text-muted: #475569;
+  --text-faint: #64748B;
+
+  /* Indicators */
   --success: #159769;
   --warning: #D99A2B;
   --danger: #D95360;
-  --border-color: #E2E8F0;
-  --card-bg: #FFFFFF;
+  --border-light: rgba(226, 232, 240, 0.9);
 }
 
 html {
@@ -28,7 +40,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
-  letter-spacing: -0.011em;
+  letter-spacing: -0.012em;
 }
 
 /* Arabic typography styling with enhanced line height and weight */
@@ -48,92 +60,243 @@ body {
   right: 0 !important;
 }
 
-/* Glassmorphism Design System */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(0, 0, 0, 0.03);
+/* ==========================================================================
+   NEOMORPHISM (SOFT UI) DESIGN SYSTEM — White, Black & Blue
+   ========================================================================== */
+
+/* Neomorphic Raised Card (Convex Extruded Surface) */
+.neu-raised {
+  background: linear-gradient(145deg, #ffffff, #f0f4f9);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 
+    7px 7px 16px rgba(166, 180, 200, 0.32),
+    -7px -7px 16px rgba(255, 255, 255, 0.95);
+  border-radius: 1.25rem;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-panel-dark {
-  background: rgba(17, 24, 39, 0.88);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.45);
+.neu-raised-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    9px 10px 22px rgba(166, 180, 200, 0.42),
+    -9px -9px 22px rgba(255, 255, 255, 1);
+  border-color: rgba(49, 94, 232, 0.25);
+}
+
+/* Smaller Raised Element (Chips, Icons, Sub-cards) */
+.neu-raised-sm {
+  background: linear-gradient(145deg, #ffffff, #f0f4f9);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 
+    4px 4px 9px rgba(166, 180, 200, 0.28),
+    -4px -4px 9px rgba(255, 255, 255, 0.95);
+  border-radius: 0.75rem;
+}
+
+/* Neomorphic Pressed / Debossed Well (Inputs, Wells, Active States) */
+.neu-pressed {
+  background: #e8eef6;
+  box-shadow: 
+    inset 3px 3px 6px rgba(166, 180, 200, 0.38),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(215, 225, 238, 0.7);
+  border-radius: 0.75rem;
+}
+
+.neu-pressed-deep {
+  background: #e3eaf3;
+  box-shadow: 
+    inset 4px 4px 8px rgba(160, 175, 195, 0.45),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(205, 218, 232, 0.8);
+}
+
+/* Neomorphic Buttons */
+.neu-btn {
+  background: linear-gradient(145deg, #ffffff, #edf2f7);
+  box-shadow: 
+    4px 4px 10px rgba(160, 175, 195, 0.32),
+    -4px -4px 10px rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 0.875rem;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neu-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    5px 6px 14px rgba(160, 175, 195, 0.38),
+    -5px -5px 14px rgba(255, 255, 255, 1);
+  color: var(--primary-blue);
+}
+
+.neu-btn:active {
+  transform: translateY(1px);
+  box-shadow: 
+    inset 2px 2px 5px rgba(160, 175, 195, 0.4),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.95);
+}
+
+/* Neomorphic Primary Blue Button */
+.neu-btn-primary {
+  background: linear-gradient(145deg, #3764f5, #244fd4);
+  color: #ffffff !important;
+  box-shadow: 
+    5px 5px 14px rgba(49, 94, 232, 0.42),
+    -3px -3px 8px rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 0.875rem;
+  font-weight: 800;
+  transition: all 0.2s ease;
+}
+
+.neu-btn-primary:hover {
+  background: linear-gradient(145deg, #4471ff, #2955de);
+  box-shadow: 
+    6px 7px 18px rgba(49, 94, 232, 0.52),
+    -4px -4px 10px rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+.neu-btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 
+    inset 2px 2px 5px rgba(0, 0, 0, 0.35),
+    inset -1px -1px 3px rgba(255, 255, 255, 0.2);
+}
+
+/* Neomorphic Obsidian Black Button */
+.neu-btn-black {
+  background: linear-gradient(145deg, #182234, #0b0f17);
+  color: #ffffff !important;
+  box-shadow: 
+    5px 5px 14px rgba(11, 15, 23, 0.35),
+    -3px -3px 8px rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.875rem;
+  font-weight: 800;
+  transition: all 0.2s ease;
+}
+
+.neu-btn-black:hover {
+  background: linear-gradient(145deg, #202c42, #0e1420);
+  box-shadow: 
+    6px 7px 18px rgba(11, 15, 23, 0.45),
+    -4px -4px 10px rgba(255, 255, 255, 0.95);
+  transform: translateY(-1px);
+}
+
+.neu-btn-black:active {
+  transform: translateY(1px);
+  box-shadow: 
+    inset 2px 2px 5px rgba(0, 0, 0, 0.5),
+    inset -1px -1px 3px rgba(255, 255, 255, 0.1);
+}
+
+/* Neomorphic Dark Surfaces (For Black Sidebar / Dark Cards) */
+.neu-dark-raised {
+  background: linear-gradient(145deg, #151d2c, #0b0f17);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    6px 6px 16px rgba(0, 0, 0, 0.6),
+    -3px -3px 10px rgba(255, 255, 255, 0.04);
+  border-radius: 1.25rem;
+}
+
+.neu-dark-pressed {
+  background: #080c13;
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.7),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0.75rem;
+}
+
+/* Soft Neomorphic Glowing Accents */
+.glow-cyan {
+  filter: drop-shadow(0 0 12px rgba(6, 182, 212, 0.5));
+}
+
+.glow-blue {
+  filter: drop-shadow(0 0 14px rgba(49, 94, 232, 0.45));
+}
+
+/* Legacy Glass Support Mapped to Smooth Translucent Neomorphic Surface */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    8px 8px 20px rgba(166, 180, 200, 0.28),
+    -8px -8px 20px rgba(255, 255, 255, 0.95);
+  border-radius: 1.25rem;
 }
 
 .glass-header {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  background: rgba(244, 247, 251, 0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(215, 225, 238, 0.8);
+  box-shadow: 0 4px 12px rgba(166, 180, 200, 0.15);
 }
 
-/* Polymorphism (Tactile Surfaces, Soft Dual Shadows, Inset Specular Lighting) */
+.glass-panel-dark {
+  background: linear-gradient(145deg, #151d2c, #0b0f17);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    8px 8px 20px rgba(0, 0, 0, 0.6),
+    -4px -4px 12px rgba(255, 255, 255, 0.04);
+  border-radius: 1.25rem;
+}
+
 .polymorphic-card {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.88));
-  border: 1px solid rgba(226, 232, 240, 0.85);
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.9);
-  border-radius: 1rem;
+  background: linear-gradient(145deg, #ffffff, #f0f4f9);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 
+    7px 7px 16px rgba(166, 180, 200, 0.32),
+    -7px -7px 16px rgba(255, 255, 255, 0.95);
+  border-radius: 1.25rem;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .polymorphic-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px -4px rgba(49, 94, 232, 0.15), 0 4px 12px -2px rgba(15, 23, 42, 0.07), inset 0 1px 2px rgba(255, 255, 255, 1);
-  border-color: rgba(99, 132, 255, 0.45);
+  box-shadow: 
+    9px 10px 22px rgba(166, 180, 200, 0.42),
+    -9px -9px 22px rgba(255, 255, 255, 1);
+  border-color: rgba(49, 94, 232, 0.25);
 }
 
 .polymorphic-btn {
-  background: linear-gradient(145deg, #ffffff, #f1f5f9);
-  box-shadow: 3px 3px 8px rgba(160, 175, 195, 0.25), -2px -2px 6px rgba(255, 255, 255, 0.95), inset 0 1px 1px rgba(255, 255, 255, 1);
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  transition: all 0.18s ease;
-}
-
-.polymorphic-btn:hover {
-  box-shadow: 4px 6px 12px rgba(49, 94, 232, 0.18), -2px -2px 8px rgba(255, 255, 255, 1);
-  transform: translateY(-1px);
-}
-
-.polymorphic-btn:active {
-  transform: translateY(1px);
-  box-shadow: inset 2px 2px 5px rgba(160, 175, 195, 0.3), inset -2px -2px 5px rgba(255, 255, 255, 0.9);
+  background: linear-gradient(145deg, #ffffff, #edf2f7);
+  box-shadow: 
+    4px 4px 10px rgba(160, 175, 195, 0.32),
+    -4px -4px 10px rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 0.875rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
 }
 
 .polymorphic-btn-primary {
-  background: linear-gradient(135deg, #315EE8 0%, #1e45ca 100%);
-  box-shadow: 0 4px 14px rgba(49, 94, 232, 0.38), inset 0 1px 1px rgba(255, 255, 255, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.18s ease;
-}
-
-.polymorphic-btn-primary:hover {
-  background: linear-gradient(135deg, #3d6aff 0%, #2550dd 100%);
-  box-shadow: 0 6px 20px rgba(49, 94, 232, 0.48), inset 0 1px 1px rgba(255, 255, 255, 0.5);
-  transform: translateY(-1px);
-}
-
-.polymorphic-btn-primary:active {
-  transform: translateY(1px);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(145deg, #3764f5, #244fd4);
+  color: #ffffff !important;
+  box-shadow: 
+    5px 5px 14px rgba(49, 94, 232, 0.42),
+    -3px -3px 8px rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 0.875rem;
+  font-weight: 800;
+  transition: all 0.2s ease;
 }
 
 .polymorphic-inset {
-  background: linear-gradient(145deg, #edf2f7, #f8fafc);
-  box-shadow: inset 2px 2px 5px rgba(160, 175, 195, 0.22), inset -2px -2px 5px rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(226, 232, 240, 0.7);
-}
-
-.glow-cyan {
-  filter: drop-shadow(0 0 12px rgba(6, 182, 212, 0.45));
-}
-
-.glow-blue {
-  filter: drop-shadow(0 0 14px rgba(49, 94, 232, 0.4));
+  background: #e8eef6;
+  box-shadow: 
+    inset 3px 3px 6px rgba(166, 180, 200, 0.38),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(215, 225, 238, 0.7);
+  border-radius: 0.75rem;
 }
 
 /* Print styling for PDF Executive Report */

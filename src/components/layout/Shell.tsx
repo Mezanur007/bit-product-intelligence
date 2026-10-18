@@ -111,25 +111,18 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className={`min-h-screen flex bg-[#F4F7FB] text-slate-900 ${isRtl ? 'font-arabic' : ''} relative`}>
-      {/* Ambient Glassmorphic Glow Orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-[-8%] left-[12%] w-[38rem] h-[38rem] rounded-full bg-cyan-400/10 blur-[130px]" />
-        <div className="absolute top-[28%] right-[4%] w-[42rem] h-[42rem] rounded-full bg-blue-600/8 blur-[140px]" />
-        <div className="absolute bottom-[10%] left-[22%] w-[32rem] h-[32rem] rounded-full bg-indigo-500/8 blur-[120px]" />
-      </div>
-
+    <div className={`min-h-screen flex bg-[#EDF2F7] text-[#0B0F17] ${isRtl ? 'font-arabic' : ''} relative`}>
       {/* Mobile Backdrop */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-black/70 backdrop-blur-xs lg:hidden"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
 
-      {/* Sidebar with Glassmorphic Deep Navy Backdrop */}
+      {/* Neomorphic Obsidian Black Sidebar */}
       <aside
-        className={`fixed top-0 bottom-0 z-40 bg-[#111827]/95 backdrop-blur-xl text-white transition-all duration-200 flex flex-col justify-between ${
+        className={`fixed top-0 bottom-0 z-40 bg-[#0B0F17] text-white transition-all duration-200 flex flex-col justify-between border-r border-slate-800/80 shadow-2xl ${
           isRtl
             ? `right-0 border-l border-slate-800/80 ${
                 mobileMenuOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
@@ -141,24 +134,24 @@ export default function Shell({ children }: { children: React.ReactNode }) {
       >
         <div>
           {/* Brand Header with Real Company Logo */}
-          <div className="h-20 flex items-center justify-between px-5 border-b border-slate-800/80">
+          <div className="h-20 flex items-center justify-between px-5 border-b border-slate-800/60">
             <Link href="/" className="flex items-center gap-3 overflow-hidden group">
-              <div className="relative shrink-0">
+              <div className="relative shrink-0 p-1.5 rounded-xl bg-slate-900 border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.3)]">
                 <img
                   src="/brand/logo.webp"
                   alt="BI Technology"
-                  className="w-10 h-10 object-contain drop-shadow-[0_0_12px_rgba(6,182,212,0.65)] group-hover:scale-105 transition-transform"
+                  className="w-8 h-8 object-contain drop-shadow-[0_0_10px_rgba(6,182,212,0.7)] group-hover:scale-105 transition-transform"
                 />
               </div>
               {!collapsed && (
                 <div className="leading-tight">
-                  <div className="font-extrabold text-base tracking-wide text-white flex items-center gap-1">
+                  <div className="font-black text-base tracking-wide text-white flex items-center gap-1.5">
                     <span>{isRtl ? 'بي آي' : 'BI'}</span>
-                    <span className="text-cyan-400 font-black tracking-normal">
+                    <span className="text-cyan-400 font-black">
                       {isRtl ? 'للتكنولوجيا' : 'TECHNOLOGY'}
                     </span>
                   </div>
-                  <div className="text-xs text-slate-400 font-bold tracking-wider uppercase mt-0.5">
+                  <div className="text-[11px] text-slate-400 font-extrabold tracking-wider uppercase mt-0.5">
                     {isRtl ? 'ذكاء الأعمال' : 'Business Intelligence'}
                   </div>
                 </div>
@@ -173,16 +166,16 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             </button>
           </div>
 
-          {/* Grouped Navigation Links with Enhanced Font Size & Clarity */}
+          {/* Grouped Navigation Links with Tactile Neomorphic Styling */}
           <div className="p-3.5 space-y-4 overflow-y-auto max-h-[calc(100vh-17rem)]">
             {navSections.map((section, sIdx) => (
               <div key={sIdx} className="space-y-1">
                 {!collapsed && (
-                  <div className="px-3 py-1 text-xs font-extrabold text-slate-400 tracking-wider uppercase">
+                  <div className="px-3 py-1 text-[11px] font-black text-slate-400 tracking-wider uppercase">
                     {section.title}
                   </div>
                 )}
-                <nav className="space-y-1">
+                <nav className="space-y-1.5">
                   {section.items.map((item) => {
                     const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
                     const Icon = item.icon;
@@ -191,9 +184,9 @@ export default function Shell({ children }: { children: React.ReactNode }) {
                         key={item.href}
                         href={item.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                        className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-bold transition-all ${
                           isActive
-                            ? 'bg-gradient-to-r from-[#315EE8] to-blue-600 text-white shadow-lg shadow-blue-600/30'
+                            ? 'bg-[#315EE8] text-white shadow-[4px_4px_12px_rgba(49,94,232,0.45),-2px_-2px_8px_rgba(255,255,255,0.15)] border border-blue-400/40'
                             : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
                         }`}
                         title={collapsed ? item.name : undefined}
@@ -210,9 +203,9 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Sidebar Footer with Mascot Card & User Meta */}
-        <div className="p-3.5 border-t border-slate-800/80 space-y-3">
+        <div className="p-3.5 border-t border-slate-800/60 space-y-3">
           {!collapsed && (
-            <div className="p-3 rounded-2xl bg-gradient-to-br from-slate-900/90 via-slate-800/60 to-blue-950/40 border border-cyan-500/25 shadow-lg text-xs relative overflow-hidden">
+            <div className="neu-dark-raised p-3.5 rounded-2xl border border-cyan-500/25 shadow-lg text-xs relative overflow-hidden">
               <div className="flex items-center gap-2.5 mb-1.5">
                 <img
                   src="/brand/mascot.png"
@@ -220,11 +213,11 @@ export default function Shell({ children }: { children: React.ReactNode }) {
                   className="w-8 h-8 object-contain drop-shadow-[0_0_8px_rgba(6,182,212,0.6)]"
                 />
                 <div>
-                  <div className="text-cyan-400 font-bold text-xs flex items-center gap-1">
+                  <div className="text-cyan-400 font-extrabold text-xs flex items-center gap-1">
                     <span>{isRtl ? 'مساعد بي آي الذكي' : 'BI Copilot'}</span>
                     <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
                   </div>
-                  <div className="text-[11px] text-slate-400 font-medium">
+                  <div className="text-[11px] text-slate-400 font-semibold">
                     {isRtl ? 'مستشار دراسة الفرص' : 'Decision Intelligence'}
                   </div>
                 </div>
@@ -232,21 +225,21 @@ export default function Shell({ children }: { children: React.ReactNode }) {
               <p className="text-slate-300 text-xs leading-relaxed mb-2 font-normal">
                 {t('aiAgentDesc')}
               </p>
-              <span className="inline-block px-2.5 py-0.5 rounded-md bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-[10px] font-extrabold tracking-wider">
+              <span className="inline-block px-2.5 py-0.5 rounded-md bg-cyan-950/90 border border-cyan-500/40 text-cyan-300 text-[10px] font-black tracking-wider shadow-inner">
                 {t('phase2Ready')}
               </span>
             </div>
           )}
 
-          {/* User Meta */}
-          <div className="flex items-center gap-3 px-2.5 py-2 rounded-xl bg-slate-900/80 border border-slate-800">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center font-bold text-white text-xs shrink-0 shadow-sm">
+          {/* User Meta Debossed Well */}
+          <div className="neu-dark-pressed flex items-center gap-3 px-3 py-2 rounded-xl border border-slate-800/80">
+            <div className="w-8 h-8 rounded-full bg-[#315EE8] text-white flex items-center justify-center font-black text-xs shrink-0 shadow-[2px_2px_6px_rgba(0,0,0,0.5)]">
               {currentUser.avatarInitials}
             </div>
             {!collapsed && (
               <div className="overflow-hidden leading-tight flex-1">
-                <div className="font-bold text-sm text-white truncate">{currentUser.name}</div>
-                <div className="text-xs text-slate-400 truncate capitalize font-medium">{currentUser.role.replace('_', ' ')}</div>
+                <div className="font-extrabold text-sm text-white truncate">{currentUser.name}</div>
+                <div className="text-xs text-slate-400 truncate capitalize font-semibold">{currentUser.role.replace('_', ' ')}</div>
               </div>
             )}
           </div>
@@ -265,26 +258,28 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             : 'lg:pl-72'
         }`}
       >
-        {/* Top Navbar with Glassmorphism Header */}
-        <header className="h-18 glass-header px-5 md:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+        {/* Top Navbar with Neomorphic Canvas Styling */}
+        <header className="h-20 bg-[#EDF2F7] border-b border-[#D8E1EC] px-5 md:px-8 flex items-center justify-between sticky top-0 z-30 shadow-[0_4px_14px_rgba(166,180,200,0.25)]">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors"
+              className="lg:hidden p-2 text-slate-700 hover:text-black rounded-xl neu-btn"
             >
               <Menu className="w-5 h-5" />
             </button>
-            <div className="text-sm text-slate-500 flex items-center gap-2.5 font-medium">
-              <img
-                src="/brand/logo.webp"
-                alt="BI Technology"
-                className="w-6 h-6 object-contain drop-shadow-[0_0_6px_rgba(6,182,212,0.4)]"
-              />
-              <span className="font-extrabold text-slate-900">
+            <div className="text-sm text-slate-600 flex items-center gap-2.5 font-bold">
+              <div className="p-1 rounded-lg bg-white shadow-[2px_2px_5px_rgba(166,180,200,0.3)]">
+                <img
+                  src="/brand/logo.webp"
+                  alt="BI Technology"
+                  className="w-5 h-5 object-contain"
+                />
+              </div>
+              <span className="font-black text-black">
                 {isRtl ? 'بي آي للتكنولوجيا · ذكاء الأعمال' : 'BI Technology · Business Intelligence'}
               </span>
               <span>/</span>
-              <span className="capitalize font-bold text-[#315EE8]">
+              <span className="capitalize font-extrabold text-[#315EE8]">
                 {pathname === '/'
                   ? t('navOverview')
                   : pathname === '/opportunities'
@@ -307,28 +302,28 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Workflow Guide Button */}
+            {/* Workflow Guide Button (Neomorphic) */}
             <button
               onClick={() => setGuideOpen(true)}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-200/90 bg-white/90 text-slate-800 text-xs md:text-sm font-bold hover:bg-white transition-all shadow-xs polymorphic-btn"
+              className="neu-btn flex items-center gap-2 px-4 py-2 text-slate-800 text-xs md:text-sm font-extrabold hover:text-[#315EE8]"
               title={t('workflowGuide')}
             >
               <HelpCircle className="w-4 h-4 text-[#315EE8]" />
               <span className="hidden md:inline">{t('workflowGuide')}</span>
             </button>
 
-            {/* Language Switcher Pill */}
+            {/* Language Switcher Pill (Neomorphic) */}
             <button
               onClick={toggleLanguage}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-[#315EE8]/40 bg-blue-50/90 text-[#315EE8] text-xs md:text-sm font-bold hover:bg-blue-100 transition-all shadow-xs polymorphic-btn"
+              className="neu-btn flex items-center gap-2 px-4 py-2 text-[#315EE8] text-xs md:text-sm font-extrabold border border-[#315EE8]/25"
               title={isRtl ? 'Switch to English (LTR)' : 'التحويل إلى العربية (RTL)'}
             >
               <Languages className="w-4 h-4" />
               <span>{isRtl ? 'English (LTR)' : 'العربية (RTL)'}</span>
             </button>
 
-            {/* Demo / Zero Data Mode Switcher */}
-            <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold border border-amber-300/80 bg-amber-50/90 text-amber-900 shadow-2xs">
+            {/* Demo / Zero Data Mode Switcher (Neomorphic Inset Well) */}
+            <div className="neu-pressed hidden sm:flex items-center gap-2 px-4 py-1.5 text-xs font-black text-amber-900 border border-amber-300/40">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
               <span>{isDemoMode ? t('sampleDataActive') : t('zeroDataMode')}</span>
               <button
@@ -340,11 +335,11 @@ export default function Shell({ children }: { children: React.ReactNode }) {
               </button>
             </div>
 
-            {/* Notification Bell */}
+            {/* Notification Bell (Neomorphic) */}
             <div className="relative">
               <button
                 onClick={() => setNotifOpen(!notifOpen)}
-                className="p-2 text-slate-600 hover:text-slate-900 hover:bg-white rounded-xl relative transition-all polymorphic-btn"
+                className="neu-btn p-2.5 text-slate-700 relative hover:text-black"
                 title="Notifications"
               >
                 <Bell className="w-4.5 h-4.5" />
@@ -355,62 +350,62 @@ export default function Shell({ children }: { children: React.ReactNode }) {
                 <div
                   className={`absolute ${
                     isRtl ? 'left-0' : 'right-0'
-                  } mt-2 w-84 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200/80 p-4 z-50 text-xs`}
+                  } mt-3 w-84 neu-raised p-4 z-50 text-xs border border-white`}
                 >
-                  <div className="flex items-center justify-between pb-2 border-b border-slate-100 font-bold text-slate-800">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-200 font-black text-slate-900">
                     <span className="text-sm">{isRtl ? 'تنبيهات المنصة' : 'Platform Alerts'}</span>
-                    <span className="text-xs text-blue-600 font-extrabold">{isRtl ? '٢ جديد' : '2 NEW'}</span>
+                    <span className="text-xs text-blue-600 font-black">{isRtl ? '٢ جديد' : '2 NEW'}</span>
                   </div>
-                  <div className="divide-y divide-slate-100 mt-2 space-y-2">
+                  <div className="divide-y divide-slate-200 mt-2 space-y-2">
                     <div className="pt-2">
-                      <div className="font-bold text-slate-900 text-xs">
+                      <div className="font-extrabold text-slate-900 text-xs">
                         {isRtl ? 'بانتظار القرار: اعتماد تجربة LawOS 360' : 'Decision Pending: LawOS 360 Pilot Approval'}
                       </div>
-                      <div className="text-slate-600 mt-0.5 text-xs">
+                      <div className="text-slate-600 mt-0.5 text-xs font-medium">
                         {isRtl ? 'طلب اعتماد التجربة مقدم من مزمل الرحمن.' : 'Pilot approval requested by Mezanur Maruf (CTO).'}
                       </div>
-                      <div className="text-[11px] text-slate-400 mt-1">{isRtl ? 'اليوم ٠٨:٣٠ ص' : 'Today 08:30 AM'}</div>
+                      <div className="text-[11px] text-slate-500 mt-1 font-semibold">{isRtl ? 'اليوم ٠٨:٣٠ ص' : 'Today 08:30 AM'}</div>
                     </div>
                     <div className="pt-2">
-                      <div className="font-bold text-amber-800 text-xs">
+                      <div className="font-extrabold text-amber-800 text-xs">
                         {isRtl ? 'فحص متطلبات هيئة الزكاة (ZATCA المرحلة 2)' : 'ZATCA Phase 2 E-Invoicing Audit'}
                       </div>
-                      <div className="text-slate-600 mt-0.5 text-xs">
+                      <div className="text-slate-600 mt-0.5 text-xs font-medium">
                         {isRtl ? 'تأكيد امتثال BITEX للتكامل مع منصة فاتورة.' : 'Confirm BITEX Fatoora compliance architecture.'}
                       </div>
-                      <div className="text-[11px] text-slate-400 mt-1">{isRtl ? 'أمس' : 'Yesterday'}</div>
+                      <div className="text-[11px] text-slate-500 mt-1 font-semibold">{isRtl ? 'أمس' : 'Yesterday'}</div>
                     </div>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Role Switcher Menu */}
+            {/* Role Switcher Menu (Neomorphic) */}
             <div className="relative">
               <button
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white/90 hover:bg-white transition-all text-xs shadow-xs polymorphic-btn"
+                className="neu-btn flex items-center gap-2.5 px-3.5 py-2 text-xs"
               >
-                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#315EE8] to-cyan-500 text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                <div className="w-7 h-7 rounded-full bg-[#315EE8] text-white flex items-center justify-center font-black text-xs shadow-[2px_2px_5px_rgba(49,94,232,0.4)]">
                   {currentUser.avatarInitials}
                 </div>
                 <div className="text-left hidden md:block">
-                  <div className="font-bold text-slate-900 text-xs leading-tight">{currentUser.name}</div>
-                  <div className="text-[11px] text-slate-500 font-medium leading-tight capitalize">{currentUser.role.replace('_', ' ')}</div>
+                  <div className="font-black text-slate-900 text-xs leading-tight">{currentUser.name}</div>
+                  <div className="text-[11px] text-slate-500 font-bold leading-tight capitalize">{currentUser.role.replace('_', ' ')}</div>
                 </div>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
               </button>
 
               {userDropdownOpen && (
                 <div
                   className={`absolute ${
                     isRtl ? 'left-0' : 'right-0'
-                  } mt-2 w-72 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200/90 p-2 z-50 text-xs`}
+                  } mt-3 w-72 neu-raised p-2.5 z-50 text-xs border border-white`}
                 >
-                  <div className="px-3 py-2 border-b border-slate-100 font-extrabold text-slate-500 text-[11px] uppercase tracking-wider">
+                  <div className="px-3 py-2 border-b border-slate-200 font-black text-slate-500 text-[11px] uppercase tracking-wider">
                     {t('switchRole')}
                   </div>
-                  <div className="py-1">
+                  <div className="py-1 space-y-1">
                     {(users && users.length > 0 ? users : ALL_USERS).map((u) => (
                       <button
                         key={u.id}
@@ -424,15 +419,15 @@ export default function Shell({ children }: { children: React.ReactNode }) {
                           );
                         }}
                         className={`w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-2.5 transition-all ${
-                          currentUser.id === u.id ? 'bg-blue-50 text-[#315EE8] font-bold shadow-2xs' : 'text-slate-700 hover:bg-slate-50 font-medium'
+                          currentUser.id === u.id ? 'neu-pressed bg-[#e3eaf3] text-[#315EE8] font-black' : 'hover:bg-slate-100 text-slate-800 font-bold'
                         }`}
                       >
-                        <div className="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-700 shrink-0">
+                        <div className="w-7 h-7 rounded-full bg-slate-300 flex items-center justify-center text-xs font-black text-slate-800 shrink-0">
                           {u.avatarInitials}
                         </div>
                         <div className="overflow-hidden">
-                          <div className="truncate text-xs font-bold">{u.name}</div>
-                          <div className="text-[11px] text-slate-500 truncate font-medium">{u.roleTitle}</div>
+                          <div className="truncate text-xs font-black">{u.name}</div>
+                          <div className="text-[11px] text-slate-500 truncate font-semibold">{u.roleTitle}</div>
                         </div>
                       </button>
                     ))}
@@ -447,9 +442,11 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         <main className="flex-1 p-5 md:p-8 max-w-7xl w-full mx-auto relative z-10">{children}</main>
 
         {/* Footer */}
-        <footer className="h-16 border-t border-slate-200/80 glass-header px-5 md:px-8 flex items-center justify-between text-xs font-semibold text-slate-500 no-print relative z-10">
+        <footer className="h-16 bg-[#EDF2F7] border-t border-[#D8E1EC] px-5 md:px-8 flex items-center justify-between text-xs font-bold text-slate-600 no-print relative z-10">
           <div className="flex items-center gap-2.5">
-            <img src="/brand/logo.webp" alt="BI Technology" className="w-5 h-5 object-contain" />
+            <div className="p-1 rounded-md bg-white shadow-xs">
+              <img src="/brand/logo.webp" alt="BI Technology" className="w-4 h-4 object-contain" />
+            </div>
             <span>
               {isRtl
                 ? '© بي آي للتكنولوجيا · منصة ذكاء الأعمال وقرارات الاستثمار'
@@ -457,7 +454,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <span className="font-bold text-slate-700">{t('currencyLabel')}</span>
+            <span className="font-black text-slate-900">{t('currencyLabel')}</span>
             <span>{t('governanceLabel')}</span>
           </div>
         </footer>

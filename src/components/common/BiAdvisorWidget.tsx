@@ -4,14 +4,8 @@ import React, { useState } from 'react';
 import {
   Sparkles,
   X,
-  MessageSquare,
-  Bot,
-  ArrowRight,
   ShieldCheck,
   CheckCircle2,
-  ChevronUp,
-  ChevronDown,
-  Layers,
   Scale,
   Building,
 } from 'lucide-react';
@@ -99,57 +93,57 @@ export default function BiAdvisorWidget() {
         isRtl ? 'left-6' : 'right-6'
       } z-50 flex flex-col items-end no-print`}
     >
-      {/* Expanded Glassmorphic Chat / Advisory Drawer */}
+      {/* Expanded Neomorphic Advisory Drawer */}
       {isOpen && (
-        <div className="mb-4 w-96 max-w-[calc(100vw-3rem)] rounded-2xl glass-panel border border-white/60 shadow-2xl overflow-hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-4">
-          {/* Header with Mascot & Brand */}
-          <div className="bg-gradient-to-r from-[#111827] via-[#1E293B] to-[#111827] p-4 text-white flex items-center justify-between border-b border-gray-700/60">
+        <div className="mb-4 w-96 max-w-[calc(100vw-3rem)] rounded-3xl neu-raised border border-white overflow-hidden shadow-2xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-4">
+          {/* Header with Mascot & Brand in Obsidian Black */}
+          <div className="bg-[#0B0F17] p-4 text-white flex items-center justify-between border-b border-slate-800">
             <div className="flex items-center gap-3">
-              <div className="relative">
+              <div className="relative p-1 rounded-xl bg-slate-900 border border-cyan-500/40 shadow-[0_0_12px_rgba(6,182,212,0.4)]">
                 <img
                   src="/brand/mascot.png"
                   alt="BI Mascot"
-                  className="w-11 h-11 object-contain drop-shadow-[0_0_10px_rgba(6,182,212,0.6)]"
+                  className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(6,182,212,0.7)]"
                 />
-                <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-gray-900" />
+                <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#0B0F17]" />
               </div>
               <div>
-                <div className="font-bold text-sm tracking-wide flex items-center gap-1.5">
+                <div className="font-black text-sm tracking-wide flex items-center gap-1.5">
                   <span>{language === 'ar' ? 'مستشار بي آي الذكي' : 'BI Intelligence Advisor'}</span>
                   <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
                 </div>
-                <div className="text-xs text-gray-300">
+                <div className="text-xs text-slate-400 font-bold">
                   {language === 'ar' ? 'بي آي للتكنولوجيا · ذكاء الأعمال' : 'BI Technology · Business Intelligence'}
                 </div>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors"
+              className="text-slate-400 hover:text-white p-1.5 rounded-xl hover:bg-slate-800 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Body Content */}
-          <div className="p-4 space-y-4 max-h-[22rem] overflow-y-auto bg-white/60 backdrop-blur-md">
+          <div className="p-4 space-y-4 max-h-[22rem] overflow-y-auto bg-[#F4F7FB]">
             {/* Mascot Greeting */}
             <div className="flex items-start gap-2.5">
               <img
                 src="/brand/mascot.png"
                 alt="BI Mascot"
-                className="w-7 h-7 object-contain mt-0.5 shrink-0"
+                className="w-8 h-8 object-contain mt-0.5 shrink-0"
               />
-              <div className="bg-white/90 p-3 rounded-2xl rounded-tl-none border border-slate-200 text-xs text-slate-800 shadow-sm leading-relaxed">
+              <div className="neu-raised-sm bg-white p-3.5 rounded-2xl rounded-tl-none border border-slate-200/80 text-xs text-slate-900 leading-relaxed font-medium">
                 {language === 'ar' ? (
                   <>
-                    مرحباً <span className="font-bold text-[#315EE8]">{currentUser.name}</span>! أنا المستشار الذكي لمنصة{' '}
-                    <span className="font-bold">ذكاء الأعمال</span> في <span className="font-bold">بي آي للتكنولوجيا</span>. كيف يمكنني مساعدتك في دراسة الفرص والاستثمارات اليوم؟
+                    مرحباً <span className="font-extrabold text-[#315EE8]">{currentUser.name}</span>! أنا المستشار الذكي لمنصة{' '}
+                    <span className="font-black">ذكاء الأعمال</span> في <span className="font-black">بي آي للتكنولوجيا</span>. كيف يمكنني مساعدتك في دراسة الفرص والاستثمارات اليوم؟
                   </>
                 ) : (
                   <>
-                    Hello <span className="font-bold text-[#315EE8]">{currentUser.name}</span>! I am your AI Business Intelligence advisor for{' '}
-                    <span className="font-bold">BI Technology</span>. How can I assist you with product evaluation and market decisions?
+                    Hello <span className="font-extrabold text-[#315EE8]">{currentUser.name}</span>! I am your AI Business Intelligence advisor for{' '}
+                    <span className="font-black">BI Technology</span>. How can I assist you with product evaluation and market decisions?
                   </>
                 )}
               </div>
@@ -157,23 +151,23 @@ export default function BiAdvisorWidget() {
 
             {/* Quick Query Pills */}
             <div className="space-y-1.5">
-              <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+              <div className="text-[11px] font-black text-slate-500 uppercase tracking-wider">
                 {language === 'ar' ? 'استفسارات سريعة مقترحة:' : 'Recommended quick audits:'}
               </div>
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 {PRESET_QUERIES.map((q) => {
                   const Icon = q.icon;
                   return (
                     <button
                       key={q.id}
                       onClick={() => handleSelectQuery(q)}
-                      className={`w-full text-left p-2.5 rounded-xl border text-xs font-semibold flex items-center gap-2.5 transition-all polymorphic-btn ${
+                      className={`w-full text-left p-3 rounded-xl text-xs font-bold flex items-center gap-2.5 transition-all ${
                         activeQuery?.id === q.id
-                          ? 'border-cyan-500 bg-cyan-50/80 text-cyan-900'
-                          : 'border-slate-200 bg-white/80 text-slate-700 hover:border-blue-400'
+                          ? 'neu-pressed bg-[#e3eaf3] text-[#315EE8] border border-blue-400'
+                          : 'neu-btn text-slate-800 hover:text-[#315EE8]'
                       }`}
                     >
-                      <Icon className="w-4 h-4 text-cyan-600 shrink-0" />
+                      <Icon className="w-4 h-4 text-[#315EE8] shrink-0" />
                       <span className="truncate">{language === 'ar' ? q.labelAr : q.labelEn}</span>
                     </button>
                   );
@@ -183,8 +177,8 @@ export default function BiAdvisorWidget() {
 
             {/* Response Display */}
             {(activeQuery || customReply) && (
-              <div className="p-3.5 rounded-xl bg-gradient-to-br from-blue-50/90 to-cyan-50/90 border border-blue-200 text-xs text-slate-900 shadow-sm space-y-2">
-                <div className="flex items-center gap-2 font-bold text-blue-900 text-xs">
+              <div className="neu-pressed p-4 rounded-2xl bg-[#e6edf6] text-xs text-slate-900 space-y-2 border border-blue-200">
+                <div className="flex items-center gap-2 font-black text-blue-900 text-xs">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                   <span>
                     {activeQuery
@@ -196,7 +190,7 @@ export default function BiAdvisorWidget() {
                       : 'AI Intelligence Analysis'}
                   </span>
                 </div>
-                <p className="leading-relaxed text-slate-800 font-medium">
+                <p className="leading-relaxed text-slate-900 font-semibold">
                   {customReply ||
                     (activeQuery &&
                       (language === 'ar' ? activeQuery.responseAr : activeQuery.responseEn))}
@@ -208,7 +202,7 @@ export default function BiAdvisorWidget() {
           {/* Interactive Input Form */}
           <form
             onSubmit={handleCustomSubmit}
-            className="p-3 bg-white/90 border-t border-slate-200/80 flex items-center gap-2"
+            className="p-3 bg-[#EDF2F7] border-t border-slate-200 flex items-center gap-2"
           >
             <input
               type="text"
@@ -219,11 +213,11 @@ export default function BiAdvisorWidget() {
                   ? 'اسأل المستشار الذكي عن أي فرصة...'
                   : 'Ask BI Advisor about any opportunity...'
               }
-              className="flex-1 px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/40 bg-slate-50/80"
+              className="neu-pressed flex-1 px-3.5 py-2.5 rounded-xl text-xs text-slate-900 focus:outline-none font-medium"
             />
             <button
               type="submit"
-              className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#315EE8] to-cyan-600 text-white font-bold text-xs hover:opacity-95 transition-all shadow-md active:scale-95 shrink-0"
+              className="neu-btn-primary px-4 py-2.5 text-white font-black text-xs shrink-0"
             >
               {language === 'ar' ? 'إرسال' : 'Ask'}
             </button>
@@ -231,28 +225,28 @@ export default function BiAdvisorWidget() {
         </div>
       )}
 
-      {/* Floating Launcher Pill */}
+      {/* Floating Neomorphic Launcher Pill */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center gap-3 px-4 py-2.5 rounded-full glass-panel border border-white/70 shadow-xl hover:shadow-2xl hover:border-cyan-400 transition-all duration-300 polymorphic-btn"
+        className="neu-btn group flex items-center gap-3.5 px-4 py-2.5 rounded-full border border-white/90 shadow-[6px_6px_16px_rgba(166,180,200,0.38),-6px_-6px_16px_rgba(255,255,255,1)]"
         title="BI Technology AI Advisor"
       >
         <div className="relative">
           <img
             src="/brand/mascot.png"
             alt="BI Mascot"
-            className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(6,182,212,0.5)] group-hover:scale-110 transition-transform"
+            className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(6,182,212,0.6)] group-hover:scale-110 transition-transform"
           />
           <span className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white animate-pulse" />
         </div>
         <div className="text-left hidden sm:block">
-          <div className="font-extrabold text-sm text-slate-900 tracking-tight flex items-center gap-1.5">
+          <div className="font-black text-sm text-black tracking-tight flex items-center gap-1.5">
             <span>{language === 'ar' ? 'مستشار بي آي' : 'BI Advisor'}</span>
-            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-cyan-100 text-cyan-800">
+            <span className="px-1.5 py-0.5 rounded text-[10px] font-black bg-[#315EE8] text-white">
               AI
             </span>
           </div>
-          <div className="text-xs text-slate-500 font-medium">
+          <div className="text-xs text-slate-600 font-bold">
             {language === 'ar' ? 'متصل وجاهز للاستشارة' : 'Online & Ready'}
           </div>
         </div>

@@ -615,39 +615,39 @@ export default function OpportunityWorkspacePage({
 
   return (
     <div className="space-y-6">
-      {/* Breadcrumb Header */}
+      {/* Breadcrumb Header — Neomorphic */}
       <div className="flex items-center justify-between no-print">
         <Link
           href="/opportunities"
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-gray-900 transition-colors"
+          className="neu-btn inline-flex items-center gap-2 px-4 py-2 text-xs font-black text-slate-800 hover:text-black transition-all"
         >
           <ArrowLeft className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
           <span>{t('backToOpps')}</span>
         </Link>
         <button
           onClick={() => window.print()}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-300 bg-white text-xs font-bold text-gray-700 hover:bg-gray-50 shadow-xs"
+          className="neu-btn inline-flex items-center gap-2 px-4 py-2 text-xs font-black text-slate-800 hover:text-black transition-all"
         >
-          <Printer className="w-3.5 h-3.5 text-gray-600" />
+          <Printer className="w-3.5 h-3.5 text-slate-600" />
           <span>{t('printPDF')}</span>
         </button>
       </div>
 
-      {/* Opportunity Title & Governance Ribbon */}
-      <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+      {/* Opportunity Title & Governance Ribbon — Neomorphic */}
+      <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white space-y-5">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
           <div>
-            <div className="flex items-center gap-2 text-xs font-bold text-[#778397] uppercase tracking-wider">
-              <span>{opp.id}</span>
+            <div className="flex items-center gap-2 text-xs font-black text-slate-500 uppercase tracking-wider">
+              <span className="neu-pressed px-2.5 py-0.5 rounded text-[10px] text-slate-700">{opp.id}</span>
               <span>·</span>
-              <span className="text-[#315EE8]">{opp.category.replace('_', ' ')}</span>
+              <span className="text-[#315EE8] font-black">{opp.category.replace('_', ' ')}</span>
               <span>·</span>
-              <span>{opp.primaryGeography}</span>
+              <span className="font-bold">{opp.primaryGeography}</span>
             </div>
-            <h1 className="text-2xl font-extrabold text-[#172033] tracking-tight mt-1">
+            <h1 className="text-2xl md:text-3xl font-black text-black tracking-tight mt-1.5">
               {opp.name}
             </h1>
-            <p className="text-xs text-[#778397] mt-1 max-w-3xl leading-relaxed">
+            <p className="text-xs md:text-sm text-slate-600 font-semibold mt-1 max-w-3xl leading-relaxed">
               {opp.description || opp.businessProblem}
             </p>
           </div>
@@ -655,20 +655,20 @@ export default function OpportunityWorkspacePage({
           <div className="flex flex-wrap items-center gap-3">
             {/* Recommendation Tag */}
             <div className={isRtl ? 'text-left' : 'text-right'}>
-              <div className="text-[10px] font-bold text-gray-400 uppercase">
+              <div className="text-[10px] font-black text-slate-500 uppercase">
                 {language === 'ar' ? 'توصية محرك القرار' : 'Engine Recommendation'}
               </div>
               <span
-                className={`inline-block px-3 py-1 rounded-lg text-xs font-extrabold uppercase mt-0.5 ${
+                className={`inline-block px-4 py-1.5 rounded-xl text-xs font-black uppercase mt-1 ${
                   opp.recommendation === 'EXECUTE'
-                    ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                    ? 'neu-raised-sm text-emerald-800 border border-emerald-300'
                     : opp.recommendation === 'PILOT'
-                    ? 'bg-blue-100 text-blue-800 border border-blue-300'
+                    ? 'neu-raised-sm text-[#315EE8] border border-blue-300'
                     : opp.recommendation === 'HOLD'
-                    ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                    ? 'neu-raised-sm text-amber-800 border border-amber-300'
                     : opp.recommendation === 'PARTNER'
-                    ? 'bg-purple-100 text-purple-800 border border-purple-300'
-                    : 'bg-red-100 text-red-800 border border-red-300'
+                    ? 'neu-raised-sm text-purple-800 border border-purple-300'
+                    : 'neu-raised-sm text-red-800 border border-red-300'
                 }`}
               >
                 {t(`rec${opp.recommendation}`) || opp.recommendation}
@@ -676,17 +676,17 @@ export default function OpportunityWorkspacePage({
             </div>
 
             {/* Score Pill */}
-            <div className="bg-[#F5F7FB] px-4 py-2 rounded-xl border border-[#E6EAF1] text-center">
-              <div className="text-[10px] font-bold text-gray-500 uppercase">{t('thWeightedScore')}</div>
-              <div className="text-lg font-extrabold text-gray-900 tabular-nums">
+            <div className="neu-pressed px-5 py-2.5 rounded-2xl text-center">
+              <div className="text-[10px] font-black text-slate-500 uppercase">{t('thWeightedScore')}</div>
+              <div className="text-xl font-black text-black tabular-nums mt-0.5">
                 {opp.weightedScore ? `${opp.weightedScore}/100` : '—'}
               </div>
             </div>
 
             {/* Status Pill */}
-            <div className="bg-[#F5F7FB] px-4 py-2 rounded-xl border border-[#E6EAF1] text-center">
-              <div className="text-[10px] font-bold text-gray-500 uppercase">{t('thStatus')}</div>
-              <div className="text-xs font-bold text-gray-800 capitalize mt-0.5">
+            <div className="neu-pressed px-5 py-2.5 rounded-2xl text-center">
+              <div className="text-[10px] font-black text-slate-500 uppercase">{t('thStatus')}</div>
+              <div className="text-xs font-black text-slate-800 capitalize mt-1">
                 {opp.status.replace(/_/g, ' ')}
               </div>
             </div>
@@ -694,43 +694,43 @@ export default function OpportunityWorkspacePage({
         </div>
 
         {/* Progress Bar & Visual Stepper */}
-        <div className="pt-5 mt-5 border-t border-[#E6EAF1] space-y-3 no-print">
+        <div className="pt-5 border-t border-slate-200 space-y-3.5 no-print">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-gray-700">{t('stepProgressLabel')}:</span>
-              <span className="font-extrabold text-[#315EE8]">{progressPercent}%</span>
-              <span className="text-gray-400">({completedCount}/6 {isRtl ? 'خطوات مكتملة' : 'completed'})</span>
+              <span className="font-black text-slate-800">{t('stepProgressLabel')}:</span>
+              <span className="font-black text-[#315EE8]">{progressPercent}%</span>
+              <span className="text-slate-500 font-semibold">({completedCount}/6 {isRtl ? 'خطوات مكتملة' : 'completed'})</span>
             </div>
 
             {/* Quick 9-Gate status pill */}
-            <div className="flex items-center gap-2">
-              <span className="text-gray-500 font-medium">{t('gatesSummaryTitle')}</span>
-              <span className="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+            <div className="flex items-center gap-2.5">
+              <span className="text-slate-600 font-bold">{t('gatesSummaryTitle')}</span>
+              <span className="neu-pressed font-black text-emerald-800 px-3 py-1 rounded-full text-xs">
                 {opp.mandatoryGates?.filter((g) => g.status === 'pass').length || 0}/9 {t('gatesPassedCount')}
               </span>
               {(opp.mandatoryGates?.filter((g) => g.status === 'fail').length || 0) > 0 && (
-                <span className="font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded-md border border-red-200">
+                <span className="neu-pressed font-black text-red-700 px-3 py-1 rounded-full text-xs">
                   {opp.mandatoryGates?.filter((g) => g.status === 'fail').length} {t('gatesFailedCount')}
                 </span>
               )}
               <button
                 onClick={() => setActiveTab('step5')}
-                className="text-xs text-[#315EE8] font-bold hover:underline ml-1"
+                className="text-xs text-[#315EE8] font-black hover:underline"
               >
                 {isRtl ? 'فحص البوابات ←' : 'Verify Gates →'}
               </button>
             </div>
           </div>
 
-          <div className="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+          <div className="neu-pressed w-full h-2.5 rounded-full overflow-hidden p-0.5">
             <div
-              className="bg-[#315EE8] h-1.5 rounded-full transition-all duration-500"
+              className="bg-[#315EE8] h-full rounded-full transition-all duration-500"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
 
-          {/* Stepper Tabs Navigation */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pt-2 pb-1">
+          {/* Stepper Tabs Navigation — Neomorphic */}
+          <div className="flex items-center gap-2 overflow-x-auto pt-2 pb-1">
             {steps.map((st, idx) => {
               const Icon = st.icon;
               const isActive = activeTab === st.id;
@@ -754,22 +754,22 @@ export default function OpportunityWorkspacePage({
                 <button
                   key={st.id}
                   onClick={() => setActiveTab(st.id)}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-black whitespace-nowrap transition-all ${
                     isActive
-                      ? 'bg-[#315EE8] text-white shadow-sm'
+                      ? 'neu-btn-primary text-white shadow-sm'
                       : stepDone
-                      ? 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200/60'
-                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 border border-transparent'
+                      ? 'neu-raised-sm text-emerald-800 border border-emerald-300'
+                      : 'neu-btn text-slate-700'
                   }`}
                 >
                   {isEvaluationStep && (
                     <span
-                      className={`w-4 h-4 rounded-full text-[10px] font-extrabold flex items-center justify-center shrink-0 ${
+                      className={`w-4 h-4 rounded-full text-[10px] font-black flex items-center justify-center shrink-0 ${
                         isActive
                           ? 'bg-white text-[#315EE8]'
                           : stepDone
                           ? 'bg-emerald-600 text-white'
-                          : 'bg-gray-200 text-gray-700'
+                          : 'neu-pressed text-slate-800'
                       }`}
                     >
                       {stepDone && !isActive ? '✓' : idx + 1}

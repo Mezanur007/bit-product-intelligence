@@ -134,20 +134,20 @@ export default function TeamPage() {
     }));
 
   return (
-    <div className="space-y-6">
-      {/* Title Header with Create User Button */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
+    <div className="space-y-8">
+      {/* Title Header with Create User Button — Neomorphic */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 neu-raised p-6 md:p-8 rounded-3xl border border-white">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold text-[#315EE8] uppercase tracking-wider mb-1">
-            <Users className="w-3.5 h-3.5" />
+          <div className="flex items-center gap-2 text-xs font-black text-[#315EE8] uppercase tracking-wider mb-1">
+            <Users className="w-4 h-4" />
             <span>
               {language === 'ar' ? 'الوحدة السابعة — إدارة المستخدمين وصلاحيات الحوكمة' : 'Module Seven — User Management & Governance Authority'}
             </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-[#172033] tracking-tight">
+          <h1 className="text-2xl md:text-3xl font-black text-black tracking-tight">
             {language === 'ar' ? 'فريق العمل وصلاحيات الوصول (RBAC)' : 'Team Members & Role-Based Access (RBAC)'}
           </h1>
-          <p className="text-sm text-[#778397] mt-1">
+          <p className="text-sm md:text-base text-slate-600 font-semibold mt-1">
             {language === 'ar'
               ? 'إدارة حسابات الفريق وتحديد الأدوار وصلاحيات الاعتماد لمشاريع بي آي للتكنولوجيا.'
               : 'Manage team accounts, assign governance roles, and simulate authorization permissions for BI Technology projects.'}
@@ -156,63 +156,63 @@ export default function TeamPage() {
 
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-5 py-2.5 bg-gradient-to-r from-[#315EE8] to-blue-600 hover:from-blue-600 hover:to-indigo-600 text-white rounded-xl text-sm font-bold flex items-center gap-2 shadow-md transition-all polymorphic-btn-primary"
+          className="neu-btn-primary px-6 py-3 rounded-xl text-sm font-black flex items-center gap-2"
         >
           <UserPlus className="w-4 h-4" />
           <span>{language === 'ar' ? '+ إضافة مستخدم جديد' : '+ Create New User'}</span>
         </button>
       </div>
 
-      {/* Team Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white p-4 rounded-xl border border-gray-200">
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+      {/* Team Summary Cards — Neomorphic Raised */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="neu-raised p-5 rounded-3xl border border-white">
+          <span className="text-xs font-black text-slate-600 uppercase tracking-wider">
             {language === 'ar' ? 'إجمالي أعضاء الفريق' : 'Total Team Members'}
           </span>
-          <div className="text-2xl font-extrabold text-[#172033] mt-1 tabular-nums">
-            {users.length} {language === 'ar' ? 'مستخدمين' : 'Users'}
+          <div className="text-3xl font-black text-black mt-1.5 tabular-nums">
+            {users.length} <span className="text-sm font-bold text-slate-500">{language === 'ar' ? 'مستخدمين' : 'Users'}</span>
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-gray-200">
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+        <div className="neu-raised p-5 rounded-3xl border border-white">
+          <span className="text-xs font-black text-slate-600 uppercase tracking-wider">
             {language === 'ar' ? 'المسؤولون التنفيذيون (Super Admin)' : 'Super Admins'}
           </span>
-          <div className="text-2xl font-extrabold text-[#315EE8] mt-1 tabular-nums">
-            {users.filter((u) => u.role === 'admin').length} {language === 'ar' ? 'مشرفين' : 'Admins'}
+          <div className="text-3xl font-black text-[#315EE8] mt-1.5 tabular-nums">
+            {users.filter((u) => u.role === 'admin').length} <span className="text-sm font-bold text-slate-500">{language === 'ar' ? 'مشرفين' : 'Admins'}</span>
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-gray-200">
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+        <div className="neu-raised p-5 rounded-3xl border border-white">
+          <span className="text-xs font-black text-slate-600 uppercase tracking-wider">
             {language === 'ar' ? 'الجلسة الحالية' : 'Active Session'}
           </span>
-          <div className="text-sm font-extrabold text-emerald-700 mt-1 truncate">
+          <div className="text-base font-black text-emerald-800 mt-1.5 truncate">
             {currentUser.name}
           </div>
-          <div className="text-[11px] text-gray-500 truncate">{currentUser.username || currentUser.email}</div>
+          <div className="text-xs text-slate-600 truncate font-bold">{currentUser.username || currentUser.email}</div>
         </div>
       </div>
 
-      {/* Active User Switcher / Simulator Card */}
-      <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
-        <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+      {/* Active User Switcher / Simulator Card — Neomorphic */}
+      <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white space-y-4">
+        <div className="flex items-center justify-between pb-4 border-b border-slate-200">
           <div>
-            <h3 className="font-bold text-base text-[#172033]">
+            <h3 className="font-black text-lg text-black">
               {language === 'ar' ? 'حسابات الفريق ومحاكي التبديل بين الأدوار' : 'Team Accounts & Active Session Switcher'}
             </h3>
-            <p className="text-xs text-[#778397] mt-0.5">
+            <p className="text-xs md:text-sm text-slate-600 font-semibold mt-0.5">
               {language === 'ar'
                 ? 'انقر على أي مستخدم لاختبار الصلاحيات والتفويضات البرمجية من جانب الخادم فوراً.'
                 : 'Click any user to simulate their session and test server-side authorization policies.'}
             </p>
           </div>
-          <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-50 text-[#315EE8] border border-blue-200">
+          <span className="neu-pressed text-xs font-black px-3.5 py-1.5 rounded-full text-[#315EE8]">
             {language === 'ar' ? 'المستخدم النشط:' : 'Active:'} {currentUser.name}
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
           {users.map((u) => {
             const isSelected = currentUser.id === u.id;
             return (
@@ -226,41 +226,35 @@ export default function TeamPage() {
                       : `Switched session to ${u.name} (${u.roleTitle})`
                   );
                 }}
-                className={`p-4 rounded-xl border text-left transition-all ${
+                className={`p-4.5 rounded-2xl text-left transition-all ${
                   isSelected
-                    ? 'border-[#315EE8] bg-blue-50/50 shadow-md ring-2 ring-blue-500/20'
-                    : 'border-gray-200 bg-white hover:bg-gray-50'
+                    ? 'neu-pressed bg-[#e3eaf3] border border-blue-400 text-[#315EE8]'
+                    : 'neu-btn text-slate-900 hover:text-[#315EE8]'
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs ${
-                        isSelected ? 'bg-[#315EE8] text-white' : 'bg-gray-200 text-gray-700'
+                      className={`w-10 h-10 rounded-full flex items-center justify-center font-black text-xs ${
+                        isSelected ? 'bg-[#315EE8] text-white shadow-sm' : 'bg-slate-300 text-slate-900'
                       }`}
                     >
                       {u.avatarInitials}
                     </div>
                     <div className="overflow-hidden">
-                      <div className="font-bold text-sm text-gray-900 truncate">{u.name}</div>
-                      <div className="text-[11px] text-gray-500 truncate">{u.username || u.email}</div>
+                      <div className="font-black text-sm text-black truncate">{u.name}</div>
+                      <div className="text-xs text-slate-600 truncate font-semibold">{u.username || u.email}</div>
                     </div>
                   </div>
                   {isSelected && (
-                    <span className="p-1 rounded-full bg-blue-100 text-[#315EE8]">
-                      <Check className="w-3.5 h-3.5" />
+                    <span className="p-1 rounded-full neu-pressed text-[#315EE8]">
+                      <Check className="w-4 h-4" />
                     </span>
                   )}
                 </div>
-
-                <div className="mt-3 pt-2.5 border-t border-gray-100 flex items-center justify-between">
-                  <div>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-gray-100 text-gray-700">
-                      {u.role.replace('_', ' ')}
-                    </span>
-                    <div className="text-xs text-gray-800 font-semibold mt-1">{u.roleTitle}</div>
-                  </div>
-                  <div className="text-[10px] text-gray-400 text-right">{u.department}</div>
+                <div className="mt-3 pt-2.5 border-t border-slate-200 flex items-center justify-between text-xs">
+                  <span className="font-extrabold text-slate-700 capitalize">{u.roleTitle}</span>
+                  <span className="font-black text-[#315EE8] uppercase">{u.role}</span>
                 </div>
               </button>
             );
@@ -269,18 +263,18 @@ export default function TeamPage() {
       </div>
 
       {/* Pending Approval Requests */}
-      <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
-        <h3 className="font-bold text-base text-[#172033] mb-1">
+      <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white">
+        <h3 className="font-black text-lg text-black mb-1">
           {language === 'ar' ? 'قائمة انتظار اعتمادات الاستثمار التنفيذية' : 'Executive Investment Approval Queue'}
         </h3>
-        <p className="text-xs text-[#778397] mb-4">
+        <p className="text-xs font-bold text-slate-600 mb-5">
           {language === 'ar'
             ? 'قرارات تتطلب تفويضاً رسمياً من الإدارة أو المسؤول التنفيذي.'
             : 'Decisions requiring formal authorization by Management / Admin.'}
         </p>
 
         {pendingApprovals.length === 0 ? (
-          <div className="py-8 text-center text-gray-400 text-xs">
+          <div className="neu-pressed p-8 rounded-2xl text-center text-slate-500 font-bold text-xs">
             {language === 'ar' ? 'لا توجد حالات استثمارية بانتظار المراجعة التنفيذية حالياً.' : 'No investment cases currently pending executive review.'}
           </div>
         ) : (
@@ -288,22 +282,22 @@ export default function TeamPage() {
             {pendingApprovals.map((pa) => (
               <div
                 key={pa.oppId}
-                className="p-4 rounded-xl border border-blue-200 bg-blue-50/30 flex items-center justify-between text-xs"
+                className="neu-pressed p-4 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs"
               >
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-gray-900">{pa.oppName}</span>
-                    <span className="px-2 py-0.5 rounded font-extrabold uppercase text-[10px] bg-blue-100 text-blue-800">
+                    <span className="font-black text-black text-sm">{pa.oppName}</span>
+                    <span className="neu-raised-sm px-2.5 py-0.5 rounded-full font-black uppercase text-[10px] text-[#315EE8]">
                       {t(`rec${pa.recommendation}`) || pa.recommendation}
                     </span>
                   </div>
-                  <div className="text-gray-600 mt-1">
+                  <div className="text-slate-600 font-bold mt-1">
                     {language === 'ar' ? 'مقدم من:' : 'Submitted by'} {pa.owner} · {language === 'ar' ? 'الميزانية المطلوبة:' : 'Requested Budget:'} {fmtCurrency(pa.budget)}
                   </div>
                 </div>
                 <Link
                   href={`/opportunities/${pa.oppId}`}
-                  className="px-3 py-1.5 rounded-lg bg-[#315EE8] text-white font-bold text-xs hover:bg-[#274ec4]"
+                  className="neu-btn-primary px-4 py-2 text-white font-black text-xs inline-flex items-center gap-1.5 self-start md:self-auto"
                 >
                   {language === 'ar' ? 'المراجعة في مساحة العمل ←' : 'Review in Workspace →'}
                 </Link>
@@ -314,37 +308,37 @@ export default function TeamPage() {
       </div>
 
       {/* Real-time Audit Trail */}
-      <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs">
-        <div className="flex items-center gap-2 text-gray-900 font-bold text-base mb-1">
-          <History className="w-4 h-4 text-gray-600" />
+      <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white">
+        <div className="flex items-center gap-2 text-black font-black text-lg mb-1">
+          <History className="w-5 h-5 text-[#315EE8]" />
           <span>{language === 'ar' ? 'سجل التدقيق غير القابل للتعديل' : 'Immutable Audit Log'}</span>
         </div>
-        <p className="text-xs text-[#778397] mb-4">
+        <p className="text-xs font-bold text-slate-600 mb-5">
           {language === 'ar'
             ? 'سجل زمني متسلسل لكافة عمليات إنشاء المستخدمين والفرص والتعديلات والاعتمادات.'
             : 'Chronological record of all user management, opportunity creation, edits, calculations, and approvals.'}
         </p>
 
-        <div className="max-h-80 overflow-y-auto divide-y divide-gray-100 text-xs">
+        <div className="neu-pressed p-4 rounded-2xl max-h-80 overflow-y-auto divide-y divide-slate-200 text-xs">
           {auditLogs.length === 0 ? (
-            <div className="py-8 text-center text-gray-400">
+            <div className="py-8 text-center text-slate-500 font-bold">
               {language === 'ar' ? 'لم يتم تسجيل إجراءات تدقيق بعد.' : 'No audit entries recorded yet.'}
             </div>
           ) : (
             auditLogs.map((log) => (
-              <div key={log.id} className="py-2.5 flex items-start justify-between gap-4">
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-gray-900">{log.actorName}</span>
-                    <span className="px-1.5 py-0.2 rounded text-[10px] uppercase font-bold bg-gray-100 text-gray-600">
+              <div key={log.id} className="py-3 flex items-start justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-black text-black">{log.actorName}</span>
+                    <span className="neu-raised-sm px-2 py-0.5 rounded-full text-[10px] uppercase font-black text-slate-700">
                       {log.actorRole}
                     </span>
-                    <span className="text-gray-400">→</span>
-                    <span className="font-semibold text-[#315EE8]">{log.action}</span>
+                    <span className="text-slate-400">→</span>
+                    <span className="font-extrabold text-[#315EE8]">{log.action}</span>
                   </div>
-                  <p className="text-gray-600 text-[11px]">{log.summary}</p>
+                  <p className="text-slate-600 font-medium text-[11px]">{log.summary}</p>
                 </div>
-                <div className="text-right text-[10px] text-gray-400 whitespace-nowrap tabular-nums">
+                <div className="text-right text-[10px] font-bold text-slate-500 whitespace-nowrap tabular-nums">
                   {log.timestamp ? new Date(log.timestamp).toLocaleString(language === 'ar' ? 'ar-SA' : 'en-US') : ''}
                 </div>
               </div>
@@ -353,42 +347,44 @@ export default function TeamPage() {
         </div>
       </div>
 
-      {/* CREATE USER MODAL */}
+      {/* CREATE USER MODAL — Neomorphic */}
       {showCreateModal && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl border border-gray-200 max-w-lg w-full p-6 space-y-5 shadow-2xl animate-fade-in">
-            <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-              <div className="flex items-center gap-2">
-                <UserPlus className="w-5 h-5 text-[#315EE8]" />
-                <h3 className="font-bold text-base text-gray-900">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="neu-raised bg-[#EDF2F7] rounded-3xl border border-white max-w-lg w-full p-7 space-y-6 shadow-2xl animate-fade-in">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-white shadow-xs">
+                  <UserPlus className="w-5 h-5 text-[#315EE8]" />
+                </div>
+                <h3 className="font-black text-lg text-black">
                   {language === 'ar' ? 'إضافة مستخدم جديد للنظام' : 'Create New Team Member'}
                 </h3>
               </div>
               <button
                 onClick={() => setShowCreateModal(false)}
-                className="p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+                className="neu-btn p-2 text-slate-500 hover:text-black"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <form onSubmit={handleCreateUser} className="space-y-4 text-xs">
+            <form onSubmit={handleCreateUser} className="space-y-4 text-xs md:text-sm">
               <div>
-                <label className="font-bold text-gray-700 block mb-1">
+                <label className="font-black text-slate-800 block mb-1">
                   {language === 'ar' ? 'اسم المستخدم / البريد الإلكتروني (Username)*' : 'Username / Email*'}
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. analyst@b-it.co"
+                  placeholder="e.g. analyst@bi.co"
                   value={userForm.username}
                   onChange={(e) => setUserForm({ ...userForm, username: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-xl outline-none focus:border-[#315EE8] focus:ring-1 focus:ring-[#315EE8]"
+                  className="neu-pressed w-full px-4 py-2.5 rounded-xl outline-none font-bold text-black"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-gray-700 block mb-1">
+                <label className="font-black text-slate-800 block mb-1">
                   {language === 'ar' ? 'الاسم الكامل والمنصب (Full Name)*' : 'Full Name*'}
                 </label>
                 <input
@@ -397,18 +393,18 @@ export default function TeamPage() {
                   placeholder="e.g. Sarah Al-Otaibi"
                   value={userForm.name}
                   onChange={(e) => setUserForm({ ...userForm, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-xl outline-none focus:border-[#315EE8] focus:ring-1 focus:ring-[#315EE8]"
+                  className="neu-pressed w-full px-4 py-2.5 rounded-xl outline-none font-bold text-black"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-gray-700 block mb-1">
+                <label className="font-black text-slate-800 block mb-1">
                   {language === 'ar' ? 'دور وصلاحية المستخدم (Role)*' : 'User Role*'}
                 </label>
                 <select
                   value={userForm.role}
                   onChange={(e) => handleRoleChange(e.target.value as UserRole)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-xl outline-none focus:border-[#315EE8] bg-white font-medium"
+                  className="neu-btn w-full px-4 py-2.5 rounded-xl outline-none font-bold text-black"
                 >
                   <option value="admin">Super Admin (Full Governance & Approvals)</option>
                   <option value="management">Management Approver (Investment Sign-off)</option>
@@ -421,55 +417,55 @@ export default function TeamPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-gray-700 block mb-1">
+                  <label className="font-black text-slate-800 block mb-1">
                     {language === 'ar' ? 'المسمى الوظيفي' : 'Role Title'}
                   </label>
                   <input
                     type="text"
                     value={userForm.roleTitle}
                     onChange={(e) => setUserForm({ ...userForm, roleTitle: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl outline-none focus:border-[#315EE8]"
+                    className="neu-pressed w-full px-4 py-2.5 rounded-xl outline-none font-bold text-black"
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-gray-700 block mb-1">
+                  <label className="font-black text-slate-800 block mb-1">
                     {language === 'ar' ? 'القسم / الإدارة' : 'Department'}
                   </label>
                   <input
                     type="text"
                     value={userForm.department}
                     onChange={(e) => setUserForm({ ...userForm, department: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl outline-none focus:border-[#315EE8]"
+                    className="neu-pressed w-full px-4 py-2.5 rounded-xl outline-none font-bold text-black"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="font-bold text-gray-700 block mb-1">
+                <label className="font-black text-slate-800 block mb-1">
                   {language === 'ar' ? 'كلمة المرور (Password)' : 'Password'}
                 </label>
                 <input
                   type="text"
                   value={userForm.password}
                   onChange={(e) => setUserForm({ ...userForm, password: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-xl outline-none focus:border-[#315EE8] font-mono text-[11px]"
+                  className="neu-pressed w-full px-4 py-2.5 rounded-xl outline-none font-mono text-xs font-bold text-black"
                 />
               </div>
 
-              <div className="pt-3 border-t border-gray-100 flex items-center justify-end gap-2">
+              <div className="pt-3 border-t border-slate-200 flex items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50"
+                  className="neu-btn px-5 py-2.5 text-slate-700 font-bold"
                 >
                   {language === 'ar' ? 'إلغاء' : 'Cancel'}
                 </button>
                 <button
                   type="submit"
                   disabled={formLoading}
-                  className="px-5 py-2 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl font-bold flex items-center gap-1.5 shadow-sm disabled:opacity-50"
+                  className="neu-btn-primary px-6 py-2.5 text-white font-black flex items-center gap-2"
                 >
-                  <Check className="w-3.5 h-3.5" />
+                  <Check className="w-4 h-4" />
                   <span>{formLoading ? (language === 'ar' ? 'جارِ الحفظ...' : 'Creating...') : (language === 'ar' ? 'حفظ المستخدم' : 'Create User')}</span>
                 </button>
               </div>

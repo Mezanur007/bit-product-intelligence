@@ -56,17 +56,19 @@ export default function ReportsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Title */}
-      <div className="bg-white p-6 rounded-2xl border border-[#E6EAF1] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 no-print">
+      {/* Title — Neomorphic */}
+      <div className="neu-raised p-6 md:p-8 rounded-3xl border border-white flex flex-col md:flex-row md:items-center justify-between gap-4 no-print">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold text-[#315EE8] uppercase tracking-wider mb-1">
-            <FileText className="w-3.5 h-3.5" />
+          <div className="flex items-center gap-2 text-xs font-black text-[#315EE8] uppercase tracking-wider mb-1.5">
+            <span className="p-1 rounded-md neu-pressed text-[#315EE8]">
+              <FileText className="w-3.5 h-3.5" />
+            </span>
             <span>{t('moduleEight')}</span>
           </div>
-          <h1 className="text-2xl font-extrabold text-[#172033] tracking-tight">
+          <h1 className="text-2xl md:text-3xl font-black text-black tracking-tight">
             {t('decisionMemoTitle')}
           </h1>
-          <p className="text-sm text-[#778397] mt-1">
+          <p className="text-xs md:text-sm text-slate-600 font-semibold mt-1">
             {t('decisionMemoSubtitle')}
           </p>
         </div>
@@ -74,14 +76,14 @@ export default function ReportsPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={exportCSV}
-            className="px-4 py-2 rounded-xl border border-gray-300 bg-white text-xs font-bold text-gray-700 hover:bg-gray-50 flex items-center gap-2 shadow-xs"
+            className="neu-btn px-4 py-2.5 text-xs font-black text-slate-800 flex items-center gap-2"
           >
-            <Download className="w-4 h-4 text-gray-600" />
+            <Download className="w-4 h-4 text-slate-600" />
             <span>{t('exportCSV')}</span>
           </button>
           <button
             onClick={() => window.print()}
-            className="px-4 py-2 rounded-xl bg-[#315EE8] hover:bg-[#274ec4] text-white text-xs font-bold flex items-center gap-2 shadow-md shadow-blue-600/20"
+            className="neu-btn-primary px-5 py-2.5 text-white text-xs font-black flex items-center gap-2"
           >
             <Printer className="w-4 h-4" />
             <span>{t('printMemo')}</span>
@@ -89,13 +91,13 @@ export default function ReportsPage() {
         </div>
       </div>
 
-      {/* Selector */}
-      <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs flex items-center gap-4 no-print">
-        <label className="text-xs font-bold text-gray-700">{t('selectOppForMemo')}</label>
+      {/* Selector — Neomorphic */}
+      <div className="neu-raised p-4 md:p-5 rounded-2xl border border-white flex items-center gap-4 no-print flex-wrap">
+        <label className="text-xs md:text-sm font-black text-black">{t('selectOppForMemo')}</label>
         <select
           value={selectedOppId}
           onChange={(e) => setSelectedOppId(e.target.value)}
-          className="text-xs bg-gray-50 border border-gray-300 rounded-lg px-3 py-1.5 font-bold text-gray-900 outline-none"
+          className="neu-btn text-xs px-4 py-2 font-black text-black outline-none rounded-xl"
         >
           {opportunities.map((o) => (
             <option key={o.id} value={o.id}>
@@ -105,60 +107,60 @@ export default function ReportsPage() {
         </select>
       </div>
 
-      {/* Printable Executive Decision Memo Document */}
+      {/* Printable Executive Decision Memo Document — Neomorphic Container */}
       {selectedOpp && (
-        <div className="bg-white p-8 md:p-12 rounded-2xl border border-gray-200 shadow-md print-page max-w-4xl mx-auto space-y-8 text-xs text-gray-800 leading-relaxed">
+        <div className="neu-raised p-8 md:p-12 rounded-3xl border border-white print-page max-w-4xl mx-auto space-y-8 text-xs text-slate-800 leading-relaxed bg-[#EDF2F7]">
           {/* Header Memo Banner */}
           <div className="border-b-2 border-slate-900 pb-6 flex items-start justify-between">
             <div className="flex items-center gap-3.5">
               <img src="/brand/logo.webp" alt="BI Technology" className="w-12 h-12 object-contain" />
               <div>
-                <div className="font-extrabold text-xl text-slate-900 tracking-wider">
+                <div className="font-black text-2xl text-black tracking-wider">
                   {t('brandName')}
                 </div>
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-0.5">
+                <div className="text-xs font-black text-slate-500 uppercase tracking-widest mt-0.5">
                   {language === 'ar' ? 'مذكرة قرار الاستثمار الداخلي المعتمدة' : 'INTERNAL INVESTMENT DECISION MEMORANDUM'}
                 </div>
-                <div className="text-xs text-slate-600 mt-1 font-medium">
+                <div className="text-xs text-slate-600 mt-1 font-semibold">
                   {language === 'ar' ? 'مرجع الوثيقة:' : 'Document Ref:'} <strong>MEMO-{selectedOpp.id}</strong> · {language === 'ar' ? 'الرياض، المملكة العربية السعودية' : 'Riyadh, Saudi Arabia'}
                 </div>
               </div>
             </div>
             <div className={isRtl ? 'text-left' : 'text-right'}>
               <span
-                className={`inline-block px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider ${
+                className={`inline-block px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider ${
                   selectedOpp.recommendation === 'EXECUTE'
-                    ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
+                    ? 'neu-raised-sm text-emerald-800'
                     : selectedOpp.recommendation === 'PILOT'
-                    ? 'bg-blue-100 text-blue-900 border border-blue-300'
-                    : 'bg-amber-100 text-amber-900 border border-amber-300'
+                    ? 'neu-raised-sm text-[#315EE8]'
+                    : 'neu-raised-sm text-amber-800'
                 }`}
               >
                 {t('thRecommendation')}: {t(`rec${selectedOpp.recommendation}`) || selectedOpp.recommendation}
               </span>
-              <div className="text-xs text-slate-400 mt-1 font-medium">
+              <div className="text-xs text-slate-400 mt-1.5 font-bold">
                 {language === 'ar' ? 'التاريخ:' : 'Date:'} {new Date().toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
               </div>
             </div>
           </div>
 
           {/* Memo Metadata Block */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
+          <div className="neu-pressed grid grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-2xl border border-white/60">
             <div>
-              <span className="text-gray-400 text-[10px] block font-bold uppercase">{t('thOpportunity')}</span>
-              <strong className="text-gray-900 block text-sm">{selectedOpp.name}</strong>
+              <span className="text-slate-500 text-[10px] block font-black uppercase">{t('thOpportunity')}</span>
+              <strong className="text-black block text-sm font-black">{selectedOpp.name}</strong>
             </div>
             <div>
-              <span className="text-gray-400 text-[10px] block font-bold uppercase">{t('thCategory')}</span>
-              <strong className="text-gray-900 block capitalize">{selectedOpp.category.replace('_', ' ')}</strong>
+              <span className="text-slate-500 text-[10px] block font-black uppercase">{t('thCategory')}</span>
+              <strong className="text-slate-800 block capitalize font-black">{selectedOpp.category.replace('_', ' ')}</strong>
             </div>
             <div>
-              <span className="text-gray-400 text-[10px] block font-bold uppercase">{language === 'ar' ? 'مدير المنتج المسؤول' : 'Product Owner'}</span>
-              <strong className="text-gray-900 block">{selectedOpp.ownerName}</strong>
+              <span className="text-slate-500 text-[10px] block font-black uppercase">{language === 'ar' ? 'مدير المنتج المسؤول' : 'Product Owner'}</span>
+              <strong className="text-slate-800 block font-black">{selectedOpp.ownerName}</strong>
             </div>
             <div>
-              <span className="text-gray-400 text-[10px] block font-bold uppercase">{t('thWeightedScore')}</span>
-              <strong className="text-[#315EE8] block text-sm font-extrabold">{selectedOpp.weightedScore}/100</strong>
+              <span className="text-slate-500 text-[10px] block font-black uppercase">{t('thWeightedScore')}</span>
+              <strong className="text-[#315EE8] block text-base font-black">{selectedOpp.weightedScore}/100</strong>
             </div>
           </div>
 
