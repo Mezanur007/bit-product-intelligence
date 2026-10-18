@@ -19,8 +19,10 @@ import {
   Menu,
   X,
   Languages,
+  HelpCircle,
 } from 'lucide-react';
 import { useApp, ALL_USERS } from '../providers/AppProvider';
+import WorkflowGuideModal from '../common/WorkflowGuideModal';
 
 export default function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -40,18 +42,39 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [guideOpen, setGuideOpen] = useState(false);
 
   const isRtl = direction === 'rtl';
 
-  const navItems = [
-    { name: t('navOverview'), href: '/', icon: LayoutDashboard },
-    { name: t('navOpportunities'), href: '/opportunities', icon: Layers3 },
-    { name: t('navFinancialSimulator'), href: '/financial-simulator', icon: ChartNoAxesCombined },
-    { name: t('navMarketIntelligence'), href: '/market-intelligence', icon: Search },
-    { name: t('navPortfolio'), href: '/portfolio', icon: Rocket },
-    { name: t('navReports'), href: '/reports', icon: FileText },
-    { name: t('navTeam'), href: '/team', icon: Users },
-    { name: t('navSettings'), href: '/settings', icon: Settings },
+  const navSections = [
+    {
+      title: t('navSecHub'),
+      items: [
+        { name: t('navOverview'), href: '/', icon: LayoutDashboard },
+      ],
+    },
+    {
+      title: t('navSecPipeline'),
+      items: [
+        { name: t('navOpportunities'), href: '/opportunities', icon: Layers3 },
+        { name: t('navFinancialSimulator'), href: '/financial-simulator', icon: ChartNoAxesCombined },
+        { name: t('navMarketIntelligence'), href: '/market-intelligence', icon: Search },
+      ],
+    },
+    {
+      title: t('navSecGovernance'),
+      items: [
+        { name: t('navReports'), href: '/reports', icon: FileText },
+        { name: t('navTeam'), href: '/team', icon: Users },
+      ],
+    },
+    {
+      title: t('navSecOperations'),
+      items: [
+        { name: t('navPortfolio'), href: '/portfolio', icon: Rocket },
+        { name: t('navSettings'), href: '/settings', icon: Settings },
+      ],
+    },
   ];
 
   const handleResetDemo = async () => {
@@ -136,32 +159,39 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             </button>
           </div>
 
-          {/* Navigation Links */}
-          <div className="p-3">
-            <div className="px-3 py-2 text-[11px] font-bold text-gray-400 tracking-wider uppercase">
-              {!collapsed && t('workspace')}
-            </div>
-            <nav className="space-y-1">
-              {navItems.map((item) => {
-                const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                      isActive
-                        ? 'bg-[#315EE8] text-white shadow-md shadow-blue-600/30'
-                        : 'text-gray-300 hover:bg-gray-800/80 hover:text-white'
-                    }`}
-                  >
-                    <Icon className="w-4 h-4 shrink-0" />
-                    {!collapsed && <span>{item.name}</span>}
-                  </Link>
-                );
-              })}
-            </nav>
+          {/* Grouped Navigation Links */}
+          <div className="p-3 space-y-4 overflow-y-auto max-h-[calc(100vh-14rem)]">
+            {navSections.map((section, sIdx) => (
+              <div key={sIdx} className="space-y-1">
+                {!collapsed && (
+                  <div className="px-3 py-1 text-[10px] font-extrabold text-gray-500 tracking-wider uppercase">
+                    {section.title}
+                  </div>
+                )}
+                <nav className="space-y-1">
+                  {section.items.map((item) => {
+                    const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold transition-all ${
+                          isActive
+                            ? 'bg-[#315EE8] text-white shadow-md shadow-blue-600/30'
+                            : 'text-gray-300 hover:bg-gray-800/80 hover:text-white'
+                        }`}
+                        title={collapsed ? item.name : undefined}
+                      >
+                        <Icon className="w-4 h-4 shrink-0" />
+                        {!collapsed && <span>{item.name}</span>}
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -246,6 +276,16 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="flex items-center gap-3">
+            {/* Workflow Guide Button */}
+            <button
+              onClick={() => setGuideOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-gray-700 text-xs font-bold hover:bg-gray-50 transition-colors shadow-2xs"
+              title={t('workflowGuide')}
+            >
+              <HelpCircle className="w-3.5 h-3.5 text-[#315EE8]" />
+              <span className="hidden md:inline">{t('workflowGuide')}</span>
+            </button>
+
             {/* Language Switcher Pill */}
             <button
               onClick={toggleLanguage}
@@ -388,6 +428,9 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           </div>
         </footer>
       </div>
+
+      {/* Workflow Guide Modal */}
+      <WorkflowGuideModal isOpen={guideOpen} onClose={() => setGuideOpen(false)} />
     </div>
   );
 }

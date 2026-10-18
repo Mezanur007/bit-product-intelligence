@@ -427,6 +427,16 @@ export default function OpportunityWorkspacePage({
     { id: 'performance', title: t('performanceTab'), icon: Activity },
   ];
 
+  const isStep1Done = Boolean(opp.marketAssessment && opp.marketAssessment.tamSAR > 0);
+  const isStep2Done = Boolean(opp.competitors && opp.competitors.length > 0);
+  const isStep3Done = Boolean(techForm.architectureSummary || (opp.technicalFeasibility && opp.technicalFeasibility.architectureSummary));
+  const isStep4Done = Boolean(opp.financialAssumptions && opp.financialAssumptions.monthlyPricePerCustomer > 0);
+  const isStep5Done = Boolean(opp.mandatoryGates && opp.mandatoryGates.filter((g) => g.status === 'pass').length >= 7);
+  const isStep6Done = Boolean(opp.recommendation && opp.weightedScore > 0);
+
+  const completedCount = [isStep1Done, isStep2Done, isStep3Done, isStep4Done, isStep5Done, isStep6Done].filter(Boolean).length;
+  const progressPercent = Math.round((completedCount / 6) * 100);
+
   return (
     <div className="space-y-6">
       {/* Breadcrumb Header */}
@@ -507,26 +517,94 @@ export default function OpportunityWorkspacePage({
           </div>
         </div>
 
-        {/* Evaluation Steps Navigation Bar */}
-        <div className="flex items-center gap-1 overflow-x-auto pt-6 mt-6 border-t border-[#E6EAF1] no-print">
-          {steps.map((st) => {
-            const Icon = st.icon;
-            const isActive = activeTab === st.id;
-            return (
+        {/* Progress Bar & Visual Stepper */}
+        <div className="pt-5 mt-5 border-t border-[#E6EAF1] space-y-3 no-print">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-gray-700">{t('stepProgressLabel')}:</span>
+              <span className="font-extrabold text-[#315EE8]">{progressPercent}%</span>
+              <span className="text-gray-400">({completedCount}/6 {isRtl ? 'خطوات مكتملة' : 'completed'})</span>
+            </div>
+
+            {/* Quick 9-Gate status pill */}
+            <div className="flex items-center gap-2">
+              <span className="text-gray-500 font-medium">{t('gatesSummaryTitle')}</span>
+              <span className="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                {opp.mandatoryGates?.filter((g) => g.status === 'pass').length || 0}/9 {t('gatesPassedCount')}
+              </span>
+              {(opp.mandatoryGates?.filter((g) => g.status === 'fail').length || 0) > 0 && (
+                <span className="font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded-md border border-red-200">
+                  {opp.mandatoryGates?.filter((g) => g.status === 'fail').length} {t('gatesFailedCount')}
+                </span>
+              )}
               <button
-                key={st.id}
-                onClick={() => setActiveTab(st.id)}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                  isActive
-                    ? 'bg-[#315EE8] text-white shadow-sm'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-                }`}
+                onClick={() => setActiveTab('step5')}
+                className="text-xs text-[#315EE8] font-bold hover:underline ml-1"
               >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{st.title}</span>
+                {isRtl ? 'فحص البوابات ←' : 'Verify Gates →'}
               </button>
-            );
-          })}
+            </div>
+          </div>
+
+          <div className="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+            <div
+              className="bg-[#315EE8] h-1.5 rounded-full transition-all duration-500"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
+
+          {/* Stepper Tabs Navigation */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pt-2 pb-1">
+            {steps.map((st, idx) => {
+              const Icon = st.icon;
+              const isActive = activeTab === st.id;
+              const isEvaluationStep = idx < 6;
+              const stepDone =
+                idx === 0
+                  ? isStep1Done
+                  : idx === 1
+                  ? isStep2Done
+                  : idx === 2
+                  ? isStep3Done
+                  : idx === 3
+                  ? isStep4Done
+                  : idx === 4
+                  ? isStep5Done
+                  : idx === 5
+                  ? isStep6Done
+                  : false;
+
+              return (
+                <button
+                  key={st.id}
+                  onClick={() => setActiveTab(st.id)}
+                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+                    isActive
+                      ? 'bg-[#315EE8] text-white shadow-sm'
+                      : stepDone
+                      ? 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200/60'
+                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 border border-transparent'
+                  }`}
+                >
+                  {isEvaluationStep && (
+                    <span
+                      className={`w-4 h-4 rounded-full text-[10px] font-extrabold flex items-center justify-center shrink-0 ${
+                        isActive
+                          ? 'bg-white text-[#315EE8]'
+                          : stepDone
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-gray-200 text-gray-700'
+                      }`}
+                    >
+                      {stepDone && !isActive ? '✓' : idx + 1}
+                    </span>
+                  )}
+                  {!isEvaluationStep && <Icon className="w-3.5 h-3.5" />}
+                  <span>{st.title}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -550,6 +628,19 @@ export default function OpportunityWorkspacePage({
                 <Save className="w-3.5 h-3.5" />
                 <span>Save Step 1</span>
               </button>
+            </div>
+
+            {/* Guidance Callout */}
+            <div className="p-3.5 mt-4 rounded-xl bg-blue-50/70 border border-blue-200/60 flex items-start gap-2.5 text-xs text-blue-900">
+              <Sparkles className="w-4 h-4 text-[#315EE8] shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold block mb-0.5">{t('guidanceTitle')}</span>
+                <p className="text-[11px] text-blue-800 leading-relaxed">
+                  {isRtl
+                    ? 'احرص على التمييز بين الحجم الكلي للسوق في السعودية (TAM) وبين الطلب المؤكد. لن يتم قبول أي مشروع دون وجود خطاب نية أو التزام تجربة مدفوعة من عميل سعودي حقيقي.'
+                    : 'Distinguish between broad macro TAM and validated demand in Saudi Arabia. At least 1 letter of intent or paid pilot commitment is required to satisfy governance gate #1.'}
+                </p>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
@@ -694,6 +785,33 @@ export default function OpportunityWorkspacePage({
                 </div>
               </div>
             </div>
+
+            {/* Sequential Step Footer */}
+            <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
+              <span className="text-xs font-semibold text-gray-500">
+                {t('stepOf').replace('{current}', '1')}
+              </span>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={handleSaveMarket}
+                  className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  {t('saveDraftBtn')}
+                </button>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await handleSaveMarket();
+                    setActiveTab('step2');
+                  }}
+                  className="px-5 py-2.5 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
+                >
+                  <span>{t('nextStepBtn')}</span>
+                  <ChevronRight className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -718,6 +836,19 @@ export default function OpportunityWorkspacePage({
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add Competitor Benchmark</span>
               </button>
+            </div>
+
+            {/* Guidance Callout */}
+            <div className="p-3.5 mt-4 rounded-xl bg-indigo-50/70 border border-indigo-200/60 flex items-start gap-2.5 text-xs text-indigo-900">
+              <Sparkles className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold block mb-0.5">{t('guidanceTitle')}</span>
+                <p className="text-[11px] text-indigo-800 leading-relaxed">
+                  {isRtl
+                    ? 'حدد على الأقل منافسين اثنين ينشطان في السوق السعودي، وتحقق من تسعيرهما الشهري، وما إذا كانا يوفران واجهة عربية ودعماً محلياً متوافقاً مع الفوترة الإلكترونية.'
+                    : 'Document at least two active competitors in the Saudi market. Verify their actual monthly pricing in SAR and whether they support Arabic UX and local regulations.'}
+                </p>
+              </div>
             </div>
 
             {/* Competitor Table */}
@@ -777,6 +908,31 @@ export default function OpportunityWorkspacePage({
                 </tbody>
               </table>
             </div>
+
+            {/* Sequential Step Footer */}
+            <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => setActiveTab('step1')}
+                className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-1.5"
+              >
+                <ArrowLeft className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
+                <span>{t('prevStepBtn')}</span>
+              </button>
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-semibold text-gray-500 hidden sm:inline">
+                  {t('stepOf').replace('{current}', '2')}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('step3')}
+                  className="px-5 py-2.5 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
+                >
+                  <span>{t('nextStepBtn')}</span>
+                  <ChevronRight className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -801,6 +957,19 @@ export default function OpportunityWorkspacePage({
                 <Save className="w-3.5 h-3.5" />
                 <span>Save Step 3</span>
               </button>
+            </div>
+
+            {/* Guidance Callout */}
+            <div className="p-3.5 mt-4 rounded-xl bg-purple-50/70 border border-purple-200/60 flex items-start gap-2.5 text-xs text-purple-900">
+              <Sparkles className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold block mb-0.5">{t('guidanceTitle')}</span>
+                <p className="text-[11px] text-purple-800 leading-relaxed">
+                  {isRtl
+                    ? 'التحقق من إمكانية استغلال المكونات البرمجية الجاهزة لدى بي-آي-تي لاختصار مدة التطوير إلى أقل من 45 يوماً عمل، مع الالتزام التام بنظام حماية البيانات الشخصية السعودي (PDPL) والاستضافة السحابية داخل المملكة.'
+                    : 'Verify internal reusable components to keep MVP development under 45 engineering days. Strict compliance with Saudi PDPL data residency and Riyadh cloud hosting is mandatory.'}
+                </p>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6 text-xs">
@@ -931,6 +1100,38 @@ export default function OpportunityWorkspacePage({
                 </div>
               </div>
             </div>
+
+            {/* Sequential Step Footer */}
+            <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => setActiveTab('step2')}
+                className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-1.5"
+              >
+                <ArrowLeft className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
+                <span>{t('prevStepBtn')}</span>
+              </button>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={handleSaveTech}
+                  className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  {t('saveDraftBtn')}
+                </button>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await handleSaveTech();
+                    setActiveTab('step4');
+                  }}
+                  className="px-5 py-2.5 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
+                >
+                  <span>{t('nextStepBtn')}</span>
+                  <ChevronRight className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -985,6 +1186,19 @@ export default function OpportunityWorkspacePage({
                   <Save className="w-3.5 h-3.5" />
                   <span>Save Financial Model</span>
                 </button>
+              </div>
+            </div>
+
+            {/* Guidance Callout */}
+            <div className="p-3.5 mt-4 rounded-xl bg-emerald-50/70 border border-emerald-200/60 flex items-start gap-2.5 text-xs text-emerald-900">
+              <Sparkles className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold block mb-0.5">{t('guidanceTitle')}</span>
+                <p className="text-[11px] text-emerald-800 leading-relaxed">
+                  {isRtl
+                    ? 'يجب أن تثبت الحسابات تحقيق نقطة التعادل التشغيلي بأقل من 20 عميلاً نشطاً، مع استرداد ميزانية التحقق (≤ 25,000 ر.س) خلال أقل من 12 شهراً في السيناريو الأساسي.'
+                    : 'The model must demonstrate break-even with under 20 paying customers and full payback of initial validation funds (≤ SAR 25,000) within 12 months under base case assumptions.'}
+                </p>
               </div>
             </div>
 
@@ -1141,6 +1355,38 @@ export default function OpportunityWorkspacePage({
                 />
               </div>
             </div>
+
+            {/* Sequential Step Footer */}
+            <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => setActiveTab('step3')}
+                className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-1.5"
+              >
+                <ArrowLeft className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
+                <span>{t('prevStepBtn')}</span>
+              </button>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={handleSaveFinancial}
+                  className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  {t('saveDraftBtn')}
+                </button>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await handleSaveFinancial();
+                    setActiveTab('step5');
+                  }}
+                  className="px-5 py-2.5 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
+                >
+                  <span>{t('nextStepBtn')}</span>
+                  <ChevronRight className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -1165,6 +1411,19 @@ export default function OpportunityWorkspacePage({
                 <Plus className="w-3.5 h-3.5" />
                 <span>Log New Risk</span>
               </button>
+            </div>
+
+            {/* Guidance Callout */}
+            <div className="p-3.5 mt-4 rounded-xl bg-amber-50/70 border border-amber-200/60 flex items-start gap-2.5 text-xs text-amber-900">
+              <Sparkles className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold block mb-0.5">{t('guidanceTitle')}</span>
+                <p className="text-[11px] text-amber-800 leading-relaxed">
+                  {isRtl
+                    ? 'قاعدة الحوكمة الصارمة: الدرجة الموزونة العالية لا تلغي إطلاقاً رسوب أي بوابة إلزامية. يجب التحقق من كافة البوابات التسع وتقديم الأدلة الميدانية قبل رفع التوصية للإدارة.'
+                    : 'Strict Governance Rule: High weighted score NEVER overrides a mandatory gate failure. All 9 gates must be verified with audit evidence before management review.'}
+                </p>
+              </div>
             </div>
 
             {/* 9 Gates List */}
@@ -1279,6 +1538,31 @@ export default function OpportunityWorkspacePage({
                 </tbody>
               </table>
             </div>
+
+            {/* Sequential Step Footer */}
+            <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => setActiveTab('step4')}
+                className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-1.5"
+              >
+                <ArrowLeft className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
+                <span>{t('prevStepBtn')}</span>
+              </button>
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-semibold text-gray-500 hidden sm:inline">
+                  {t('stepOf').replace('{current}', '5')}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('step6')}
+                  className="px-5 py-2.5 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
+                >
+                  <span>{t('nextStepBtn')}</span>
+                  <ChevronRight className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -1313,6 +1597,19 @@ export default function OpportunityWorkspacePage({
                   <Rocket className="w-3.5 h-3.5" />
                   <span>Submit for Review</span>
                 </button>
+              </div>
+            </div>
+
+            {/* Guidance Callout */}
+            <div className="p-3.5 mt-4 rounded-xl bg-blue-50/70 border border-blue-200/60 flex items-start gap-2.5 text-xs text-blue-900">
+              <Sparkles className="w-4 h-4 text-[#315EE8] shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold block mb-0.5">{t('guidanceTitle')}</span>
+                <p className="text-[11px] text-blue-800 leading-relaxed">
+                  {isRtl
+                    ? 'محرك القرار يجمع التقييم الموزون، ونتائج البوابات التسع، ونموذج التعادل المالي. بعد الحصول على التوصية، يقوم مدير المنتج برفع طلب الاعتماد للإدارة التنفيذية.'
+                    : 'The decision engine synthesizes weighted criteria, 9 mandatory gate results, and break-even metrics. Once recommendations are generated, POs submit for formal executive sign-off.'}
+                </p>
               </div>
             </div>
 
@@ -1417,6 +1714,37 @@ export default function OpportunityWorkspacePage({
                   ))}
                 </div>
               )}
+            </div>
+
+            {/* Sequential Step Footer */}
+            <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => setActiveTab('step5')}
+                className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-1.5"
+              >
+                <ArrowLeft className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
+                <span>{t('prevStepBtn')}</span>
+              </button>
+              <div className="flex items-center gap-3">
+                <Link
+                  href={`/reports?oppId=${opp.id}`}
+                  className="px-5 py-2.5 bg-gray-900 hover:bg-black text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-2"
+                >
+                  <FileText className="w-3.5 h-3.5 text-[#6484FF]" />
+                  <span>{isRtl ? 'عرض المذكرة الاستثمارية الرسمية ←' : 'View Decision Memorandum →'}</span>
+                </Link>
+                {opp.status.includes('pilot') && (
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('pilot')}
+                    className="px-4 py-2.5 bg-[#315EE8] hover:bg-[#274ec4] text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2"
+                  >
+                    <span>{t('pilotTab')}</span>
+                    <ChevronRight className={`w-3.5 h-3.5 ${isRtl ? 'rotate-180' : ''}`} />
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>

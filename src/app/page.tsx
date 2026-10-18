@@ -167,97 +167,233 @@ export default function ExecutiveDashboard() {
         </div>
       </div>
 
-      {/* 10 Executive KPI Cards Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3.5">
-        {/* KPI 1 */}
-        <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#778397] uppercase">{t('kpiTotalOpps')}</div>
-          <div className="text-2xl font-extrabold text-[#172033] mt-1 tabular-nums">
-            {totalCount.toString().padStart(2, '0')}
+      {/* B-IT 4-Stage Investment Framework Stepper Banner */}
+      <div className="bg-gradient-to-br from-gray-900 via-[#111827] to-gray-900 text-white p-6 rounded-2xl border border-gray-800 shadow-md">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-5 pb-5 border-b border-gray-800">
+          <div>
+            <div className="flex items-center gap-2 text-xs font-bold text-[#6484FF] uppercase tracking-wider mb-1">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>{t('processBannerTitle')}</span>
+            </div>
+            <p className="text-xs text-gray-300 max-w-2xl leading-relaxed">
+              {t('processBannerDesc')}
+            </p>
           </div>
-          <div className="text-[11px] text-gray-500 mt-1">{t('kpiSubAllStages')}</div>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/opportunities?new=true"
+              className="px-3.5 py-2 rounded-xl bg-[#315EE8] hover:bg-[#274ec4] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-2"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span>{t('newOpportunity')}</span>
+            </Link>
+          </div>
         </div>
 
-        {/* KPI 2 */}
-        <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#6484FF] uppercase">{t('kpiUnderEval')}</div>
-          <div className="text-2xl font-extrabold text-[#172033] mt-1 tabular-nums">
-            {underEvaluationCount.toString().padStart(2, '0')}
+        {/* 4 Steps Horizontal Flow */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+            <div className="w-7 h-7 rounded-lg bg-blue-500/20 text-[#6484FF] font-extrabold text-xs flex items-center justify-center shrink-0">
+              1
+            </div>
+            <div>
+              <div className="text-xs font-bold text-white">{isRtl ? 'تسجيل الفكرة' : '1. Idea Intake'}</div>
+              <div className="text-[11px] text-gray-400 mt-0.5">{isRtl ? 'حصر مشاكل العملاء' : 'Painful KSA problem'}</div>
+            </div>
           </div>
-          <div className="text-[11px] text-gray-500 mt-1">{t('kpiSubActive6Step')}</div>
+
+          <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+            <div className="w-7 h-7 rounded-lg bg-indigo-500/20 text-indigo-400 font-extrabold text-xs flex items-center justify-center shrink-0">
+              2
+            </div>
+            <div>
+              <div className="text-xs font-bold text-white">{isRtl ? 'التحقق بالأدلة' : '2. 6-Step Validation'}</div>
+              <div className="text-[11px] text-gray-400 mt-0.5">{isRtl ? 'سوق، منافسين، مالية' : 'Market, comps, finance'}</div>
+            </div>
+          </div>
+
+          <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+            <div className="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 font-extrabold text-xs flex items-center justify-center shrink-0">
+              3
+            </div>
+            <div>
+              <div className="text-xs font-bold text-white">{isRtl ? 'بوابات الحوكمة 9' : '3. 9 Mandatory Gates'}</div>
+              <div className="text-[11px] text-gray-400 mt-0.5">{isRtl ? 'توقيع الإدارة المعتمد' : 'Zero bypass rules'}</div>
+            </div>
+          </div>
+
+          <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+            <div className="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-400 font-extrabold text-xs flex items-center justify-center shrink-0">
+              4
+            </div>
+            <div>
+              <div className="text-xs font-bold text-white">{isRtl ? 'تجربة مقيدة ≤ 25 ألف' : '4. Pilot Launch'}</div>
+              <div className="text-[11px] text-gray-400 mt-0.5">{isRtl ? 'عملاء حقيقيون وإيراد' : 'Paid pilot & break-even'}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3 Grouped Executive Metric Clusters */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        {/* Cluster 1: Pipeline Status & Velocity */}
+        <div className="bg-white p-5 rounded-2xl border border-[#E6EAF1] shadow-xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+            <span className="text-xs font-bold text-gray-600 uppercase tracking-wider">{t('dashClusterPipeline')}</span>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-[#315EE8]">
+              {totalCount} {isRtl ? 'فرص مسجلة' : 'Registered'}
+            </span>
+          </div>
+          <div className="grid grid-cols-3 gap-2 text-center">
+            <div className="p-2 rounded-xl bg-gray-50/70 border border-gray-100">
+              <div className="text-2xl font-extrabold text-[#172033] tabular-nums">{totalCount}</div>
+              <div className="text-[10px] font-semibold text-gray-500 mt-1">{t('kpiTotalOpps')}</div>
+            </div>
+            <div className="p-2 rounded-xl bg-blue-50/50 border border-blue-100">
+              <div className="text-2xl font-extrabold text-[#315EE8] tabular-nums">{underEvaluationCount}</div>
+              <div className="text-[10px] font-semibold text-gray-500 mt-1">{t('kpiUnderEval')}</div>
+            </div>
+            <div className={`p-2 rounded-xl border ${attentionItems.length > 0 ? 'bg-amber-50/70 border-amber-200' : 'bg-gray-50/70 border-gray-100'}`}>
+              <div className={`text-2xl font-extrabold tabular-nums ${attentionItems.length > 0 ? 'text-amber-600' : 'text-gray-400'}`}>
+                {attentionItems.length}
+              </div>
+              <div className="text-[10px] font-semibold text-gray-500 mt-1">{t('kpiAttentionNeeded')}</div>
+            </div>
+          </div>
         </div>
 
-        {/* KPI 3 */}
-        <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#315EE8] uppercase">{t('kpiPilotApproved')}</div>
-          <div className="text-2xl font-extrabold text-[#315EE8] mt-1 tabular-nums">
-            {pilotApprovedCount.toString().padStart(2, '0')}
+        {/* Cluster 2: Capital Allocation & Exposure */}
+        <div className="bg-white p-5 rounded-2xl border border-[#E6EAF1] shadow-xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+            <span className="text-xs font-bold text-gray-600 uppercase tracking-wider">{t('dashClusterCapital')}</span>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">
+              ≤ SAR 25k Cap
+            </span>
           </div>
-          <div className="text-[11px] text-gray-500 mt-1">{t('kpiSubBoundedTrials')}</div>
+          <div className="grid grid-cols-3 gap-2 text-center">
+            <div className="p-2 rounded-xl bg-gray-50/70 border border-gray-100">
+              <div className="text-[10px] font-semibold text-gray-500">{t('kpiProposedBudget')}</div>
+              <div className="text-sm font-bold text-gray-800 mt-1.5 tabular-nums truncate">{fmtSAR(totalProposedBudget)}</div>
+            </div>
+            <div className="p-2 rounded-xl bg-blue-50/50 border border-blue-100">
+              <div className="text-[10px] font-semibold text-gray-500">{t('kpiApprovedBudget')}</div>
+              <div className="text-sm font-bold text-[#315EE8] mt-1.5 tabular-nums truncate">{fmtSAR(totalApprovedBudget)}</div>
+            </div>
+            <div className="p-2 rounded-xl bg-emerald-50/50 border border-emerald-100">
+              <div className="text-[10px] font-semibold text-gray-500">{t('kpiActualSpend')}</div>
+              <div className="text-sm font-bold text-gray-900 mt-1.5 tabular-nums truncate">{fmtSAR(totalActualExpenditure)}</div>
+            </div>
+          </div>
+          {/* Progress against cap */}
+          <div className="pt-1">
+            <div className="flex justify-between text-[10px] text-gray-400 mb-1">
+              <span>{t('dashCapLimitNote')}</span>
+              <span className="font-semibold text-gray-700">
+                {totalApprovedBudget > 0 ? Math.round((totalActualExpenditure / totalApprovedBudget) * 100) : 0}%
+              </span>
+            </div>
+            <div className="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+              <div
+                className="bg-[#315EE8] h-1.5 rounded-full transition-all duration-500"
+                style={{
+                  width: `${Math.min(
+                    100,
+                    totalApprovedBudget > 0 ? Math.round((totalActualExpenditure / totalApprovedBudget) * 100) : 0
+                  )}%`,
+                }}
+              />
+            </div>
+          </div>
         </div>
 
-        {/* KPI 4 */}
-        <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#159769] uppercase">{t('kpiActiveProducts')}</div>
-          <div className="text-2xl font-extrabold text-[#159769] mt-1 tabular-nums">
-            {activeProductsCount.toString().padStart(2, '0')}
+        {/* Cluster 3: Commercial Traction & Returns */}
+        <div className="bg-white p-5 rounded-2xl border border-[#E6EAF1] shadow-xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+            <span className="text-xs font-bold text-gray-600 uppercase tracking-wider">{t('dashClusterReturns')}</span>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700">
+              {isRtl ? 'إيرادات متكررة' : 'Recurring Billing'}
+            </span>
           </div>
-          <div className="text-[11px] text-gray-500 mt-1">{t('kpiSubCommercialized')}</div>
+          <div className="grid grid-cols-3 gap-2 text-center">
+            <div className="p-2 rounded-xl bg-emerald-50/50 border border-emerald-100">
+              <div className="text-2xl font-extrabold text-[#159769] tabular-nums">
+                {activeProductsCount + pilotApprovedCount}
+              </div>
+              <div className="text-[10px] font-semibold text-gray-500 mt-1">
+                {isRtl ? 'منتجات وتجارب' : 'Products & Pilots'}
+              </div>
+            </div>
+            <div className="p-2 rounded-xl bg-emerald-50/50 border border-emerald-100">
+              <div className="text-sm font-bold text-[#159769] mt-1.5 tabular-nums truncate">{fmtSAR(totalCurrentMRR)}</div>
+              <div className="text-[10px] font-semibold text-gray-500 mt-1">{t('kpiCurrentMRR')}</div>
+            </div>
+            <div className="p-2 rounded-xl bg-emerald-50/50 border border-emerald-100">
+              <div className="text-2xl font-extrabold text-[#159769] tabular-nums">{actualGrossMargin}%</div>
+              <div className="text-[10px] font-semibold text-gray-500 mt-1">{t('kpiGrossMargin')}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Actionable Executive Decision Queue */}
+      <div className="bg-white p-5 rounded-2xl border border-[#E6EAF1] shadow-xs space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <ShieldAlert className={`w-4 h-4 ${attentionItems.length > 0 ? 'text-amber-500' : 'text-emerald-500'}`} />
+            <h3 className="text-sm font-bold text-gray-900">{t('executiveDecisionQueue')}</h3>
+            {attentionItems.length > 0 ? (
+              <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold">
+                {attentionItems.length} {isRtl ? 'تتطلب قرار' : 'Pending'}
+              </span>
+            ) : (
+              <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                {isRtl ? 'مكتمل' : 'All Clear'}
+              </span>
+            )}
+          </div>
+          <Link
+            href="/opportunities"
+            className="text-xs text-[#315EE8] font-bold hover:underline"
+          >
+            {isRtl ? 'عرض سجل الفرص كامل ←' : 'View Full Register →'}
+          </Link>
         </div>
 
-        {/* KPI 5 */}
-        <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-amber-600 uppercase">{t('kpiAttentionNeeded')}</div>
-          <div className="text-2xl font-extrabold text-amber-600 mt-1 tabular-nums">
-            {attentionItems.length.toString().padStart(2, '0')}
+        {attentionItems.length > 0 ? (
+          <div className="divide-y divide-gray-100">
+            {attentionItems.map((opp) => (
+              <div key={opp.id} className="py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-gray-100 text-gray-600 uppercase">
+                    {opp.id}
+                  </span>
+                  <div>
+                    <div className="text-xs font-bold text-gray-900">{opp.name}</div>
+                    <div className="text-[11px] text-amber-700 flex items-center gap-1 mt-0.5">
+                      <span>•</span>
+                      <span>
+                        {opp.mandatoryGates?.some((g) => g.status === 'fail')
+                          ? (isRtl ? 'يوجد فحص بوابة غير مجتاز' : 'Has unverified mandatory gate')
+                          : (isRtl ? 'بانتظار اعتماد التجربة أو معلق' : 'Pending executive pilot approval or on hold')}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <Link
+                  href={`/opportunities/${opp.id}`}
+                  className="px-3 py-1.5 rounded-lg bg-blue-50 text-[#315EE8] hover:bg-blue-100 text-xs font-bold transition-colors inline-flex items-center gap-1.5 self-start sm:self-auto"
+                >
+                  <span>{t('actionReviewNow')}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            ))}
           </div>
-          <div className="text-[11px] text-gray-500 mt-1">{t('kpiSubBlockers')}</div>
-        </div>
-
-        {/* KPI 6 */}
-        <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#778397] uppercase">{t('kpiProposedBudget')}</div>
-          <div className="text-lg font-bold text-[#172033] mt-1 tabular-nums">
-            {fmtSAR(totalProposedBudget)}
+        ) : (
+          <div className="py-3 text-center text-xs text-gray-500">
+            {t('queueEmpty')}
           </div>
-          <div className="text-[11px] text-gray-400 mt-1">{t('kpiSubRequestedByPOs')}</div>
-        </div>
-
-        {/* KPI 7 */}
-        <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#315EE8] uppercase">{t('kpiApprovedBudget')}</div>
-          <div className="text-lg font-bold text-[#315EE8] mt-1 tabular-nums">
-            {fmtSAR(totalApprovedBudget)}
-          </div>
-          <div className="text-[11px] text-gray-400 mt-1">{t('kpiSubAuthorizedByMgmt')}</div>
-        </div>
-
-        {/* KPI 8 */}
-        <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#778397] uppercase">{t('kpiActualSpend')}</div>
-          <div className="text-lg font-bold text-[#172033] mt-1 tabular-nums">
-            {fmtSAR(totalActualExpenditure)}
-          </div>
-          <div className="text-[11px] text-gray-400 mt-1">{t('kpiSubRealizedCash')}</div>
-        </div>
-
-        {/* KPI 9 */}
-        <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#159769] uppercase">{t('kpiCurrentMRR')}</div>
-          <div className="text-lg font-bold text-[#159769] mt-1 tabular-nums">
-            {fmtSAR(totalCurrentMRR)}
-          </div>
-          <div className="text-[11px] text-gray-400 mt-1">{t('kpiSubActiveBilling')}</div>
-        </div>
-
-        {/* KPI 10 */}
-        <div className="bg-white p-4 rounded-xl border border-[#E6EAF1] shadow-xs">
-          <div className="text-[11px] font-bold text-[#159769] uppercase">{t('kpiGrossMargin')}</div>
-          <div className="text-lg font-bold text-[#159769] mt-1 tabular-nums">
-            {actualGrossMargin}%
-          </div>
-          <div className="text-[11px] text-gray-400 mt-1">{t('kpiSubDirectMargin')}</div>
-        </div>
+        )}
       </div>
 
       {/* Main Charts & Attention Grid */}
@@ -460,8 +596,22 @@ export default function ExecutiveDashboard() {
             <tbody className="divide-y divide-[#E6EAF1]">
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-gray-500">
-                    {t('noOpportunitiesFound')}
+                  <td colSpan={7} className="py-12 text-center">
+                    <div className="max-w-md mx-auto space-y-3">
+                      <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#315EE8] flex items-center justify-center mx-auto">
+                        <Layers3 className="w-6 h-6" />
+                      </div>
+                      <h4 className="text-sm font-bold text-gray-900">{t('emptySearchTitle')}</h4>
+                      <p className="text-xs text-gray-500">{t('emptySearchDesc')}</p>
+                      <div className="flex items-center justify-center gap-3 pt-1">
+                        <Link
+                          href="/opportunities?new=true"
+                          className="px-4 py-2 bg-[#315EE8] text-white rounded-xl text-xs font-bold hover:bg-[#274ec4] transition-colors"
+                        >
+                          {t('createFirstOpp')}
+                        </Link>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               ) : (

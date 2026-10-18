@@ -263,6 +263,93 @@ export const DICTIONARY: TranslationDictionary = {
   // Language Switcher
   switchToArabic: { en: 'العربية', ar: 'English' },
   languageName: { en: 'English', ar: 'العربية' },
+
+  // Grouped Navigation Sections
+  navSecHub: { en: 'PORTFOLIO HUB', ar: 'المركز التنفيذي' },
+  navSecPipeline: { en: 'EVALUATION & RESEARCH', ar: 'مسار التقييم والأبحاث' },
+  navSecGovernance: { en: 'DECISIONS & GOVERNANCE', ar: 'اتخاذ القرارات والحوكمة' },
+  navSecOperations: { en: 'OPERATIONS & SETTINGS', ar: 'العمليات والإعدادات' },
+
+  // Workflow Guide Modal
+  workflowGuide: { en: 'Workflow Guide', ar: 'دليل العمليات' },
+  workflowModalTitle: { en: 'How B-IT Product Intelligence Works', ar: 'كيف تعمل منصة ذكاء المنتجات في بي-آي-تي' },
+  workflowModalSubtitle: {
+    en: 'A disciplined 4-stage governance journey from Saudi market hypothesis to recurring revenue.',
+    ar: 'رحلة حوكمة منضبطة من 4 مراحل لتحويل الفرضيات إلى إيرادات متكررة مستدامة.',
+  },
+  workflowStage1: { en: 'Stage 1: Intake & Problem Definition', ar: 'المرحلة 1: تسجيل الفكرة وتحديد المشكلة' },
+  workflowStage1Desc: {
+    en: 'Register customer segments, painful problems in KSA, and proposed validation budget (capped at SAR 25,000).',
+    ar: 'تسجيل شريحة العملاء المستهدفة، والمشكلة الفعلية في السعودية، والميزانية المقترحة (بحد أقصى 25,000 ر.س).',
+  },
+  workflowStage2: { en: 'Stage 2: 6-Step Evidence Validation', ar: 'المرحلة 2: التحقق بالخطوات الست القائم على الأدلة' },
+  workflowStage2Desc: {
+    en: 'Validate market size, benchmark competitors, evaluate technical build vs buy, model 24-month finances, and log operational risks.',
+    ar: 'التحقق من حجم السوق، ومقارنة المنافسين، والجدوى التقنية، ونمذجة 24 شهراً مالياً، وسجل المخاطر.',
+  },
+  workflowStage3: { en: 'Stage 3: 9 Mandatory Governance Gates', ar: 'المرحلة 3: بوابات الحوكمة التسع الإلزامية' },
+  workflowStage3Desc: {
+    en: 'Before any capital is authorized, all 9 strict gates must be reviewed and signed off by authorized executives.',
+    ar: 'قبل اعتماد أي سيولة، يجب فحص واجتياز بوابات الحوكمة التسع الصارمة وتوقيع أصحاب الصلاحية.',
+  },
+  workflowStage4: { en: 'Stage 4: Controlled Pilot & Scale', ar: 'المرحلة 4: التجربة الميدانية المقيدة والتوسع' },
+  workflowStage4Desc: {
+    en: 'Execute a bounded paid pilot with real Saudi clients to reach commercial break-even and sustainable MRR.',
+    ar: 'تنفيذ تجربة مدفوعة محدودة مع عملاء سعوديين حقيقيين لتحقيق نقطة التعادل وإيرادات متكررة.',
+  },
+  closeGuide: { en: 'Got it, Let\'s Begin', ar: 'فهمت، لنبدأ الآن' },
+
+  // Grouped Dashboard Clusters
+  dashClusterPipeline: { en: 'Pipeline Status & Velocity', ar: 'حالة مسار الفرص والسرعة' },
+  dashClusterCapital: { en: 'Capital Allocation & Exposure', ar: 'تخصيص السيولة ومستوى المخاطر' },
+  dashClusterReturns: { en: 'Commercial Traction & Returns', ar: 'النتائج التجارية والعوائد الفعلية' },
+  dashCapLimitNote: { en: 'Validation capital cap: ≤ SAR 25,000 per project', ar: 'الحد الأقصى لميزانية التحقق: ≤ 25,000 ر.س لكل مشروع' },
+  executiveDecisionQueue: { en: 'Executive Decision Queue', ar: 'قائمة القرارات المعلقة للإدارة' },
+  executiveQueueSubtitle: {
+    en: 'Opportunities currently requiring management gate clearance or investment decisions',
+    ar: 'الفرص التي تتطلب حالياً اعتماد البوابات أو قرارات استثمارية من الإدارة',
+  },
+  queueEmpty: { en: 'All opportunities are clear. No pending management blockers.', ar: 'جميع الفرص تسير بانتظام. لا توجد معوقات معلقة للإدارة حالياً.' },
+  actionReviewNow: { en: 'Review & Sign-off', ar: 'مراجعة واعتماد' },
+  processBannerTitle: { en: 'B-IT Investment & Evaluation Framework', ar: 'منهجية بي-آي-تي في الاستثمار وتطوير المنتجات' },
+  processBannerDesc: {
+    en: 'Four structured steps to eliminate guesswork and protect company capital before code is written.',
+    ar: 'أربع خطوات منهجية لإلغاء التخمين وحماية رأس مال الشركة قبل كتابة أي كود برمجي.',
+  },
+
+  // Opportunities Kanban & Filters
+  viewBoard: { en: 'Pipeline Board', ar: 'لوحة المسار (كانبان)' },
+  viewTable: { en: 'Audit Table', ar: 'جدول التفاصيل' },
+  colIdea: { en: 'Discovery & Ideas', ar: 'الاستكشاف والأفكار' },
+  colUnderEval: { en: 'Under 6-Step Review', ar: 'قيد التقييم المنهجي' },
+  colDecisionPending: { en: 'Decision Pending', ar: 'بانتظار قرار الإدارة' },
+  colPilotApproved: { en: 'Pilot Approved (≤25k)', ar: 'تجارب معتمدة (≤25 ألف)' },
+  colActive: { en: 'Commercialized / Scale', ar: 'مطروحة تجارياً / نمو' },
+  cardBudget: { en: 'Budget:', ar: 'الميزانية:' },
+  cardGates: { en: 'Gates:', ar: 'البوابات:' },
+  cardOpenWorkspace: { en: 'Open Workspace', ar: 'فتح مساحة التقييم' },
+  filterAll: { en: 'All Items', ar: 'كافة العناصر' },
+  filterNeedsAction: { en: 'Needs Action', ar: 'تتطلب إجراء' },
+  filterHighPriority: { en: 'Score > 70', ar: 'درجة عالية > 70' },
+
+  // Guided Stepper & Guidance
+  stepProgressLabel: { en: 'Evaluation Progress', ar: 'نسبة اكتمال التقييم' },
+  stepOf: { en: 'Step {current} of 6', ar: 'الخطوة {current} من 6' },
+  nextStepBtn: { en: 'Save & Continue to Next Step →', ar: 'حفظ ومتابعة إلى الخطوة التالية ←' },
+  prevStepBtn: { en: '← Back to Previous Step', ar: '← العودة إلى الخطوة السابقة' },
+  saveDraftBtn: { en: 'Save Draft', ar: 'حفظ كمسودة' },
+  gatesSummaryTitle: { en: '9 Mandatory Governance Gates:', ar: 'بوابات الحوكمة الإلزامية التسع:' },
+  gatesPassedCount: { en: 'Passed', ar: 'مكتملة' },
+  gatesPendingCount: { en: 'Pending', ar: 'قيد الانتظار' },
+  gatesFailedCount: { en: 'Action Needed', ar: 'معوقات' },
+  guidanceTitle: { en: 'Saudi Market Guidance & B-IT Criteria', ar: 'إرشادات السوق السعودي ومعايير بي-آي-تي' },
+  emptySearchTitle: { en: 'No matching opportunities found', ar: 'لم يتم العثور على فرص مطابقة' },
+  emptySearchDesc: {
+    en: 'Try adjusting your search filters or start by creating a new opportunity.',
+    ar: 'جرب تغيير كلمات البحث أو المرشحات، أو ابدأ بتسجيل فرصة جديدة.',
+  },
+  createFirstOpp: { en: 'Create First Opportunity', ar: 'تسجيل أول فرصة منتج' },
+  loadDemoOpps: { en: 'Load Sample Saudi Portfolio', ar: 'تحميل محفظة نماذج سعودية' },
 };
 
 /**
