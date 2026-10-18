@@ -6,64 +6,38 @@ import { Language, Direction, getTranslation, formatCurrency } from '@/lib/i18n'
 
 export const ALL_USERS: User[] = [
   {
-    id: 'usr-admin',
-    name: 'Khalid Al-Mansoor',
-    email: 'khalid@b-it.sa',
+    id: 'usr-maruf',
+    name: 'Mezanur Maruf (CTO)',
+    email: 'maruf@b-it.co',
+    username: 'maruf@b-it.co',
+    password: 'Bit@123456@',
     role: 'admin',
-    roleTitle: 'Chief Executive Officer & Admin',
-    department: 'Executive Management',
-    avatarInitials: 'KM',
+    roleTitle: 'Super Admin (CTO)',
+    department: 'Executive Management & Technology',
+    avatarInitials: 'MM',
+    createdAt: '2026-10-18T00:00:00Z',
   },
   {
-    id: 'usr-management',
-    name: 'Tariq Al-Ghamdi',
-    email: 'tariq@b-it.sa',
-    role: 'management',
-    roleTitle: 'VP of Technology & Approver',
-    department: 'Management',
-    avatarInitials: 'TG',
-  },
-  {
-    id: 'usr-po',
-    name: 'Mezanur Rahman',
-    email: 'mezanur@b-it.sa',
-    role: 'product_owner',
-    roleTitle: 'Lead Product Manager',
-    department: 'Product Delivery',
-    avatarInitials: 'MR',
-  },
-  {
-    id: 'usr-analyst',
-    name: 'Sarah Al-Otaibi',
-    email: 'sarah@b-it.sa',
-    role: 'market_analyst',
-    roleTitle: 'Market & Competitive Intelligence Analyst',
-    department: 'Strategy & Research',
-    avatarInitials: 'SO',
-  },
-  {
-    id: 'usr-tech',
-    name: 'Fahad Al-Harbi',
-    email: 'fahad@b-it.sa',
-    role: 'technical_reviewer',
-    roleTitle: 'Solutions Architect & Tech Lead',
-    department: 'Engineering',
-    avatarInitials: 'FH',
-  },
-  {
-    id: 'usr-finance',
-    name: 'Omar Al-Zahrani',
-    email: 'omar@b-it.sa',
-    role: 'finance_reviewer',
-    roleTitle: 'Senior Financial Analyst',
-    department: 'Finance & Controlling',
-    avatarInitials: 'OZ',
+    id: 'usr-coo',
+    name: 'Faisal Mohammed (COO)',
+    email: 'coo@b--it.co',
+    username: 'coo@b--it.co',
+    password: 'Bit@123456@',
+    role: 'admin',
+    roleTitle: 'Super Admin (COO)',
+    department: 'Executive Management & Operations',
+    avatarInitials: 'FM',
+    createdAt: '2026-10-18T00:00:00Z',
   },
 ];
 
 interface AppContextType {
   currentUser: User;
   setCurrentUser: (u: User) => void;
+  users: User[];
+  setUsers: (users: User[]) => void;
+  refreshUsers: () => Promise<void>;
+  addUser: (user: User) => void;
   isDemoMode: boolean;
   setIsDemoMode: (val: boolean) => void;
   language: Language;
@@ -80,12 +54,32 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | null>(null);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
+  const [users, setUsers] = useState<User[]>(ALL_USERS);
   const [currentUser, setCurrentUser] = useState<User>(ALL_USERS[0]);
   const [isDemoMode, setIsDemoMode] = useState<boolean>(true);
   const [language, setLanguageState] = useState<Language>('en');
   const [toast, setToast] = useState<string | null>(null);
 
-  // Load language from localStorage if available
+  const refreshUsers = async () => {
+    try {
+      const res = await fetch('/api/users');
+      const data = await res.json();
+      if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+        setUsers(data.data);
+      }
+    } catch {
+      // fallback
+    }
+  };
+
+  const addUser = (newUser: User) => {
+    setUsers((prev) => {
+      if (prev.some((u) => u.id === newUser.id)) return prev;
+      return [...prev, newUser];
+    });
+  };
+
+  // Load language and users on mount
   useEffect(() => {
     try {
       const savedLang = localStorage.getItem('bit_lang') as Language;
@@ -97,6 +91,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     } catch {
       // ignore
     }
+    refreshUsers();
   }, []);
 
   const setLanguage = (lang: Language) => {
@@ -111,8 +106,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   };
 
   const toggleLanguage = () => {
-    const next = language === 'en' ? 'ar' : 'en';
-    setLanguage(next);
+    setLanguage(language === 'en' ? 'ar' : 'en');
   };
 
   const direction: Direction = language === 'ar' ? 'rtl' : 'ltr';
@@ -132,6 +126,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       value={{
         currentUser,
         setCurrentUser,
+        users,
+        setUsers,
+        refreshUsers,
+        addUser,
         isDemoMode,
         setIsDemoMode,
         language,

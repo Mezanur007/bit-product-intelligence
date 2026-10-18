@@ -29,6 +29,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   const {
     currentUser,
     setCurrentUser,
+    users,
     isDemoMode,
     setIsDemoMode,
     showToast,
@@ -380,7 +381,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
                     {t('switchRole')}
                   </div>
                   <div className="py-1">
-                    {ALL_USERS.map((u) => (
+                    {(users && users.length > 0 ? users : ALL_USERS).map((u) => (
                       <button
                         key={u.id}
                         onClick={() => {

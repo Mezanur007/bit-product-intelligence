@@ -12,11 +12,15 @@ import {
   recordApprovalDecision,
   getAuditLogs,
   resetToDemoData,
+  getAllUsers,
+  getUserById,
+  getUserByUsername,
+  createUser,
 } from '../src/lib/db/repository.js';
 import { INITIAL_USERS } from '../src/lib/db/seed.js';
 
 describe('Data Repository & Persistence — B-IT Technology', () => {
-  const adminUser = INITIAL_USERS[0]; // Khalid Al-Mansoor
+  const adminUser = INITIAL_USERS[0]; // Mezanur Maruf (CTO)
 
   beforeEach(() => {
     resetToDemoData(adminUser);
@@ -36,6 +40,59 @@ describe('Data Repository & Persistence — B-IT Technology', () => {
     assert.ok(bitex !== null);
     assert.strictEqual(bitex?.name, 'BITEX');
     assert.strictEqual(bitex?.pilotPlan?.targetCustomers, 5);
+  });
+
+  it('verifies initial 2 Super Admin users (Maruf & Faisal)', () => {
+    const users = getAllUsers();
+    assert.strictEqual(users.length, 2);
+
+    const maruf = getUserByUsername('maruf@b-it.co');
+    assert.ok(maruf !== null);
+    assert.strictEqual(maruf?.name, 'Mezanur Maruf (CTO)');
+    assert.strictEqual(maruf?.role, 'admin');
+
+    const faisal = getUserByUsername('coo@b--it.co');
+    assert.ok(faisal !== null);
+    assert.strictEqual(faisal?.name, 'Faisal Mohammed (COO)');
+    assert.strictEqual(faisal?.role, 'admin');
+  });
+
+  it('creates new users by username and selected role', () => {
+    const newUser = createUser(
+      {
+        username: 'analyst@b-it.co',
+        name: 'Sarah Al-Otaibi',
+        role: 'market_analyst',
+        roleTitle: 'Senior Market Intelligence Analyst',
+        department: 'Strategy & Research',
+        password: 'Bit@123456@',
+      },
+      adminUser
+    );
+
+    assert.ok(newUser.id.startsWith('usr-'));
+    assert.strictEqual(newUser.username, 'analyst@b-it.co');
+    assert.strictEqual(newUser.role, 'market_analyst');
+    assert.strictEqual(newUser.avatarInitials, 'SA');
+
+    const retrieved = getUserById(newUser.id);
+    assert.ok(retrieved !== null);
+    assert.strictEqual(retrieved?.name, 'Sarah Al-Otaibi');
+
+    const allUsers = getAllUsers();
+    assert.strictEqual(allUsers.length, 3);
+
+    // Prevents duplicate username
+    assert.throws(() => {
+      createUser(
+        {
+          username: 'analyst@b-it.co',
+          name: 'Duplicate Sarah',
+          role: 'market_analyst',
+        },
+        adminUser
+      );
+    }, /already exists/);
   });
 
   it('creates and persists a new opportunity with audit entry', () => {
@@ -106,7 +163,7 @@ describe('Data Repository & Persistence — B-IT Technology', () => {
     assert.strictEqual(submitted.approvals.length, 1);
 
     const approvalId = submitted.approvals[0].id;
-    const managementUser = INITIAL_USERS[1]; // Tariq Al-Ghamdi
+    const managementUser = INITIAL_USERS[1]; // Faisal Mohammed (COO)
 
     const approved = recordApprovalDecision(
       opp.id,

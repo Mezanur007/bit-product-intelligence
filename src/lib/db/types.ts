@@ -17,10 +17,13 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  username?: string;
+  password?: string;
   role: UserRole;
   roleTitle: string;
   department: string;
   avatarInitials: string;
+  createdAt?: string;
 }
 
 export type OpportunityStatus =

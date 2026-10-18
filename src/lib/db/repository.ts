@@ -647,6 +647,7 @@ export function updateSystemSettings(settings: Partial<SystemSettings>, actor: U
 export function resetToDemoData(actor: User): void {
   const store = loadStore();
   store.opportunities = getSampleOpportunities();
+  store.users = [...INITIAL_USERS];
   store.settings.demoModeActive = true;
   saveStore(store);
 
@@ -660,4 +661,159 @@ export function resetToZeroData(actor: User): void {
   saveStore(store);
 
   logAudit(actor, 'RESET_ZERO_DATA', 'System', 'all', 'Cleared all opportunities to start with an honest zero-data state');
+}
+
+// -------------------------------------------------------------
+// USER MANAGEMENT METHODS
+// -------------------------------------------------------------
+
+export function getAllUsers(): User[] {
+  const store = loadStore();
+  if (!store.users || store.users.length === 0) {
+    store.users = [...INITIAL_USERS];
+    saveStore(store);
+  }
+  return store.users;
+}
+
+export function getUserById(id: string): User | null {
+  const users = getAllUsers();
+  return users.find((u) => u.id === id) || null;
+}
+
+export function getUserByUsername(username: string): User | null {
+  const users = getAllUsers();
+  const normalized = username.trim().toLowerCase();
+  return (
+    users.find(
+      (u) =>
+        u.username?.toLowerCase() === normalized ||
+        u.email.toLowerCase() === normalized
+    ) || null
+  );
+}
+
+export function createUser(
+  input: {
+    username: string;
+    name: string;
+    role: User['role'];
+    roleTitle?: string;
+    department?: string;
+    password?: string;
+    email?: string;
+  },
+  actor: User
+): User {
+  const store = loadStore();
+  const normalizedUsername = input.username.trim().toLowerCase();
+
+  // Validate duplicate username
+  const existing = store.users.find(
+    (u) =>
+      u.username?.toLowerCase() === normalizedUsername ||
+      u.email.toLowerCase() === normalizedUsername
+  );
+  if (existing) {
+    throw new Error(`User with username/email "${input.username}" already exists.`);
+  }
+
+  // Generate initials from name
+  const initials =
+    input.name
+      .split(' ')
+      .filter(Boolean)
+      .map((w) => w[0].toUpperCase())
+      .slice(0, 2)
+      .join('') || 'U';
+
+  const defaultRoleTitle: Record<string, string> = {
+    admin: 'Super Admin',
+    management: 'Management Approver',
+    product_owner: 'Lead Product Manager',
+    market_analyst: 'Market & Competitive Intelligence Analyst',
+    technical_reviewer: 'Solutions Architect & Tech Lead',
+    finance_reviewer: 'Senior Financial Analyst',
+  };
+
+  const newUser: User = {
+    id: `usr-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+    name: input.name.trim(),
+    email: input.email?.trim() || input.username.trim(),
+    username: input.username.trim(),
+    password: input.password || 'Bit@123456@',
+    role: input.role,
+    roleTitle: input.roleTitle?.trim() || defaultRoleTitle[input.role] || 'Team Member',
+    department: input.department?.trim() || 'Product & Technology',
+    avatarInitials: initials,
+    createdAt: new Date().toISOString(),
+  };
+
+  store.users.push(newUser);
+  saveStore(store);
+
+  logAudit(
+    actor,
+    'CREATE_USER',
+    'User',
+    newUser.id,
+    `Created new user "${newUser.name}" (${newUser.username}) with role [${newUser.role}]`
+  );
+
+  return newUser;
+}
+
+export function updateUser(
+  id: string,
+  updates: Partial<User>,
+  actor: User
+): User {
+  const store = loadStore();
+  const index = store.users.findIndex((u) => u.id === id);
+  if (index === -1) {
+    throw new Error(`User with ID "${id}" not found.`);
+  }
+
+  store.users[index] = {
+    ...store.users[index],
+    ...updates,
+  };
+  saveStore(store);
+
+  logAudit(
+    actor,
+    'UPDATE_USER',
+    'User',
+    id,
+    `Updated user profile for "${store.users[index].name}"`
+  );
+
+  return store.users[index];
+}
+
+export function deleteUser(id: string, actor: User): boolean {
+  const store = loadStore();
+  const index = store.users.findIndex((u) => u.id === id);
+  if (index === -1) return false;
+
+  const user = store.users[index];
+  if (user.role === 'admin') {
+    const adminCount = store.users.filter((u) => u.role === 'admin').length;
+    if (adminCount <= 1) {
+      throw new Error('Cannot delete the last remaining Super Admin.');
+    }
+  }
+
+  store.users.splice(index, 1);
+  saveStore(store);
+
+  logAudit(
+    actor,
+    'DELETE_USER',
+    'User',
+    id,
+    `Deleted user "${user.name}" (${user.username || user.email})`
+  );
+
+  return true;
 }
